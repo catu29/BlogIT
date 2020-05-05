@@ -1,7 +1,7 @@
 
 package Beans;
 
-public class UserBean {
+public class UserInfoBean {
     String username;
     String password;
     String email;
@@ -9,9 +9,9 @@ public class UserBean {
     int postAmount;
     String avatar;
     
-    public UserBean() { }
+    public UserInfoBean() { }
     
-    public UserBean(String username, String password, String email, String fullName, int postAmount, String avatar) {
+    public UserInfoBean(String username, String password, String email, String fullName, int postAmount, String avatar) {
         this.username = username;
         this.password = password;
         this.email = email;

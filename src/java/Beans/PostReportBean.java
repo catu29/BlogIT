@@ -4,16 +4,16 @@ package Beans;
 import java.util.Calendar;
 
 public class PostReportBean {
-    String reportId;
+    int reportId;
     String username;
-    String postId;
-    String reportReasonId;
+    int postId;
+    int reportReasonId;
     Calendar reportTime;
     
     public PostReportBean() {
     }
     
-    public PostReportBean(String reportId, String username, String postId, String reportReasonId, Calendar reportTime) {
+    public PostReportBean(int reportId, String username, int postId, int reportReasonId, Calendar reportTime) {
         this.reportId = reportId;
         this.username = username;
         this.postId = postId;
@@ -21,11 +21,11 @@ public class PostReportBean {
         this.reportTime = reportTime;
     }
 
-    public String getReportId() {
+    public int getReportId() {
         return reportId;
     }
 
-    public void setReportId(String reportId) {
+    public void setReportId(int reportId) {
         this.reportId = reportId;
     }
 
@@ -37,19 +37,19 @@ public class PostReportBean {
         this.username = username;
     }
 
-    public String getPostId() {
+    public int getPostId() {
         return postId;
     }
 
-    public void setPostId(String postId) {
+    public void setPostId(int postId) {
         this.postId = postId;
     }
 
-    public String getReportReasonId() {
+    public int getReportReasonId() {
         return reportReasonId;
     }
 
-    public void setReportReasonId(String reportReasonId) {
+    public void setReportReasonId(int reportReasonId) {
         this.reportReasonId = reportReasonId;
     }
 

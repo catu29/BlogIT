@@ -4,15 +4,15 @@ package Beans;
 import java.util.Calendar;
 
 public class PostBean {
-    String postId;
+    int postId;
     String postTitle;
     Calendar postTime;
     String username;
     int likes;
     String postContent;
-    String seriesId;
+    int seriesId;
 
-    public PostBean(String postId, String postTitle, Calendar postTime, String username, int likes, String postContent, String seriesId) {
+    public PostBean(int postId, String postTitle, Calendar postTime, String username, int likes, String postContent, int seriesId) {
         this.postId = postId;
         this.postTitle = postTitle;
         this.postTime = postTime;
@@ -25,11 +25,11 @@ public class PostBean {
     public PostBean() {
     }
     
-    public String getPostId() {
+    public int getPostId() {
         return postId;
     }
 
-    public void setPostId(String postId) {
+    public void setPostId(int postId) {
         this.postId = postId;
     }
 
@@ -73,11 +73,11 @@ public class PostBean {
         this.postContent = postContent;
     }
 
-    public String getSeriesId() {
+    public int getSeriesId() {
         return seriesId;
     }
 
-    public void setSeriesId(String seriesId) {
+    public void setSeriesId(int seriesId) {
         this.seriesId = seriesId;
     }
 }

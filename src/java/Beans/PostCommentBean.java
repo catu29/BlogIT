@@ -3,22 +3,22 @@ package Beans;
 
 import java.util.Calendar;
 
-public class CommentBean {
-    String commentId;
+public class PostCommentBean {
+    int commentId;
     String username;
-    String postId;
+    int postId;
     String content;
     Calendar commentTime;
-    String replyToCommentId;
+    int replyToCommentId;
 
-    public CommentBean() {
+    public PostCommentBean() {
     }
 
-    public String getCommentId() {
+    public int getCommentId() {
         return commentId;
     }
 
-    public void setCommentId(String commentId) {
+    public void setCommentId(int commentId) {
         this.commentId = commentId;
     }
 
@@ -30,11 +30,11 @@ public class CommentBean {
         this.username = username;
     }
 
-    public String getPostId() {
+    public int getPostId() {
         return postId;
     }
 
-    public void setPostId(String postId) {
+    public void setPostId(int postId) {
         this.postId = postId;
     }
 
@@ -54,15 +54,15 @@ public class CommentBean {
         this.commentTime = commentTime;
     }
 
-    public String getReplyToCommentId() {
+    public int getReplyToCommentId() {
         return replyToCommentId;
     }
 
-    public void setReplyToCommentId(String replyToCommentId) {
+    public void setReplyToCommentId(int replyToCommentId) {
         this.replyToCommentId = replyToCommentId;
     }
 
-    public CommentBean(String commentId, String username, String postId, String content, Calendar commentTime, String replyToCommentId) {
+    public PostCommentBean(int commentId, String username, int postId, String content, Calendar commentTime, int replyToCommentId) {
         this.commentId = commentId;
         this.username = username;
         this.postId = postId;

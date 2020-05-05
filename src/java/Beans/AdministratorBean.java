@@ -1,13 +1,13 @@
 
 package Beans;
 
-public class AdminBean {
+public class AdministratorBean {
     private String id;
     private String password;
     
-    public AdminBean() {};
+    public AdministratorBean() {};
     
-    public AdminBean(String id, String password) {
+    public AdministratorBean(String id, String password) {
         this.id = id;
         this.password = password;
     }

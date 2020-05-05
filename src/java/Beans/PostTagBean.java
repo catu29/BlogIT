@@ -2,30 +2,30 @@
 package Beans;
 
 public class PostTagBean {
-    String postId;
-    String tagId;
+    int postId;
+    int tagId;
 
     public PostTagBean() {
     }
 
-    public PostTagBean(String postId, String tagId) {
+    public PostTagBean(int postId, int tagId) {
         this.postId = postId;
         this.tagId = tagId;
     }
 
-    public String getPostId() {
+    public int getPostId() {
         return postId;
     }
 
-    public void setPostId(String postId) {
+    public void setPostId(int postId) {
         this.postId = postId;
     }
 
-    public String getTagId() {
+    public int getTagId() {
         return tagId;
     }
 
-    public void setTagId(String tagId) {
+    public void setTagId(int tagId) {
         this.tagId = tagId;
     }
     

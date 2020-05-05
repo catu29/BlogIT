@@ -2,24 +2,24 @@
 package Beans;
 
 public class UserSeriesListBean {
-    String seriesId;
+    int seriesId;
     String username;
     String seriesName;
 
     public UserSeriesListBean() {
     }
 
-    public UserSeriesListBean(String seriesId, String username, String seriesName) {
+    public UserSeriesListBean(int seriesId, String username, String seriesName) {
         this.seriesId = seriesId;
         this.username = username;
         this.seriesName = seriesName;
     }
 
-    public String getSeriesId() {
+    public int getSeriesId() {
         return seriesId;
     }
 
-    public void setSeriesId(String seriesId) {
+    public void setSeriesId(int seriesId) {
         this.seriesId = seriesId;
     }
 
