@@ -9,10 +9,10 @@ public class UserSeriesListBean {
     public UserSeriesListBean() {
     }
 
-    public UserSeriesListBean(int seriesId, String username, String seriesName) {
-        this.seriesId = seriesId;
-        this.username = username;
-        this.seriesName = seriesName;
+    public void initUserSeriesList(int seriesId, String username, String seriesName) {
+        this.setSeriesId(seriesId);
+        this.setUsername(username);
+        this.setSeriesName(seriesName);
     }
 
     public int getSeriesId() {
@@ -20,7 +20,9 @@ public class UserSeriesListBean {
     }
 
     public void setSeriesId(int seriesId) {
-        this.seriesId = seriesId;
+        if (seriesId > 0) {
+            this.seriesId = seriesId;
+        }
     }
 
     public String getUsername() {

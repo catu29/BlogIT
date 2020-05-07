@@ -13,12 +13,12 @@ public class PostReportBean {
     public PostReportBean() {
     }
     
-    public PostReportBean(int reportId, String username, int postId, int reportReasonId, Calendar reportTime) {
-        this.reportId = reportId;
-        this.username = username;
-        this.postId = postId;
-        this.reportReasonId = reportReasonId;
-        this.reportTime = reportTime;
+    public void initPostReport(int reportId, String username, int postId, int reportReasonId, Calendar reportTime) {
+        this.setReportId(reportId);
+        this.setUserName(username);
+        this.setPostId(postId);
+        this.setReportReasonId(reportReasonId);
+        this.setReportTime(reportTime);
     }
 
     public int getReportId() {
@@ -26,7 +26,9 @@ public class PostReportBean {
     }
 
     public void setReportId(int reportId) {
-        this.reportId = reportId;
+        if (reportId > 0) {
+            this.reportId = reportId;
+        }
     }
 
     public String getUserName() {
@@ -42,7 +44,9 @@ public class PostReportBean {
     }
 
     public void setPostId(int postId) {
-        this.postId = postId;
+        if (postId > 0) {
+            this.postId = postId;
+        }
     }
 
     public int getReportReasonId() {
@@ -50,7 +54,9 @@ public class PostReportBean {
     }
 
     public void setReportReasonId(int reportReasonId) {
-        this.reportReasonId = reportReasonId;
+        if (reportReasonId > 0) {
+            this.reportReasonId = reportReasonId;
+        }
     }
 
     public Calendar getReportTime() {

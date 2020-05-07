@@ -12,16 +12,18 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import Data.MySqlConnection;
+import DatabaseConnection.MySqlConnection;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import javax.servlet.annotation.WebServlet;
 
 /**
  *
  * @author TranCamTu
  */
+//@WebServlet(name = "TestServlet", urlPatterns = "{/TestServlet}")
 public class TestServlet extends HttpServlet{
 
     /**
@@ -56,10 +58,7 @@ public class TestServlet extends HttpServlet{
         Statement stmt = null;
         
         try {
-            MySqlConnection msc = new MySqlConnection();
-            msc.getDataConnection();
-            
-            stmt = MySqlConnection.dataConnection.prepareStatement(query);
+            stmt = MySqlConnection.getDataConnection().prepareStatement(query);
             ResultSet rs = stmt.executeQuery(query);
                         
             while (rs.next()) {
@@ -69,7 +68,7 @@ public class TestServlet extends HttpServlet{
             stmt.close();
             stmt = null;
             
-            msc.closeDataConnection();
+            MySqlConnection.closeDataConnection();
         } catch (SQLException e) {
             System.out.println("Servlet Error: " + e.getMessage());
             count = -1;

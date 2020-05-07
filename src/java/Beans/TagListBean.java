@@ -2,22 +2,22 @@
 package Beans;
 
 public class TagListBean {
-    int tagId;
+    String tagId;
     String tagName;
 
     public TagListBean() {
     }
 
-    public TagListBean(int tagId, String tagName) {
-        this.tagId = tagId;
-        this.tagName = tagName;
+    public void initTagList(String tagId, String tagName) {
+        this.setTagId(tagId);
+        this.setTagName(tagName);
     }
 
-    public int getTagId() {
+    public String getTagId() {
         return tagId;
     }
 
-    public void setTagId(int tagId) {
+    public void setTagId(String tagId) {
         this.tagId = tagId;
     }
 

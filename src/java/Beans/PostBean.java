@@ -12,16 +12,6 @@ public class PostBean {
     String postContent;
     int seriesId;
 
-    public PostBean(int postId, String postTitle, Calendar postTime, String username, int likes, String postContent, int seriesId) {
-        this.postId = postId;
-        this.postTitle = postTitle;
-        this.postTime = postTime;
-        this.username = username;
-        this.likes = likes;
-        this.postContent = postContent;
-        this.seriesId = seriesId;
-    }
-
     public PostBean() {
     }
     
@@ -30,7 +20,9 @@ public class PostBean {
     }
 
     public void setPostId(int postId) {
-        this.postId = postId;
+        if (postId > 0) {
+            this.postId = postId;
+        }
     }
 
     public String getPostTitle() {
@@ -62,7 +54,9 @@ public class PostBean {
     }
 
     public void setLikes(int likes) {
-        this.likes = likes;
+        if (likes > 0) {
+            this.likes = likes;
+        }
     }
 
     public String getPostContent() {
@@ -78,6 +72,18 @@ public class PostBean {
     }
 
     public void setSeriesId(int seriesId) {
-        this.seriesId = seriesId;
+        if (seriesId > 0) {
+            this.seriesId = seriesId;
+        }
+    }
+    
+    public void initPost(int postId, String postTitle, Calendar postTime, String username, int likes, String postContent, int seriesId) {
+        this.setPostId(postId);
+        this.setPostTitle(postTitle);
+        this.setPostTime(postTime);
+        this.setUserName(username);
+        this.setLikes(likes);
+        this.setPostContent(postContent);
+        this.setSeriesId(seriesId);
     }
 }

@@ -8,9 +8,9 @@ public class ReportReasonListBean {
     public ReportReasonListBean() {
     }
 
-    public ReportReasonListBean(int reasonId, String reasonContent) {
-        this.reasonId = reasonId;
-        this.reasonContent = reasonContent;
+    public void initReportReasonList(int reasonId, String reasonContent) {
+        this.setReasonId(reasonId);
+        this.setReasonContent(reasonContent);
     }
 
     public int getReasonId() {
@@ -18,7 +18,9 @@ public class ReportReasonListBean {
     }
 
     public void setReasonId(int reasonId) {
-        this.reasonId = reasonId;
+        if (reasonId > 0) {
+            this.reasonId = reasonId;
+        }
     }
 
     public String getReasonContent() {
