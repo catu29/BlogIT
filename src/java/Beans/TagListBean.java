@@ -8,9 +8,9 @@ public class TagListBean {
     public TagListBean() {
     }
 
-    public TagListBean(String tagId, String tagName) {
-        this.tagId = tagId;
-        this.tagName = tagName;
+    public void initTagList(String tagId, String tagName) {
+        this.setTagId(tagId);
+        this.setTagName(tagName);
     }
 
     public String getTagId() {

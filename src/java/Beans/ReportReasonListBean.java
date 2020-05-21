@@ -2,23 +2,25 @@
 package Beans;
 
 public class ReportReasonListBean {
-    String reasonId;
+    int reasonId;
     String reasonContent;
 
     public ReportReasonListBean() {
     }
 
-    public ReportReasonListBean(String reasonId, String reasonContent) {
-        this.reasonId = reasonId;
-        this.reasonContent = reasonContent;
+    public void initReportReasonList(int reasonId, String reasonContent) {
+        this.setReasonId(reasonId);
+        this.setReasonContent(reasonContent);
     }
 
-    public String getReasonId() {
+    public int getReasonId() {
         return reasonId;
     }
 
-    public void setReasonId(String reasonId) {
-        this.reasonId = reasonId;
+    public void setReasonId(int reasonId) {
+        if (reasonId > 0) {
+            this.reasonId = reasonId;
+        }
     }
 
     public String getReasonContent() {

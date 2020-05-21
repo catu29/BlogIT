@@ -3,7 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/F:/SoftwareEngineeringCourses/N4HK2_J2EE/Project/BlogIT/build.xml</file>
+            <file>file:/D:/WorkSpace/SubjectProject/JEE/BlogIT/src/java/Test/TestServlet.java</file>
+            <file>file:/D:/WorkSpace/SubjectProject/JEE/BlogIT/src/java/DatabaseConnection/MySqlConnection.java</file>
+            <file>file:/D:/WorkSpace/SubjectProject/JEE/BlogIT/web/WEB-INF/web.xml</file>
+            <file>file:/D:/WorkSpace/SubjectProject/JEE/BlogIT/web/META-INF/context.xml</file>
         </group>
     </open-files>
 </project-private>

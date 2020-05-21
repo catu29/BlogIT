@@ -4,33 +4,25 @@ package Beans;
 import java.util.Calendar;
 
 public class PostBean {
-    String postId;
+    int postId;
     String postTitle;
     Calendar postTime;
     String username;
     int likes;
     String postContent;
-    String seriesId;
-
-    public PostBean(String postId, String postTitle, Calendar postTime, String username, int likes, String postContent, String seriesId) {
-        this.postId = postId;
-        this.postTitle = postTitle;
-        this.postTime = postTime;
-        this.username = username;
-        this.likes = likes;
-        this.postContent = postContent;
-        this.seriesId = seriesId;
-    }
+    int seriesId;
 
     public PostBean() {
     }
     
-    public String getPostId() {
+    public int getPostId() {
         return postId;
     }
 
-    public void setPostId(String postId) {
-        this.postId = postId;
+    public void setPostId(int postId) {
+        if (postId > 0) {
+            this.postId = postId;
+        }
     }
 
     public String getPostTitle() {
@@ -62,7 +54,9 @@ public class PostBean {
     }
 
     public void setLikes(int likes) {
-        this.likes = likes;
+        if (likes > 0) {
+            this.likes = likes;
+        }
     }
 
     public String getPostContent() {
@@ -73,11 +67,23 @@ public class PostBean {
         this.postContent = postContent;
     }
 
-    public String getSeriesId() {
+    public int getSeriesId() {
         return seriesId;
     }
 
-    public void setSeriesId(String seriesId) {
-        this.seriesId = seriesId;
+    public void setSeriesId(int seriesId) {
+        if (seriesId > 0) {
+            this.seriesId = seriesId;
+        }
+    }
+    
+    public void initPost(int postId, String postTitle, Calendar postTime, String username, int likes, String postContent, int seriesId) {
+        this.setPostId(postId);
+        this.setPostTitle(postTitle);
+        this.setPostTime(postTime);
+        this.setUserName(username);
+        this.setLikes(likes);
+        this.setPostContent(postContent);
+        this.setSeriesId(seriesId);
     }
 }
