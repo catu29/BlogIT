@@ -19,9 +19,7 @@ public class PostCommentBean {
     }
 
     public void setCommentId(int commentId) {
-        if (commentId > 0) {
-            this.commentId = commentId;
-        }
+        this.commentId = commentId;
     }
 
     public String getUserName() {
@@ -37,9 +35,7 @@ public class PostCommentBean {
     }
 
     public void setPostId(int postId) {
-        if (postId > 0) {
-            this.postId = postId;
-        }
+        this.postId = postId;
     }
 
     public String getContent() {
@@ -63,17 +59,15 @@ public class PostCommentBean {
     }
 
     public void setReplyToCommentId(int replyToCommentId) {
-        if (replyToCommentId > 0) {
-            this.replyToCommentId = replyToCommentId;
-        }
+        this.replyToCommentId = replyToCommentId;
     }
 
-    public void initPostComment(int commentId, String username, int postId, String content, Calendar commentTime, int replyToCommentId) {
-        this.setCommentId(commentId);
-        this.setUserName(username);
-        this.setPostId(postId);
-        this.setContent(content);
-        this.setCommentTime(commentTime);
-        this.setReplyToCommentId(replyToCommentId);
+    public PostCommentBean(int commentId, String username, int postId, String content, Calendar commentTime, int replyToCommentId) {
+        this.commentId = commentId;
+        this.username = username;
+        this.postId = postId;
+        this.content = content;
+        this.commentTime = commentTime;
+        this.replyToCommentId = replyToCommentId;
     }
 }

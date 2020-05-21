@@ -1,40 +1,41 @@
 
-package DatabaseConnection;
+package Data;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
 
 public class MySqlConnection {
-    private static DataSource dataSource = null;
-    private static Connection dataConnection = null;
+    public static DataSource dataSource = null;
+    public static Connection dataConnection = null;
     
-    private static void getDataSource() {
-        try {  
-            if (dataSource == null) {
-                InitialContext initContext = new InitialContext();
-                dataSource = (DataSource)initContext.lookup("java:comp/env/jdbc/MySqlDatabase");
-            }
+    private void getDataSource() {
+        try {          
+            InitialContext initContext = new InitialContext();
+            dataSource = (DataSource)initContext.lookup("java:comp/env/jdbc/MySqlDatabase");
         } catch (Exception e) {
             System.out.println("Get Data Source Error: " + e.getMessage());
         }
     }
     
-    public static Connection getDataConnection() {
+    public void getDataConnection() {
         try {
             if (dataConnection == null) {
-                getDataSource();
+                if (dataSource == null) {
+                    getDataSource();
+                }
+                
                 dataConnection = dataSource.getConnection();
             }
         } catch (Exception e) {
             System.out.println("Get Data Connection Error: " + e.getMessage());
         }
-        
-        return dataConnection;
     }
     
-    public static void closeDataConnection() {
+    public void closeDataConnection() {
         try {
             if (dataConnection != null) {
                 if (!dataConnection.isClosed()) {
