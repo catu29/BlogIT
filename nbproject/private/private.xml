@@ -3,7 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/F:/SoftwareEngineeringCourses/N4HK2_J2EE/Project/BlogIT/build.xml</file>
+            <file>file:/F:/SoftwareEngineeringCourses/N4HK2_J2EE/Project/BlogIT/web/WEB-INF/web.xml</file>
+            <file>file:/F:/SoftwareEngineeringCourses/N4HK2_J2EE/Project/BlogIT/src/java/Servlets/User/RegisterServlet.java</file>
+            <file>file:/F:/SoftwareEngineeringCourses/N4HK2_J2EE/Project/BlogIT/web/Resources/css/bootstrap-4.min.css</file>
+            <file>file:/F:/SoftwareEngineeringCourses/N4HK2_J2EE/Project/BlogIT/src/java/Servlets/Post/ViewPortServlet.java</file>
+            <file>file:/F:/SoftwareEngineeringCourses/N4HK2_J2EE/Project/BlogIT/web/Views/User/register.jsp</file>
+            <file>file:/F:/SoftwareEngineeringCourses/N4HK2_J2EE/Project/BlogIT/web/Views/Post/view.jsp</file>
         </group>
     </open-files>
 </project-private>
