@@ -1,9 +1,6 @@
 
 package Beans;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 public class UserInfoBean {
     String username;
     String password;
@@ -14,13 +11,13 @@ public class UserInfoBean {
     
     public UserInfoBean() { }
     
-    public void initUserInfo(String username, String password, String email, String fullName, int postAmount, String avatar) {
-        this.setUserName(username);
-        this.setPassword(password);
-        this.setEmail(email);
-        this.setFullName(fullName);
-        this.setPostAmount(postAmount);
-        this.setAvatar(avatar);
+    public UserInfoBean(String username, String password, String email, String fullName, int postAmount, String avatar) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.fullName = fullName;
+        this.postAmount = postAmount;
+        this.avatar = avatar;
     }
 
     public String getUserName() {
@@ -44,9 +41,7 @@ public class UserInfoBean {
     }
 
     public void setEmail(String email) {
-        if (this.validateEmail(email)) {
-            this.email = email;
-        }
+        this.email = email;
     }
 
     public String getFullName() {
@@ -62,9 +57,7 @@ public class UserInfoBean {
     }
 
     public void setPostAmount(int postAmount) {
-        if (postAmount >= 0) {
-            this.postAmount = postAmount;
-        }
+        this.postAmount = postAmount;
     }
 
     public String getAvatar() {
@@ -73,11 +66,5 @@ public class UserInfoBean {
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
-    }
-    
-    public boolean validateEmail(String emailStr) {
-        Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
-        Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(emailStr);
-        return matcher.find();
     }
 }

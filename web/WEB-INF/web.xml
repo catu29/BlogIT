@@ -34,12 +34,11 @@
     <servlet>
         <servlet-name>ViewPortServlet</servlet-name>    
         <servlet-class>Servlets.Post.ViewPortServlet</servlet-class>
-    </servlet>
+    </servlet>    
     <servlet-mapping>
         <servlet-name>ViewPortServlet</servlet-name>
         <url-pattern>/post/*</url-pattern>
-    </servlet-mapping>    
-    
+       
     <servlet>
         <servlet-name>TestServlet</servlet-name>
         <servlet-class>Test.TestServlet</servlet-class>

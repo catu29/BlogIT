@@ -3,14 +3,14 @@ package Beans;
 
 public class PostTagBean {
     int postId;
-    String tagId;
+    int tagId;
 
     public PostTagBean() {
     }
 
-    public void initPostTag(int postId, String tagId) {
-        this.setPostId(postId);       
-        this.setTagId(tagId);
+    public PostTagBean(int postId, int tagId) {
+        this.postId = postId;
+        this.tagId = tagId;
     }
 
     public int getPostId() {
@@ -18,16 +18,16 @@ public class PostTagBean {
     }
 
     public void setPostId(int postId) {
-        if (postId > 0) {
-            this.postId = postId;
-        }
+        this.postId = postId;
     }
 
-    public String getTagId() {
+    public int getTagId() {
         return tagId;
     }
 
-    public void setTagId(String tagId) {
+    public void setTagId(int tagId) {
         this.tagId = tagId;
     }
+    
+    
 }
