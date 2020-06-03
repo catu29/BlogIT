@@ -45,9 +45,7 @@ public class RegisterServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
-        
-        RequestDispatcher view = request.getRequestDispatcher("Views/User/register.jsp");
+        RequestDispatcher view = request.getRequestDispatcher("/Views/User/register.jsp");
         view.forward(request, response);
     }
 
@@ -61,11 +59,8 @@ public class RegisterServlet extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
+            throws ServletException, IOException {        
         
-        RequestDispatcher view = request.getRequestDispatcher("Views/User/register.jsp");
-        view.forward(request, response);
     }
 
     /**

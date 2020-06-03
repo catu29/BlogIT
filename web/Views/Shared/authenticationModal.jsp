@@ -14,27 +14,27 @@
                 <h4 class="modal-title">Login</h4>
             </div>
             <div class="modal-body">
-                <form action="action">
+                <form action="LoginServlet" method="POST">
                     <div class="form-group">
                         <label for="email">Email</label>
-                        <input type="email" class="input" id="email" placeholder="Email">
+                        <input type="email" class="input" id="email" name="email" placeholder="Email">
                     </div>
                     <div class="form-group">
-                        <label for="password">Password</label>
-                        <input type="password" class="input" id="password" placeholder="Password">
+                        <label for="password">Mật khẩu</label>
+                        <input type="password" class="input" id="password" name="password" placeholder="Password">
                     </div>
                     <div class="form-group">
                         <input type="checkbox" class="form-check-input" id="rememberCheck">
                         <label class="form-check-label" for="rememberCheck">Remember me</label>
                     </div>
-                    <button type="button" class="primary-button btn-block">Login</button>
+                    <button type="submit" class="primary-button btn-block">Đăng nhập</button>
                 </form>
                 
             </div>
             <div class="modal-footer">
                 <span class="pull-left">
-                    <span>Don't have an account!&nbsp;</span>
-                    <a href="user/register">Sign Up Here</a>
+                    <span>Chưa có tài khoản?&nbsp;</span>
+                    <a href="user/register">Đăng ký ngay</a>
                 </span>        
             </div>
         </div>

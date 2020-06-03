@@ -4,7 +4,7 @@
     Author     : Tin Bui
 --%>
 
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@tag description="main layout" pageEncoding="UTF-8"%>
 
 <%-- The list of normal or fragment attributes can be specified here: --%>
@@ -27,13 +27,13 @@
         <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700%7CMuli:400,700" rel="stylesheet">
 
         <!-- Bootstrap -->
-        <link type="text/css" rel="stylesheet" href="Resources/css/bootstrap.min.css" />
+        <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/Resources/css/bootstrap.min.css" />
 
         <!-- Font Awesome Icon -->
-        <link type="text/css" rel="stylesheet" href="Resources/css/fontawesome.min.css"/>
+        <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/Resources/css/fontawesome.min.css"/>
 
         <!-- Custom stlylesheet -->
-        <link type="text/css" rel="stylesheet" href="Resources/css/style.css" />
+        <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/Resources/css/style.css" />
         <!-- custom css -->
         <jsp:invoke fragment="css"></jsp:invoke>
     </head>
@@ -47,7 +47,7 @@
                     <div class="container">
                         <!-- logo -->
                         <div class="nav-logo">
-                            <a href="index.html" class="logo"><img src="Resources/img/logo.png" alt=""></a>
+                            <a href="index.html" class="logo"><img src="${pageContext.request.contextPath}/Resources/img/logo.png" alt=""></a>
                         </div>
                         <!-- /logo -->
 
@@ -69,7 +69,7 @@
                                 <c:when test="${1 == 2}">
                                     <div class="dropdown login-btn open-auth-modal">
                                         <button class="dropdown-toggle" type="button" id="userdropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                            <img src="Resources/img/default-user.png" alt="">
+                                            <img src="${pageContext.request.contextPath}/Resources/img/default-user.png" alt="">
                                         </button>
                                         <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="userdropdown">
                                             <li><a href="#">Đăng nhập</a></li>
@@ -79,7 +79,7 @@
                                 </c:when>
                                 <c:otherwise>
                                     <button class="dropdown-toggle" type="button" data-toggle="modal" data-target="#authenticationModal">
-                                        <img src="Resources/img/default-user.png" alt="">
+                                        <img src="${pageContext.request.contextPath}/Resources/img/default-user.png" alt="">
                                     </button>
                                 </c:otherwise>
                             </c:choose>
@@ -130,7 +130,7 @@
                                                         <!-- post -->
                                                         <div class="col-md-4">
                                                             <div class="post post-sm">
-                                                                <a class="post-img" href="blog-post.html"><img src="Resources/img/post-10.jpg" alt=""></a>
+                                                                <a class="post-img" href="blog-post.html"><img src="${pageContext.request.contextPath}/Resources/img/post-10.jpg" alt=""></a>
                                                                 <div class="post-body">
                                                                     <div class="post-category">
                                                                         <a href="category.html">Travel</a>
@@ -148,7 +148,7 @@
                                                         <!-- post -->
                                                         <div class="col-md-4">
                                                             <div class="post post-sm">
-                                                                <a class="post-img" href="blog-post.html"><img src="Resources/img/post-13.jpg" alt=""></a>
+                                                                <a class="post-img" href="blog-post.html"><img src="${pageContext.request.contextPath}/Resources/img/post-13.jpg" alt=""></a>
                                                                 <div class="post-body">
                                                                     <div class="post-category">
                                                                         <a href="category.html">Travel</a>
@@ -167,7 +167,7 @@
                                                         <!-- post -->
                                                         <div class="col-md-4">
                                                             <div class="post post-sm">
-                                                                <a class="post-img" href="blog-post.html"><img src="Resources/img/post-12.jpg" alt=""></a>
+                                                                <a class="post-img" href="blog-post.html"><img src="${pageContext.request.contextPath}/Resources/img/post-12.jpg" alt=""></a>
                                                                 <div class="post-body">
                                                                     <div class="post-category">
                                                                         <a href="category.html">Lifestyle</a>
@@ -191,7 +191,7 @@
                                                         <!-- post -->
                                                         <div class="col-md-4">
                                                             <div class="post post-sm">
-                                                                <a class="post-img" href="blog-post.html"><img src="Resources/img/post-5.jpg" alt=""></a>
+                                                                <a class="post-img" href="blog-post.html"><img src="${pageContext.request.contextPath}/Resources/img/post-5.jpg" alt=""></a>
                                                                 <div class="post-body">
                                                                     <div class="post-category">
                                                                         <a href="category.html">Lifestyle</a>
@@ -209,7 +209,7 @@
                                                         <!-- post -->
                                                         <div class="col-md-4">
                                                             <div class="post post-sm">
-                                                                <a class="post-img" href="blog-post.html"><img src="Resources/img/post-8.jpg" alt=""></a>
+                                                                <a class="post-img" href="blog-post.html"><img src="${pageContext.request.contextPath}/Resources/img/post-8.jpg" alt=""></a>
                                                                 <div class="post-body">
                                                                     <div class="post-category">
                                                                         <a href="category.html">Fashion</a>
@@ -228,7 +228,7 @@
                                                         <!-- post -->
                                                         <div class="col-md-4">
                                                             <div class="post post-sm">
-                                                                <a class="post-img" href="blog-post.html"><img src="Resources/img/post-9.jpg" alt=""></a>
+                                                                <a class="post-img" href="blog-post.html"><img src="${pageContext.request.contextPath}/Resources/img/post-9.jpg" alt=""></a>
                                                                 <div class="post-body">
                                                                     <div class="post-category">
                                                                         <a href="category.html">Lifestyle</a>
@@ -438,10 +438,10 @@
         
         <jsp:include page="../../Views/Shared/authenticationModal.jsp" />
 
-        <script src="Resources/js/jquery.min.js"></script>
-        <script src="Resources/js/bootstrap.min.js"></script>
-        <script src="Resources/js/jquery.stellar.min.js"></script>
-        <script src="Resources/js/main.js"></script>
+        <script src="${pageContext.request.contextPath}/Resources/js/jquery.min.js"></script>
+        <script src="${pageContext.request.contextPath}/Resources/js/bootstrap.min.js"></script>
+        <script src="${pageContext.request.contextPath}/Resources/js/jquery.stellar.min.js"></script>
+        <script src="${pageContext.request.contextPath}/Resources/js/main.js"></script>
         <!-- custom js -->
         <jsp:invoke fragment="js"></jsp:invoke>
     </body>
