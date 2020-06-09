@@ -66,14 +66,15 @@
                             <button class="aside-btn"><i class="fa fa-bars"></i></button>
                             
                             <c:choose>
-                                <c:when test="${1 == 2}">
+                                <c:when test="${1 == 1}">
                                     <div class="dropdown login-btn open-auth-modal">
                                         <button class="dropdown-toggle" type="button" id="userdropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                             <img src="${pageContext.request.contextPath}/Resources/img/default-user.png" alt="">
                                         </button>
                                         <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="userdropdown">
-                                            <li><a href="#">Đăng nhập</a></li>
-                                            <li><a href="#">Đăng ký</a></li>
+                                            <li><a href="#">Thông tin cá nhân</a></li>
+                                            <li><a href="#">Tạo bài viết</a></li>
+                                            <li><a href="#">Đăng xuất</a></li>
                                         </ul>
                                     </div>
                                 </c:when>
@@ -337,11 +338,15 @@
                 <!-- /Aside Nav -->
             </div>
             <!-- /NAV -->
+            
         </header>
         <!-- /HEADER -->
-
-        <jsp:doBody/>
-
+        <div class="section">
+            <div class="container">
+                <jsp:doBody/>
+            </div>
+        </div>
+        
         <!-- FOOTER -->
         <footer id="footer">
             <!-- container -->

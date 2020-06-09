@@ -37,8 +37,8 @@
     </servlet>    
     <servlet-mapping>
         <servlet-name>ViewPortServlet</servlet-name>
-        <url-pattern>/post/*</url-pattern>
-       
+        <url-pattern>/post</url-pattern>
+    </servlet-mapping>
     <servlet>
         <servlet-name>TestServlet</servlet-name>
         <servlet-class>Test.TestServlet</servlet-class>
