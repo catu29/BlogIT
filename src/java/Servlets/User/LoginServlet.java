@@ -13,8 +13,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import DatabaseConnection.MySqlConnection;
+import Data.MySqlConnection;
 import Beans.UserInfoBean;
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -59,10 +60,12 @@ public class LoginServlet extends HttpServlet {
         
         int count = 0;
         String query = "Select * From UserInfo Where email='" + user.getEmail() + "' and pass='" + user.getPassword() +"';";
+        MySqlConnection mySql = new MySqlConnection();
+        Connection connection = mySql.getDataConnection();
         Statement stmt = null;
         
         try {
-            stmt = MySqlConnection.getDataConnection().prepareStatement(query);
+            stmt = connection.prepareStatement(query);
             ResultSet rs = stmt.executeQuery(query);
             
             while (rs.next()) {

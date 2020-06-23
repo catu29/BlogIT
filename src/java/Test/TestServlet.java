@@ -57,9 +57,9 @@ public class TestServlet extends HttpServlet{
         
         try {
             MySqlConnection msc = new MySqlConnection();
-            msc.getDataConnection();
+            Connection connection = msc.getDataConnection();
             
-            stmt = MySqlConnection.dataConnection.prepareStatement(query);
+            stmt = connection.prepareStatement(query);
             ResultSet rs = stmt.executeQuery(query);
                         
             while (rs.next()) {
@@ -69,7 +69,7 @@ public class TestServlet extends HttpServlet{
             stmt.close();
             stmt = null;
             
-            msc.closeDataConnection();
+            connection.close();
         } catch (SQLException e) {
             System.out.println("Servlet Error: " + e.getMessage());
             count = -1;
