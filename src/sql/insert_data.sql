@@ -2,27 +2,38 @@ Use BlogIT;
 ------------------------------------------------------------------
 --------------- INSERT DATA -----------------
 
-Insert into Administrator value ('admin', 'admin');
+Insert into User values
+(1, 'admin', 'admin@gmail.com', N'Admin', 'defaut-user.png', 1),
+(2, 'minhmonmen', 'minhmonmen@gmail.com', N'Minh Monmen', 'default-user.png', 0),
+(3, 'hoangxuantruong', 'hoangxuantruong@gmail.com', N'Hoàng Xuân Trường', 'default-user.png', 0),
+(4, 'dainguyen', 'dainguyen@gmail.com', N'Dai Nguyen', 'default-user.png', 0),
+(5, 'luuxuantrong', 'luuxuantrong@gmail.com', N'Lưu Xuân Trọng', 'default-user.png', 0),
+(6, 'anhnc', 'anhnc@gmail.com', N'Anh NC', 'default-user.png', 0),
+(7, 'dangxuanthanh', 'dangxuanthanh@gmail.com', N'Đặng Xuân Thành', 'default-user.png', 0),
+(8, 'junookyo', 'junookyo@gmail.com', N'Juno_okyo', 'default-user.png', 0);
 
-Insert into UserInfo values 
-('minhmonmen', 'minhmonmen', 'minhmonmen@gmail.com', N'Minh Monmen', 18, 'default-user.png'),
-('hoangxuantruong', 'hoangxuantruong', 'hoangxuantruong@gmail.com', N'Hoàng Xuân Trường', 0, 'default-user.png'),
-('dainguyen', 'dainguyen', 'dainguyen@gmail.com', N'Dai Nguyen', 0, 'default-user.png'),
-('luuxuantrong', 'luuxuantrong', 'luuxuantrong@gmail.com', N'Lưu Xuân Trọng', 0, 'default-user.png'),
-('anhnc', 'anhnc', 'anhnc@gmail.com', N'Anh NC', 4, 'default-user.png'),
-('dangxuanthanh', 'dangxuanthanh', 'dangxuanthanh@gmail.com', N'Đặng Xuân Thành', 0, 'default-user.png'),
-('junookyo', 'junookyo', 'junookyo@gmail.com', N'Juno_okyo', 25, 'default-user.png');
-
-Insert into UserSeriesList values
-(1, 'minhmonmen', N'Nghệ thuật xử lý background job');
 
 Insert into PostComment values
-(1, 'hoangxuantruong', 1, N'Hay', '2019/11/21', null),
-(2, 'dainguyen', 1, N'Thank you', '2019/11/21', null),
-(3, 'luuxuantrong', 2, N'Like vì 2 con dê', '2020/04/18', null),
-(4, 'dangxuanthanh', 3, N'Có gì tiếc mà không kipalog cho những bài viết như thế này', '2020/04/18', null),
-(5, 'dainguyen', 5, N'Ui hữu ích quá boss Tuấn ơi', '2017/01/19', null),
-(6, 'junookyo', 5, N'Cảm ơn bạn', '2017/01/19', 5);
+(1, 3, 1, N'Hay', '2019/11/21 00:00:00', null),
+(2, 2, 1, N'Thank you', '2019/11/21 00:00:00', null),
+(3, 7, 2, N'Like vì 2 con dê', '2020/04/18 00:00:00', null),
+(4, 8, 3, N'Có gì tiếc mà không kipalog cho những bài viết như thế này', '2020/04/18 00:00:00', null),
+(5, 6, 5, N'Ui hữu ích quá boss Tuấn ơi', '2017/01/19 00:00:00', null),
+(6, 5, 5, N'Cảm ơn bạn', '2017/01/19 00:00:00', 5);
+
+
+Insert into PostLike values
+(1, 2, '2020/06/20 00:00:00'),
+(1, 9, '2020/06/20 00:00:00'),
+(2, 8, '2020/06/20 00:00:00'),
+(1, 3, '2020/06/20 00:00:00'),
+(3, 2, '2020/06/20 00:00:00'),
+(2, 5, '2020/06/20 00:00:00');
+
+
+Insert into UserSeriesList values
+(1, 2, N'Nghệ thuật xử lý background job', 'nghe-thuat-xu-ly-background-job');
+
 
 Insert into ReportReasonList values
 (1, N'Nội dung không liên quan tiêu đề'),
@@ -80,7 +91,7 @@ Insert into PostTag values
 Insert into Post values
 
 -- Nghệ thuật xử lý background job --
-(1, N'Nghệ thuật xử lý background job', '2019/11/21', 'minhmonmen', 82, 1,
+(1, N'Nghệ thuật xử lý background job', 'nghe-thuat-xu-ly-background-job', '2019/11/21 00:00:00', 2, 1,
 N'<p>Đây thực chất là phần tiếp theo của câu chuyện anh chàng buôn chuối trong <a href="https://kipalog.com/posts/Background-job-va-queue-cho-nguoi-nong-dan">bài viết này</a></p>
 <p><a class="fluidbox" href="https://s3-ap-southeast-1.amazonaws.com/kipalog.com/h5z2n1nqv1_%E1%BA%A3nh.png"><img src="https://s3-ap-southeast-1.amazonaws.com/kipalog.com/h5z2n1nqv1_%E1%BA%A3nh.png" alt="alt text"></a><a></a></p>
 <h2>First things first</h2>
@@ -256,7 +267,7 @@ N'<p>Đây thực chất là phần tiếp theo của câu chuyện anh chàng b
 <p>Cám ơn các bạn đã quan tâm theo dõi đến đây. Hẹn gặp lại trong bài viết sau.</p>'),
 
 -- Nghệ thuật xử lý background job phần 2 --
-(2, N'Nghệ thuật xử lý background job phần 2: Job order with concurrent worker', '2020/04/18', 'minhmonmen', 13, 1,
+(2, N'Nghệ thuật xử lý background job phần 2: Job order with concurrent worker', 'nghe-thuat-xu-ly-background-job-phan-2', '2020/04/18 00:00:00', 2, 1,
 N'<p>Aka <strong>Nghệ thuật đưa dê qua cầu</strong> của tác giả <strong>Minh Monmen</strong>.</p>
 <p>Hê lô bà con cô bác họ hàng gần xa bà con khối phố. Lại là mình đây, <strong>Minh Monmen</strong> trong những chia sẻ vụn vặt về quá trình làm những sản phẩm siêu to khổng lồ (tự huyễn hoặc bản thân vậy cho có động lực). Hôm nay mình xin hân hạnh gửi đến các bạn phần tiếp theo của series <a href="https://kipalog.com/posts/Nghe-thuat-xu-ly-background-job"><strong>Nghệ thuật xử lý background job</strong></a> mà mình vừa mới nghĩ được ra thêm. </p>
 <p>Thật ra đây cũng không phải chia sẻ gì mà là mình đang gặp 1 vấn đề, mình tìm ra 1 cách nông dân để giải quyết nó và đưa lên đây để các bạn cùng cho ý kiến xem nó có ok không. Rất mong nhận được nhiều gạch đá từ các bạn để đủ xây lâu đài cho vấn đề này.</p>
@@ -539,7 +550,7 @@ return Promise.all(missingLockTasks);
 <p>Cảm ơn các bạn vì đã quan tâm 1 bài viết dài vãi lúa thế này. </p>'),
 
 -- Tôi đã clone diễn đàn Voz như thế nào. --
-(3, N'Tôi đã clone diễn đàn Voz như thế nào.', '2020/03/09', 'anhnc', 61, null,
+(3, N'Tôi đã clone diễn đàn Voz như thế nào.', 'toi-da-clone-dien-dan-voz-nhu-the-nao', '2020/03/09 00:00:00', 2, null,
 N'<h1>Ý tưởng</h1>
 <p>Diễn đàn <strong>voz</strong> không còn qúa xa lạ với nhiều dev. Giao diện cổ của nó khi dùng mobile thì ức chế lòi dom. Đợt làm lại next voz tưởng ngon hơn, ai ngờ vứt cái phân trang đi, nhiều hôm vào đọc topic đang theo dõi mà kéo mỏi cả tay. </p>
 <p>Cộng với thói quen đọc tít để hiểu vấn đề của các vozer thông minh :)), lại muốn sắp xếp lại đống dữ liệu cho nó dễ nhìn hơn. Nhìn phát là biết hôm nay có gì hot.</p>
@@ -577,7 +588,7 @@ N'<h1>Ý tưởng</h1>
 </section>'),
 
 -- Làm thế nào để thay đổi cuộc đời bạn? --
-(4, N'Làm thế nào để thay đổi cuộc đời bạn?', '2017/10/24', 'junookyo', 44, null,
+(4, N'Làm thế nào để thay đổi cuộc đời bạn?', 'lam-the-nao-de-thay-doi-cuoc-doi-ban', '2017/10/24 00:00:00', 7, null,
 N'<p><a class="fluidbox" href="https://s3-ap-southeast-1.amazonaws.com/kipalog.com/p9ia8wdsjg_How-To-Change-Your-Life.png"><img src="https://s3-ap-southeast-1.amazonaws.com/kipalog.com/p9ia8wdsjg_How-To-Change-Your-Life.png" alt="change-your-life"></a><a></a></p>
 <blockquote>
 <p>"Bạn sẽ không bao giờ thay đổi cuộc đời mình cho đến khi bạn thay đổi điều gì đó mà bạn đang làm hằng ngày" - Mike Murdock.</p>
@@ -656,7 +667,7 @@ N'<p><a class="fluidbox" href="https://s3-ap-southeast-1.amazonaws.com/kipalog.c
 </section>'),
 
 -- 21 trang web hay mà bạn có thể ghé thăm mỗi khi rảnh rỗi --
-(5, N'21 trang web hay mà bạn có thể ghé thăm mỗi khi rảnh rỗi', '2017/01/19', 'junookyo', 25, null,
+(5, N'21 trang web hay mà bạn có thể ghé thăm mỗi khi rảnh rỗi', '21-trang-web-hay-ma-ban-co-the-ghe-tham-moi-khi-ranh-roi', '2017/01/19 00:00:00', 7, null,
 N'<p>Bạn thấy chán các trang web cũ? Muốn tìm một vài góc mới của Internet để giúp bạn tìm lại sự hứng thú? Tốt thôi, bạn đã gặp may đấy. Dù bạn đang tìm những trò chơi ngớ ngẩn hay điều gì đó hữu ích thì dưới đây là 21 trang web hay mà bạn nên ghé qua.</p>
 <h3>1. <a href="http://www.ted.com/talks">TED</a>
 </h3>
@@ -732,7 +743,7 @@ N'<p>Bạn thấy chán các trang web cũ? Muốn tìm một vài góc mới c�
 </section>'),
 
 -- Lỗ hổng bảo mật Cross-Site-Scripting (XSS) có gì nguy hiểm? --
-(6, N'Lỗ hổng bảo mật Cross-Site-Scripting (XSS) có gì nguy hiểm?', '2016/08/30', 'junookyo', 28, null,
+(6, N'Lỗ hổng bảo mật Cross-Site-Scripting (XSS) có gì nguy hiểm?', 'lo-hong-bao-mat-cross-site-scripting-co-gi-nguy-hiem', '2016/08/30 00:00:00', 7, null,
 N'<p>Mỗi khi đăng những bài <a href="https://junookyo.blogspot.com/search/label/Write-up">writeup</a> về một <a href="https://junookyo.blogspot.com/search/label/XSS">lỗ hổng XSS</a> được phát hiện trên một trang web nào đó, tôi biết sẽ có những người nhếch mép cười khẩy vì lúc đó trong đầu họ sẽ nghĩ:</p>
 <ul>
 <li>"Cái lỗi XSS này thì có cái quái gì nguy hiểm cơ chứ?"</li>

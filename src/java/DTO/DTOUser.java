@@ -1,31 +1,39 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package DTO;
 
-package Beans;
-
-public class UserInfoBean {
-    String username;
+/**
+ *
+ * @author TranCamTu
+ */
+public class DTOUser {
+    int userId;
     String password;
     String email;
     String fullName;
-    int postAmount;
     String avatar;
+    int role;
     
-    public UserInfoBean() { }
+    public DTOUser() { }
     
-    public UserInfoBean(String username, String password, String email, String fullName, int postAmount, String avatar) {
-        this.username = username;
+    public DTOUser(int userId, String password, String email, String fullName, String avatar, int role) {
+        this.userId = userId;
         this.password = password;
         this.email = email;
         this.fullName = fullName;
-        this.postAmount = postAmount;
         this.avatar = avatar;
+        this.role = role;
     }
 
-    public String getUserName() {
-        return username;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setUserName(String username) {
-        this.username = username;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public String getPassword() {
@@ -52,19 +60,19 @@ public class UserInfoBean {
         this.fullName = fullName;
     }
 
-    public int getPostAmount() {
-        return postAmount;
-    }
-
-    public void setPostAmount(int postAmount) {
-        this.postAmount = postAmount;
-    }
-
     public String getAvatar() {
         return avatar;
     }
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+    
+    public int getRole() {
+        return role;
+    }
+
+    public void setRole(int role) {
+        this.role = role;
     }
 }

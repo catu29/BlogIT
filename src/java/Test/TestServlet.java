@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import Data.MySqlConnection;
+import DataAccess.MySqlConnection;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;

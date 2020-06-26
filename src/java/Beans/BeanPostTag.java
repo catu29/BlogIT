@@ -1,16 +1,18 @@
 
 package Beans;
 
-public class PostTagBean {
+import DTO.DTOPostTag;
+
+public class BeanPostTag {
     int postId;
     int tagId;
 
-    public PostTagBean() {
+    public BeanPostTag() {
     }
 
-    public PostTagBean(int postId, int tagId) {
-        this.postId = postId;
-        this.tagId = tagId;
+    public void initFromDTO(DTOPostTag postTag) {
+        this.setPostId(postTag.getPostId());
+        this.setTagId(postTag.getTagId());
     }
 
     public int getPostId() {

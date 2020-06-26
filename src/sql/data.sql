@@ -3,48 +3,52 @@ Use BlogIT;
 ------------------------------------------
 ------------ CREATE TABLE ----------------
 
-Create Table Administrator
+Create Table User
 (
-	id varchar(5) primary key,
-    pass tinytext
-);
-
-Create Table UserInfo
-(
-	userName varchar(254) primary key,
-    pass tinytext,
+	userId int auto_increment primary key,
+    password tinytext,
     email varchar(254) unique,
     fullName nvarchar(50),
-    postAmount int,
-    avatar tinytext
+    avatar tinytext,
+    role int
 );
 
 Create Table Post
 (
 	postId int auto_increment primary key,
     postTitle tinytext,
-    postTime date,
-    userName tinytext,
-    likes int,
+    postTitleUnsigned tinytext,
+    postTime datetime,
+    userId int,
     seriesId int,
     postContent text
-);
-
-Create Table UserSeriesList
-(
-	seriesId int auto_increment primary key,
-    userName tinytext,
-    seriesName tinytext
 );
 
 Create Table PostComment
 (
 	commentId int auto_increment primary key,
-    userName tinytext,
+    userId int,
     postId int,
     content text,
-    commentTime date,
-    replyToCommentId int
+    commentTime datetime,
+    parentId int
+);
+
+Create Table PostLike
+(
+	postId int,
+    userId int,
+    likeTime datetime,
+    
+    primary key (postId, userId)
+);
+
+Create Table UserSeriesList
+(
+	seriesId int auto_increment primary key,
+    userId int,
+    seriesName tinytext,
+    seriesNameUnsigned tinytext
 );
 
 Create Table ReportReasonList
@@ -56,10 +60,10 @@ Create Table ReportReasonList
 Create Table PostReport
 (
 	reportId int auto_increment primary key,
-    userName tinytext,
+    userId tinytext,
     postId int,
     reasonId int,
-    reportTime date
+    reportTime datetime
 );
 
 Create Table TagList

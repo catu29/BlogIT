@@ -1,5 +1,5 @@
 
-package Data;
+package DataAccess;
 
 import java.sql.Connection;
 import javax.naming.InitialContext;
@@ -7,10 +7,10 @@ import javax.sql.DataSource;
 
 
 public class MySqlConnection {
-    private DataSource dataSource = null;
-    private Connection dataConnection = null;
+    public static DataSource dataSource = null;
+    public static Connection dataConnection = null;
     
-    private DataSource getDataSource() {
+    public static DataSource getDataSource() {
         if (dataSource == null) {
             try {          
                 InitialContext initContext = new InitialContext();
@@ -23,7 +23,7 @@ public class MySqlConnection {
         return dataSource;
     }
     
-    public Connection getDataConnection() {
+    public static Connection getDataConnection() {
         if (dataConnection == null) {
             try {            
                 if (dataSource == null) {
@@ -39,7 +39,7 @@ public class MySqlConnection {
         return dataConnection;
     }
     
-    public void closeDataConnection() {
+    public static void closeDataConnection() {
         try {
             if (dataConnection != null) {
                 if (!dataConnection.isClosed()) {

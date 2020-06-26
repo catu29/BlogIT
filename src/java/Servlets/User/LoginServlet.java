@@ -13,8 +13,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import Data.MySqlConnection;
-import Beans.UserInfoBean;
+import DataAccess.MySqlConnection;
+import Beans.BeanUser;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -27,14 +27,14 @@ import javax.servlet.http.HttpSession;
  */
 
 public class LoginServlet extends HttpServlet {
-    private UserInfoBean user;
+    private BeanUser user;
     private boolean isLogined = false;
    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
-        user = new UserInfoBean();
+        user = new BeanUser();
         
         if (request.getParameter("email") != null) {
             user.setEmail(request.getParameter("email"));
