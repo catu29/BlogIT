@@ -15,77 +15,67 @@ import java.util.ArrayList;
  * @author TranCamTu
  */
 public class BOUser {
-    public boolean login(String email, String password) {
-        MapperUser mapper = new MapperUser();
+    MapperUser mapper = new MapperUser();
         
+    public boolean login(String email, String password) {
         return mapper.login(email, password);
     }
     
     public boolean insertNewUser(DTOUser user) {
-        MapperUser mapper = new MapperUser();
-        
         return mapper.isExisting(user.getEmail()) ? false : mapper.insertNewUser(user);
     }
     
-    public boolean updateUserByCondition(DTOUser user, String column, String condition) {
-        MapperUser mapper = new MapperUser();
-        
-        if (column.equals("email") && mapper.isExisting(condition)) {
+    public boolean updateUserEmail(DTOUser user, String email) {
+        if (mapper.isExisting(email)) {
             return false;
-        } else {
-            return mapper.updateUserByCondition(user, column, condition);
         }
+        
+        return mapper.updateUserEmail(user, email);
+    }
+    
+    public boolean updateUserFullName(DTOUser user, String fullname) {
+        return mapper.updateUserFullName(user, fullname);
+    }
+    
+    public boolean updateUserPassword(DTOUser user, String password) {
+        return mapper.updateUserPassword(user, password);
+    }
+    
+    public boolean updateUserAvatar(DTOUser user, String avatar) {
+        return mapper.updateUserAvatar(user, avatar);
+    }
+    
+    public boolean updateUserRole(DTOUser user, int role) {
+        return mapper.updateUserRole(user, role);
     }
     
     public boolean deleteUser(DTOUser user) {
-        MapperUser mapper = new MapperUser();
-        
-        return mapper.isExisting(user.getEmail()) ? false : mapper.deleteUser(user);
+        return mapper.isExisting(user.getEmail()) ? mapper.deleteUser(user) : false;
     }
     
     public ArrayList<DTOUser> getAllUsers() {
-        MapperUser mapper = new MapperUser();
-        
         return mapper.getAllUsers();
     }
     
     // Use for get the unique user by their email
     public DTOUser getUserInformation(String email) {
-        MapperUser mapper = new MapperUser();
-        
-        if (searchUser("email", email).size() == 1) {
-            return searchUser("email", email).get(0);
-        } else {
-            return null;
-        }
+       return mapper.getUserInformation(email);
     }
     
     // Use for get the unique user by their Id
-    public DTOUser getUserInformation(int Id) {
-        MapperUser mapper = new MapperUser();
-        
-        if (searchUser("email", Id).size() == 1) {
-            return searchUser("email", Id).get(0);
-        } else {
-            return null;
-        }
+    public DTOUser getUserInformation(int id) {
+        return mapper.getUserInformation(id);
     }
     
     public ArrayList<DTOUser> searchUser(String column, String condition) {
-        MapperUser mapper = new MapperUser();
-        
         return mapper.searchUser(column, condition);
     }
     
     public ArrayList<DTOUser> searchUser(String column, int condition) {
-        MapperUser mapper = new MapperUser();
-        
         return mapper.searchUser(column, condition);
     }
     
     public ArrayList<DTOUser> searchUser(String condition) {
-        MapperUser mapper = new MapperUser();
-        
         return mapper.searchUser(condition);
     }
 }

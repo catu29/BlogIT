@@ -27,6 +27,14 @@ public class DTOUser {
         this.avatar = avatar;
         this.role = role;
     }
+    
+    public DTOUser(String password, String email, String fullName, String avatar, int role) {
+        this.password = password;
+        this.email = email;
+        this.fullName = fullName;
+        this.avatar = avatar;
+        this.role = role;
+    }
 
     public int getUserId() {
         return userId;

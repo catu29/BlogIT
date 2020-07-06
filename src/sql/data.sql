@@ -10,7 +10,7 @@ Create Table User
     email varchar(254) unique,
     fullName nvarchar(50),
     avatar tinytext,
-    role int
+    role int -- 1 = admin
 );
 
 Create Table Post
@@ -60,7 +60,7 @@ Create Table ReportReasonList
 Create Table PostReport
 (
 	reportId int auto_increment primary key,
-    userId tinytext,
+    userId int,
     postId int,
     reasonId int,
     reportTime datetime
@@ -79,3 +79,5 @@ Create Table PostTag
     
     primary key(postId, tagId)
 );
+use BLogIT;
+select * from ReportReasonList inner join PostReport on ReportReasonList.reasonId = PostReport.reasonId;

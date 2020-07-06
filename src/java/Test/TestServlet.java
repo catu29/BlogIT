@@ -5,6 +5,8 @@
  */
 package Test;
 
+import BO.BOUser;
+import DTO.DTOUser;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -13,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import DataAccess.MySqlConnection;
+import DataMapper.MapperUser;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -50,30 +53,11 @@ public class TestServlet extends HttpServlet{
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
         int count = 0;
-        String query = "Select * From UserSeriesList;";
-        Statement stmt = null;
         
-        try {
-            MySqlConnection msc = new MySqlConnection();
-            Connection connection = msc.getDataConnection();
-            
-            stmt = connection.prepareStatement(query);
-            ResultSet rs = stmt.executeQuery(query);
-                        
-            while (rs.next()) {
-                count++;
-            }
-                        
-            stmt.close();
-            stmt = null;
-            
-            connection.close();
-        } catch (SQLException e) {
-            System.out.println("Servlet Error: " + e.getMessage());
-            count = -1;
-        }
+        BOUser user = new BOUser();
+        DTOUser dto = new DTOUser("testPassword", "email@gmail.com", "Test full name", "avatar", 0);
+              
         
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
@@ -85,7 +69,13 @@ public class TestServlet extends HttpServlet{
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Hello world !</h1>");
-            out.println("<p>count: " + String.valueOf(count) + "</p>");
+            
+            if (user.insertNewUser(dto) == true) {
+                out.println("<p>Insert success</p>");
+            } else {
+                out.println("<p>Insert fail</p>");
+            }
+            
             out.println("</body>");
             out.println("</html>");
         }

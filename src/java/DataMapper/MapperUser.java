@@ -28,11 +28,9 @@ public class MapperUser extends MapperBase {
      */
     public boolean login (String email, String password) {
         try {
-            String query = "Select * From User Where 'email' = ? and 'password' = ?;";
+            String query = "Select * From User Where email = '" + email + "' and password = '" + password + "';";
             PreparedStatement stmt = connection.prepareStatement(query);
             
-            stmt.setString(1, email);
-            stmt.setString(2, password);
             
             if (stmt.executeUpdate(query) == 1) {
                 stmt.close();
@@ -56,10 +54,8 @@ public class MapperUser extends MapperBase {
      */
     public boolean isExisting (String email) {
         try {
-            String query = "Select * From User Where 'email' = ?;";
+            String query = "Select * From User Where email = '" + email + "';";
             PreparedStatement stmt = connection.prepareStatement(query);
-            
-            stmt.setString(1, email);
             
             if (stmt.executeUpdate(query) > 0) {
                 stmt.close();
@@ -79,14 +75,15 @@ public class MapperUser extends MapperBase {
         boolean result = false;
         
         try {
-            String query = "Insert Into User (password, email, fullName, avatar, role) Values(?, ?, ?, ?, ?, ?);";
+            String query = "Insert Into User (password, email, fullName, avatar, role) Values ('"
+                    + newUser.getPassword() + "', '"
+                    + newUser.getEmail() + "', N'"
+                    + newUser.getFullName() + "', '"
+                    + newUser.getAvatar() + "', "
+                    + newUser.getRole() + ")";
+            
             PreparedStatement stmt = connection.prepareStatement(query);
             
-            stmt.setString(1, newUser.getPassword());
-            stmt.setString(2, newUser.getEmail());
-            stmt.setString(3, newUser.getFullName());
-            stmt.setString(4, newUser.getAvatar());
-            stmt.setInt(5, newUser.getRole());
             
             result = stmt.executeUpdate(query) > 0;
             
@@ -103,28 +100,99 @@ public class MapperUser extends MapperBase {
     /***
      * Update a particular user info by specific condition
      * @param user - the one want to update
-     * @param column - the field need update
-     * @param condition - the value of field need update
+     * @param email - the value of email need update
      * @return 
      */
-    public boolean updateUserByCondition(DTOUser user, String column, String condition) {
-        boolean result = false;
+    public boolean updateUserEmail(DTOUser user, String email) {
+        boolean result = false;      
         
         try {
-            String query = "Update User Set ? = ? Where userId = ?;";
+            String query = "Update User Set email = '" + email + "' Where userId = '" + user.getUserId() + "';";
             PreparedStatement stmt = connection.prepareStatement(query);
-            
-            stmt.setString(1, column);
-            stmt.setString(2, condition);
-            stmt.setInt(3, user.getUserId());
-            
+        
             result = stmt.executeUpdate(query) > 0;
             
             stmt.close();
         } catch (Exception e) {
             result = false;
             
-            System.out.println("Update user error: " + e.getMessage());
+            System.out.println("Update user email error: " + e.getMessage());
+        }
+        
+        return result;
+    }
+    
+    public boolean updateUserPassword(DTOUser user, String password) {
+        boolean result = false;      
+        
+        try {
+            String query = "Update User Set password = '" + password + "' Where userId = '" + user.getUserId() + "';";
+            PreparedStatement stmt = connection.prepareStatement(query);
+        
+            result = stmt.executeUpdate(query) > 0;
+            
+            stmt.close();
+        } catch (Exception e) {
+            result = false;
+            
+            System.out.println("Update user password error: " + e.getMessage());
+        }
+        
+        return result;
+    }
+    
+    public boolean updateUserFullName(DTOUser user, String fullname) {
+        boolean result = false;      
+        
+        try {
+            String query = "Update User Set fullName = N'" + fullname + "' Where userId = '" + user.getUserId() + "';";
+            PreparedStatement stmt = connection.prepareStatement(query);
+        
+            result = stmt.executeUpdate(query) > 0;
+            
+            stmt.close();
+        } catch (Exception e) {
+            result = false;
+            
+            System.out.println("Update user full name error: " + e.getMessage());
+        }
+        
+        return result;
+    }
+    
+    public boolean updateUserAvatar(DTOUser user, String avatar) {
+        boolean result = false;      
+        
+        try {
+            String query = "Update User Set avatar = '" + avatar + "' Where userId = '" + user.getUserId() + "';";
+            PreparedStatement stmt = connection.prepareStatement(query);
+        
+            result = stmt.executeUpdate(query) > 0;
+            
+            stmt.close();
+        } catch (Exception e) {
+            result = false;
+            
+            System.out.println("Update user avatar error: " + e.getMessage());
+        }
+        
+        return result;
+    }
+    
+    public boolean updateUserRole(DTOUser user, int role) {
+        boolean result = false;      
+        
+        try {
+            String query = "Update User Set role = " + role + " Where userId = '" + user.getUserId() + "';";
+            PreparedStatement stmt = connection.prepareStatement(query);
+        
+            result = stmt.executeUpdate(query) > 0;
+            
+            stmt.close();
+        } catch (Exception e) {
+            result = false;
+            
+            System.out.println("Update user role error: " + e.getMessage());
         }
         
         return result;
@@ -175,15 +243,52 @@ public class MapperUser extends MapperBase {
         }
     }
     
+    public DTOUser getUserInformation(String email) {
+        try {           
+            String query = "Select * From User Where email = '" + email + "';";
+            PreparedStatement stmt = connection.prepareStatement(query);
+            
+            ResultSet rs = stmt.executeQuery(query);
+            
+            rs.next();
+            DTOUser user = new DTOUser(rs.getInt("userId"), rs.getString("password"), rs.getString("email"), rs.getString("fullName"), rs.getString("avatar"), rs.getInt("role"));
+            
+            stmt.close();
+            
+            return user;
+        } catch (Exception e) {
+            System.out.println("Search users error: " + e.getMessage());
+            
+            return null;
+        }
+    }
+    
+    public DTOUser getUserInformation(int id) {
+        try {           
+            String query = "Select * From User Where userId = " + id + ";";
+            PreparedStatement stmt = connection.prepareStatement(query);
+            
+            ResultSet rs = stmt.executeQuery(query);
+            
+            rs.next();
+            DTOUser user = new DTOUser(rs.getInt("userId"), rs.getString("password"), rs.getString("email"), rs.getString("fullName"), rs.getString("avatar"), rs.getInt("role"));
+            
+            stmt.close();
+            
+            return user;
+        } catch (Exception e) {
+            System.out.println("Search users error: " + e.getMessage());
+            
+            return null;
+        }
+    }
+    
     public ArrayList<DTOUser> searchUser(String column, String condition) {
         try {
             ArrayList<DTOUser> result = new ArrayList<DTOUser>();
                         
-            String query = "Select * From User Where ? like '%?%';";
+            String query = "Select * From User Where " + column + " like '%" + condition + "%';";
             PreparedStatement stmt = connection.prepareStatement(query);
-            
-            stmt.setString(1, column);
-            stmt.setString(2, condition);
             
             ResultSet rs = stmt.executeQuery(query);
             
@@ -206,11 +311,8 @@ public class MapperUser extends MapperBase {
         try {
             ArrayList<DTOUser> result = new ArrayList<DTOUser>();
                         
-            String query = "Select * From User Where ? = ?;";
+            String query = "Select * From User Where " + column + " = " + condition + ";";
             PreparedStatement stmt = connection.prepareStatement(query);
-            
-            stmt.setString(1, column);
-            stmt.setInt(2, condition);
             
             ResultSet rs = stmt.executeQuery(query);
             
@@ -233,11 +335,10 @@ public class MapperUser extends MapperBase {
             ArrayList<DTOUser> result = new ArrayList<DTOUser>();
                         
             StringBuffer query = new StringBuffer("Select * From User Where ");
-            query.append("'email' like '%");
+            query.append("email like '%");
             query.append(condition);
-            query.append("%' or 'fullName' like '%");
-            query.append(condition);
-            
+            query.append("%' or fullName like '%");
+            query.append(condition);            
             query.append("%';");
 
             PreparedStatement stmt = connection.prepareStatement(query.toString());

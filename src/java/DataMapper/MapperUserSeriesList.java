@@ -58,10 +58,8 @@ public class MapperUserSeriesList extends MapperBase {
         try {
             ArrayList<DTOUserSeriesList> result = new ArrayList();
             
-            String query = "Select * From UserSeriesList Where 'userId' = ?;";
+            String query = "Select * From UserSeriesList Where userId = '" + userId + "';";
             PreparedStatement stmt = connection.prepareStatement(query);
-            
-            stmt.setInt(1, userId);
             
             ResultSet rs = stmt.executeQuery(query);
             
@@ -88,12 +86,12 @@ public class MapperUserSeriesList extends MapperBase {
      */
     public boolean insertNewUserSeriesList(DTOUserSeriesList list) {
         try {
-            String query = "Insert Into UserSeriesList(userId, seriesName, seriesNameUnsigned) values (?, ?, ?);";
-            PreparedStatement stmt = connection.prepareStatement(query);
+            String query = "Insert Into UserSeriesList(userId, seriesName, seriesNameUnsigned) values ('"
+                    + list.getUserId() + "', N'"
+                    + list.getSeriesName() + "', '"
+                    + list.getSeriesNameUnsigned() + "';";
             
-            stmt.setInt(1, list.getUserId());
-            stmt.setString(2, list.getSeriesName());
-            stmt.setString(3, list.getSeriesNameUnsigned());
+            PreparedStatement stmt = connection.prepareStatement(query);
             
             return stmt.executeUpdate(query) > 0;
         } catch (Exception e) {
@@ -111,10 +109,8 @@ public class MapperUserSeriesList extends MapperBase {
      */
     public boolean deleteUserSeriesList(DTOUserSeriesList list) {
         try {
-            String query = "Delete From UserSeriesList Where 'seriesId' = ?;";
+            String query = "Delete From UserSeriesList Where seriesId = '" + list.getSeriesId() + "';";
             PreparedStatement stmt = connection.prepareStatement(query);
-            
-            stmt.setInt(1, list.getSeriesId());
             
             return stmt.executeUpdate(query) > 0;
         } catch (Exception e) {
@@ -133,18 +129,44 @@ public class MapperUserSeriesList extends MapperBase {
      */
     public boolean updateUserSeriesByCondition(DTOUserSeriesList list, String column, String condition) {
         try {
-            String query = "Update UserSeriesList Set ? = ? Where 'seriesId' = ?;";
+            String query = "Update UserSeriesList Set " + column + " = N'" + condition 
+                         + "' Where seriesId = '" + list.getSeriesId() + "';";
             PreparedStatement stmt = connection.prepareStatement(query);
-            
-            stmt.setString(1, column);
-            stmt.setString(2, condition);
-            stmt.setInt(3, list.getSeriesId());
             
             return stmt.executeUpdate(query) > 0;
         } catch (Exception e) {
             System.out.println("Update user series list error: " + e.getMessage());
             
             return false;
+        }
+    }
+    
+    /***
+     * Search all series of a particular user
+     * @param userId - the user who wanted to be searched
+     * @return - ArrayList of DTOUserSeriesList if found.
+     *         - null if nothing found
+     */
+    public ArrayList<DTOUserSeriesList> searchSeriesList(int userId) {
+        try {
+            ArrayList<DTOUserSeriesList> result = new ArrayList();
+            
+            String query = "Select * From UserSeriesList Where userId = '" + userId + "';";
+            PreparedStatement stmt = connection.prepareStatement(query);
+            
+            
+            ResultSet rs = stmt.executeQuery(query);
+            
+            while(rs.next()) {
+                DTOUserSeriesList list = new DTOUserSeriesList(rs.getInt("seriesId"), rs.getInt("userId"), rs.getString("seriesName"), rs.getString("seriesNameUnsigned"));
+                result.add(list);
+            }
+            
+            return result;
+        } catch (Exception e) {
+            System.out.println("Search user series list error: " + e.getMessage());
+            
+            return null;
         }
     }
     
@@ -159,18 +181,21 @@ public class MapperUserSeriesList extends MapperBase {
             ArrayList<DTOUserSeriesList> result = new ArrayList();
             
             StringBuffer query = new StringBuffer("Select * From UserSeriesList Inner Join User on UserSeriesList.userId = User.userId ");
-            query.append("Where 'UserSeriesList.seriesName' = ? or 'UserSeriesList.seriesNameUnsigned' = ? ");
-            query.append("or 'UserSeriesList.seriesName' like '%?%' or 'UserSeriesList.seriesNameUnsigned' like '%?%' ");
-            query.append("or 'User.fullName' like '%?%' or 'User.email' like '%?%';");
+            query.append("Where UserSeriesList.seriesName = '");
+            query.append(condition);
+            query.append("' or UserSeriesList.seriesNameUnsigned = '");
+            query.append(condition);
+            query.append("' or UserSeriesList.seriesName like '%");
+            query.append(condition);
+            query.append("%' or UserSeriesList.seriesNameUnsigned like '%");
+            query.append(condition);
+            query.append("%' or User.fullName like '%");
+            query.append(condition);
+            query.append("%' or User.email like '%");
+            query.append(condition);
+            query.append("%';");
             
             PreparedStatement stmt = connection.prepareStatement(query.toString());
-            
-            stmt.setString(1, condition);
-            stmt.setString(2, condition);
-            stmt.setString(3, condition);
-            stmt.setString(4, condition);
-            stmt.setString(5, condition);
-            stmt.setString(6, condition);
             
             ResultSet rs = stmt.executeQuery(query.toString());
             
