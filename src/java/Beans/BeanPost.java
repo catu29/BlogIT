@@ -16,6 +16,16 @@ public class BeanPost {
     public BeanPost() {
     }
 
+    public void initFromDTO(DTOPost post) {        
+        this.setPostId(post.getPostId());
+        this.setPostTitle(post.getPostTitle());
+        this.setPostTitleUnsigned(post.getPostTitleUnsigned());
+        this.setPostTime(post.getPostTime());
+        this.setUserId(post.getUserId());
+        this.setSeriesId(post.getSeriesId());
+        this.setPostContent(post.getPostContent());
+    }
+    
     public int getPostId() {
         return postId;
     }
@@ -70,15 +80,5 @@ public class BeanPost {
 
     public void setPostContent(String postContent) {
         this.postContent = postContent;
-    }    
-    
-    public void initFromDTO(DTOPost post) {        
-        this.setPostId(post.getPostId());
-        this.setPostTitle(post.getPostTitle());
-        this.setPostTitleUnsigned(post.getPostTitleUnsigned());
-        this.setPostTime(post.getPostTime());
-        this.setUserId(post.getUserId());
-        this.setSeriesId(post.getSeriesId());
-        this.setPostContent(post.getPostContent());
     }
 }
