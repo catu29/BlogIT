@@ -32,4 +32,8 @@ public class BOPostReport {
     public boolean insertNewReport(DTOPostReport report) {
         return mapper.insertNewReport(report);
     }
+    
+    public boolean deleteReport(int reportId) {
+        return mapper.deleteReport(reportId);
+    }
 }

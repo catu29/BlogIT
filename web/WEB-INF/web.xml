@@ -50,7 +50,7 @@
     
     
     <!--Filters-->
-    <filter>
+<!--    <filter>
         <filter-name>CheckRegisteredUserFilter</filter-name>
         <filter-class>Filters.Register.CheckRegisteredUserFilter</filter-class>
     </filter>
@@ -68,7 +68,7 @@
     <filter-mapping>
         <filter-name>RegisterFilter</filter-name>
         <servlet-name>RegisterServlet</servlet-name>    
-    </filter-mapping>
+    </filter-mapping>-->
     
     <!--Session-->
     <session-config>

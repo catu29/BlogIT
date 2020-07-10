@@ -5,10 +5,30 @@
  */
 package BO;
 
+import DTO.DTOPostComment;
+import DataMapper.MapperPostComment;
+import java.util.ArrayList;
+
 /**
  *
  * @author TranCamTu
  */
 public class BOPostComment {
+    MapperPostComment mapper = new MapperPostComment();
     
+    public ArrayList<DTOPostComment> getAllCommentsForPost(int postId) {
+        return mapper.getAllCommentsForPost(postId);
+    }
+    
+    public boolean insertCommentForPost(DTOPostComment comment) {
+        return mapper.insertCommentForPost(comment);
+    }
+    
+    public boolean updateCommentForPost(DTOPostComment comment) {
+        return mapper.updateCommentForPost(comment);
+    }
+    
+    public boolean deleteCommentForPost(DTOPostComment comment) {
+        return mapper.deleteCommentForPost(comment);
+    }
 }

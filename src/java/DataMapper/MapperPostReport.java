@@ -116,4 +116,17 @@ public class MapperPostReport extends MapperBase {
             return false;
         }
     }
+    
+    public boolean deleteReport(int reportId) {
+        try {
+            String query = "Delete From PostReport Where reportId = " + reportId + ";";
+            PreparedStatement stmt = connection.prepareStatement(query);
+            
+            return stmt.executeUpdate(query) > 0;
+        } catch (Exception e) {
+            System.out.println("Delete report error: " + e.getMessage());
+            
+            return false;
+        }
+    }
 }
