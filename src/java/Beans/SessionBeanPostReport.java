@@ -1,17 +1,31 @@
-
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package Beans;
 
 import DTO.DTOPostReport;
+import java.io.Serializable;
 import java.util.Calendar;
+import javax.ejb.Stateless;
 
-public class BeanPostReport {
+/**
+ *
+ * @author TranCamTu
+ */
+@Stateless
+public class SessionBeanPostReport implements Serializable {
+
     int reportId;
     int userId;
     int postId;
     int reportReasonId;
     Calendar reportTime;
     
-    public BeanPostReport() {
+    
+    
+    public SessionBeanPostReport() {
     }
     
     public void initFromDTO(DTOPostReport postReport) {

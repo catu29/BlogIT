@@ -1,10 +1,22 @@
-
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package Beans;
 
 import DTO.DTOPostComment;
+import java.io.Serializable;
 import java.util.Calendar;
+import javax.ejb.Stateless;
 
-public class BeanPostComment {
+/**
+ *
+ * @author TranCamTu
+ */
+@Stateless
+public class SessionBeanPostComment implements Serializable {
+
     int commentId;
     int userId;
     int postId;
@@ -12,7 +24,7 @@ public class BeanPostComment {
     Calendar commentTime;
     int parentId;
 
-    public BeanPostComment() {
+    public SessionBeanPostComment() {
     }
 
     public void initFromDTO(DTOPostComment postComment) {

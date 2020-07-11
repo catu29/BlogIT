@@ -80,4 +80,4 @@ Create Table PostTag
     primary key(postId, tagId)
 );
 use BLogIT;
-select * from ReportReasonList inner join PostReport on ReportReasonList.reasonId = PostReport.reasonId;
+select * from user;

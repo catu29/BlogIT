@@ -1,15 +1,27 @@
-
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package Beans;
 
 import DTO.DTOUserSeriesList;
+import java.io.Serializable;
+import javax.ejb.Stateless;
 
-public class BeanUserSeriesList {
+/**
+ *
+ * @author TranCamTu
+ */
+@Stateless
+public class SessionBeanUserSeriesList implements Serializable {
+
     int seriesId;
     int userId;
     String seriesName;
     String seriesNameUnsigned;
 
-    public BeanUserSeriesList() {
+    public SessionBeanUserSeriesList() {
     }
 
     public void initFromDTO(DTOUserSeriesList userSeries) {
@@ -48,6 +60,5 @@ public class BeanUserSeriesList {
 
     public void setSeriesNameUnsigned(String seriesNameUnsigned) {
         this.seriesNameUnsigned = seriesNameUnsigned;
-    }   
-    
+    }
 }

@@ -1,23 +1,35 @@
-
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package Beans;
 
 import DTO.DTOUser;
+import java.io.Serializable;
+import javax.ejb.Stateful;
 
-public class BeanUser {
+/**
+ *
+ * @author TranCamTu
+ */
+@Stateful
+public class SessionBeanUser implements Serializable {
+
     int userId;
     String password;
     String email;
-    String fullName;
+    String fullname;
     String avatar;
     int role;
     
-    public BeanUser() { }
+    public SessionBeanUser() { }
     
     public void initFromDTO(DTOUser user) {
         this.setUserId(user.getUserId());
         this.setPassword(user.getPassword());
         this.setEmail(user.getEmail());
-        this.setFullName(user.getFullName());
+        this.setFullname(user.getFullname());
         this.setAvatar(user.getAvatar());
         this.setRole(user.getRole());
     }
@@ -46,12 +58,12 @@ public class BeanUser {
         this.email = email;
     }
 
-    public String getFullName() {
-        return fullName;
+    public String getFullname() {
+        return fullname;
     }
 
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
+    public void setFullname(String fullname) {
+        this.fullname = fullname;
     }
 
     public String getAvatar() {

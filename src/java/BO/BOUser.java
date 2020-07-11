@@ -21,6 +21,10 @@ public class BOUser {
         return mapper.login(email, password);
     }
     
+    public boolean isExisting (String email) {
+        return mapper.isExisting(email);
+    }
+    
     public boolean insertNewUser(DTOUser user) {
         return mapper.isExisting(user.getEmail()) ? false : mapper.insertNewUser(user);
     }

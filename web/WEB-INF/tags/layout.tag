@@ -66,7 +66,7 @@
                             <button class="aside-btn"><i class="fa fa-bars"></i></button>
                             
                             <c:choose>
-                                <c:when test="${1 == 1}">
+                                <c:when test="${1 == 2}">
                                     <div class="dropdown login-btn open-auth-modal">
                                         <button class="dropdown-toggle" type="button" id="userdropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                             <img src="${pageContext.request.contextPath}/Resources/img/default-user.png" alt="">

@@ -34,7 +34,7 @@
             <div class="modal-footer">
                 <span class="pull-left">
                     <span>Chưa có tài khoản?&nbsp;</span>
-                    <a href="user/register">Đăng ký ngay</a>
+                    <a href="${pageContext.request.contextPath}/user/register">Đăng ký ngay</a>
                 </span>        
             </div>
         </div>

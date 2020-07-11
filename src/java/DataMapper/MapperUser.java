@@ -31,14 +31,9 @@ public class MapperUser extends MapperBase {
             String query = "Select * From User Where email = '" + email + "' and password = '" + password + "';";
             PreparedStatement stmt = connection.prepareStatement(query);
             
+            ResultSet rs = stmt.executeQuery(query);
             
-            if (stmt.executeUpdate(query) == 1) {
-                stmt.close();
-                return true;
-            } else {
-                stmt.close();
-                return false;
-            }
+            return rs.next();
         } catch (Exception e) {
             System.out.println("Login connect db error: " + e.getMessage());
             
@@ -57,15 +52,15 @@ public class MapperUser extends MapperBase {
             String query = "Select * From User Where email = '" + email + "';";
             PreparedStatement stmt = connection.prepareStatement(query);
             
-            if (stmt.executeUpdate(query) > 0) {
-                stmt.close();
+            ResultSet rs = stmt.executeQuery(query);
+            
+            if (rs.next()) {
                 return true;
-            } else {
-                stmt.close();
-                return false;
             }
+            
+            return false;
         } catch (Exception e) {
-            System.out.println("Login connect db error: " + e.getMessage());
+            System.out.println("Check is existing user error: " + e.getMessage());
             
             return false;
         }
@@ -75,10 +70,17 @@ public class MapperUser extends MapperBase {
         boolean result = false;
         
         try {
+            System.out.println("Insert new user: ");
+            System.out.println("password: " + newUser.getPassword());
+            System.out.println("email: " + newUser.getEmail());
+            System.out.println("fullName: "+ newUser.getFullname());
+            System.out.println("avatar: " + newUser.getAvatar());
+            System.out.println("role: " + newUser.getRole());
+            
             String query = "Insert Into User (password, email, fullName, avatar, role) Values ('"
                     + newUser.getPassword() + "', '"
                     + newUser.getEmail() + "', N'"
-                    + newUser.getFullName() + "', '"
+                    + newUser.getFullname() + "', '"
                     + newUser.getAvatar() + "', "
                     + newUser.getRole() + ")";
             
