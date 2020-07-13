@@ -7,7 +7,7 @@ package Beans;
 
 import DTO.DTOPostComment;
 import java.io.Serializable;
-import java.util.Calendar;
+import java.util.Date;
 import javax.ejb.Stateless;
 
 /**
@@ -21,7 +21,7 @@ public class SessionBeanPostComment implements Serializable {
     int userId;
     int postId;
     String content;
-    Calendar commentTime;
+    Date commentTime;
     int parentId;
 
     public SessionBeanPostComment() {
@@ -68,11 +68,11 @@ public class SessionBeanPostComment implements Serializable {
         this.content = content;
     }
 
-    public Calendar getCommentTime() {
+    public Date getCommentTime() {
         return commentTime;
     }
 
-    public void setCommentTime(Calendar commentTime) {
+    public void setCommentTime(Date commentTime) {
         this.commentTime = commentTime;
     }
 

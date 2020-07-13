@@ -5,12 +5,7 @@
  */
 package Servlets.User;
 
-import BO.BOPost;
-import Beans.SessionBeanUser;
-import DTO.DTOPost;
 import java.io.IOException;
-import java.util.ArrayList;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -21,7 +16,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author TranCamTu
  */
-public class ProfileServlet extends HttpServlet {
+public class LogoutServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,6 +30,7 @@ public class ProfileServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -50,22 +46,11 @@ public class ProfileServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-        HttpSession session = request.getSession(true);
         
-        SessionBeanUser userBean = (SessionBeanUser) session.getAttribute("userBean");
-                    
-        if (userBean == null) {
-            response.sendRedirect(getServletContext().getContextPath() + "/user/login");
-        } else {
-            BOPost boPost = new BOPost();
-            ArrayList<DTOPost> listPosts = new ArrayList();
-            
-            listPosts = boPost.getPostsOfUser(userBean.getUserId(), 5);
-            session.setAttribute("listPosts", listPosts);
-            
-            RequestDispatcher rd = request.getRequestDispatcher("/Views/User/profile.jsp");
-            rd.forward(request, response);
-        }
+        HttpSession session = request.getSession(true);
+        session.setAttribute("userBean", null);
+        
+        response.sendRedirect(getServletContext().getContextPath() + "/user/login");
     }
 
     /**
@@ -89,7 +74,7 @@ public class ProfileServlet extends HttpServlet {
      */
     @Override
     public String getServletInfo() {
-        return "Profile Servlet";
+        return "Short description";
     }// </editor-fold>
 
 }

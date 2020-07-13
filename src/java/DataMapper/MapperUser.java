@@ -69,14 +69,7 @@ public class MapperUser extends MapperBase {
     public boolean insertNewUser(DTOUser newUser) {
         boolean result = false;
         
-        try {
-            System.out.println("Insert new user: ");
-            System.out.println("password: " + newUser.getPassword());
-            System.out.println("email: " + newUser.getEmail());
-            System.out.println("fullName: "+ newUser.getFullname());
-            System.out.println("avatar: " + newUser.getAvatar());
-            System.out.println("role: " + newUser.getRole());
-            
+        try {            
             String query = "Insert Into User (password, email, fullName, avatar, role) Values ('"
                     + newUser.getPassword() + "', '"
                     + newUser.getEmail() + "', N'"

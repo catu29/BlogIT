@@ -5,7 +5,7 @@
  */
 package DTO;
 
-import java.util.Calendar;
+import java.util.Date;
 
 /**
  *
@@ -15,7 +15,7 @@ public class DTOPost {
     int postId;
     String postTitle;
     String postTitleUnsigned;
-    Calendar postTime;
+    Date postTime;
     int userId;
     int seriesId;
     String postContent;
@@ -23,7 +23,7 @@ public class DTOPost {
     public DTOPost() {
     }
 
-    public DTOPost(int postId, String postTitle, String postTitleUnsigned, Calendar postTime, int userId, int seriesId, String postContent) {
+    public DTOPost(int postId, String postTitle, String postTitleUnsigned, Date postTime, int userId, int seriesId, String postContent) {
         this.postId = postId;
         this.postTitle = postTitle;
         this.postTitleUnsigned = postTitleUnsigned;
@@ -57,11 +57,11 @@ public class DTOPost {
         this.postTitleUnsigned = postTitleUnsigned;
     }
 
-    public Calendar getPostTime() {
+    public Date getPostTime() {
         return postTime;
     }
 
-    public void setPostTime(Calendar postTime) {
+    public void setPostTime(Date postTime) {
         this.postTime = postTime;
     }
 

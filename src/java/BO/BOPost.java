@@ -24,6 +24,10 @@ public class BOPost {
         return mapper.getAllPostsOfUser(userId);
     }
     
+    public ArrayList<DTOPost> getPostsOfUser(int userId, int amount) {
+        return mapper.getPostsOfUser(userId, amount);
+    }
+    
     public ArrayList<DTOPost> getAllPostsOfSeries(int seriesId) {
         return mapper.getAllPostsOfSeries(seriesId);
     }

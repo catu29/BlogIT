@@ -5,7 +5,7 @@
  */
 package DTO;
 
-import java.util.Calendar;
+import java.util.Date;
 
 /**
  *
@@ -16,13 +16,13 @@ public class DTOPostComment {
     int userId;
     int postId;
     String content;
-    Calendar commentTime;
+    Date commentTime;
     int parentId;
 
     public DTOPostComment() {
     }
 
-    public DTOPostComment(int commentId, int userId, int postId, String content, Calendar commentTime, int parentId) {
+    public DTOPostComment(int commentId, int userId, int postId, String content, Date commentTime, int parentId) {
         this.commentId = commentId;
         this.userId = userId;
         this.postId = postId;
@@ -63,11 +63,11 @@ public class DTOPostComment {
         this.content = content;
     }
 
-    public Calendar getCommentTime() {
+    public Date getCommentTime() {
         return commentTime;
     }
 
-    public void setCommentTime(Calendar commentTime) {
+    public void setCommentTime(Date commentTime) {
         this.commentTime = commentTime;
     }
 

@@ -96,14 +96,10 @@ public class MapperPostTag extends MapperBase {
             while (rs.next()) {
                 DTOPost post = new DTOPost();
                 
-                Date postDate = rs.getDate("postTime");
-                Calendar postCalendar = Calendar.getInstance();
-                postCalendar.setTime(postDate);
-                                ;
                 post.setPostId(rs.getInt("postId"));
                 post.setPostTitle(rs.getString("postTitle"));
                 post.setPostTitleUnsigned(rs.getString("postTitleUnsigned"));
-                post.setPostTime(postCalendar);
+                post.setPostTime(rs.getDate("postTime"));
                 post.setUserId(rs.getInt("userId"));
                 post.setSeriesId(rs.getInt("seriesId"));
                 post.setPostContent(rs.getString("postContent"));

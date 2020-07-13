@@ -80,4 +80,4 @@ Create Table PostTag
     primary key(postId, tagId)
 );
 use BLogIT;
-select * from user;
+select * from user limit 2

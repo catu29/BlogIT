@@ -7,7 +7,7 @@ package Beans;
 
 import DTO.DTOPostReport;
 import java.io.Serializable;
-import java.util.Calendar;
+import java.util.Date;
 import javax.ejb.Stateless;
 
 /**
@@ -21,7 +21,7 @@ public class SessionBeanPostReport implements Serializable {
     int userId;
     int postId;
     int reportReasonId;
-    Calendar reportTime;
+    Date reportTime;
     
     
     
@@ -68,11 +68,11 @@ public class SessionBeanPostReport implements Serializable {
         this.reportReasonId = reportReasonId;
     }
 
-    public Calendar getReportTime() {
+    public Date getReportTime() {
         return reportTime;
     }
 
-    public void setReportTime(Calendar reportTime) {
+    public void setReportTime(Date reportTime) {
         this.reportTime = reportTime;
     }
 }

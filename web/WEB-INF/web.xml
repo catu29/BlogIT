@@ -18,6 +18,24 @@
     </servlet-mapping>
     
     <servlet>
+        <servlet-name>LogoutServlet</servlet-name>
+        <servlet-class>Servlets.User.LogoutServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LogoutServlet</servlet-name>
+        <url-pattern>/user/logout</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>UserServlet</servlet-name>
+        <servlet-class>Servlets.User.UserServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UserServlet</servlet-name>
+        <url-pattern>/user</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
         <servlet-name>LoginServlet</servlet-name>
         <servlet-class>Servlets.User.LoginServlet</servlet-class>
     </servlet>
@@ -53,7 +71,7 @@
         <url-pattern>/user/profile</url-pattern>
     </servlet-mapping>
     
-    <!--Session-->
+    <!--Session-->       
     <session-config>
         <session-timeout>
             60

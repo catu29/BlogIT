@@ -7,7 +7,7 @@ package Beans;
 
 import DTO.DTOPost;
 import java.io.Serializable;
-import java.util.Calendar;
+import java.util.Date;
 import javax.ejb.Stateless;
 
 /**
@@ -20,7 +20,7 @@ public class SessionBeanPost implements Serializable{
     int postId;
     String postTitle;
     String postTitleUnsigned;
-    Calendar postTime;
+    Date postTime;
     int userId;
     int seriesId;
     String postContent;
@@ -62,11 +62,11 @@ public class SessionBeanPost implements Serializable{
         this.postTitleUnsigned = postTitleUnsigned;
     }
 
-    public Calendar getPostTime() {
+    public Date getPostTime() {
         return postTime;
     }
 
-    public void setPostTime(Calendar postTime) {
+    public void setPostTime(Date postTime) {
         this.postTime = postTime;
     }
 

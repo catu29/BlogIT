@@ -5,7 +5,7 @@
  */
 package DTO;
 
-import java.util.Calendar;
+import java.util.Date;
 
 /**
  *
@@ -16,12 +16,12 @@ public class DTOPostReport {
     int userId;
     int postId;
     int reportReasonId;
-    Calendar reportTime;
+    Date reportTime;
     
     public DTOPostReport() {
     }
     
-    public DTOPostReport(int reportId, int userId, int postId, int reportReasonId, Calendar reportTime) {
+    public DTOPostReport(int reportId, int userId, int postId, int reportReasonId, Date reportTime) {
         this.reportId = reportId;
         this.userId = userId;
         this.postId = postId;
@@ -61,11 +61,11 @@ public class DTOPostReport {
         this.reportReasonId = reportReasonId;
     }
 
-    public Calendar getReportTime() {
+    public Date getReportTime() {
         return reportTime;
     }
 
-    public void setReportTime(Calendar reportTime) {
+    public void setReportTime(Date reportTime) {
         this.reportTime = reportTime;
     }
 }

@@ -33,11 +33,8 @@ public class MapperPostReport extends MapperBase {
             ResultSet rs = stmt.executeQuery(query);
             
             while (rs.next()) {
-                Date reportDate = rs.getDate("reportTime");
-                Calendar reportCalendar = Calendar.getInstance();
-                reportCalendar.setTime(reportDate);
                         
-                DTOPostReport pr = new DTOPostReport(rs.getInt("reportId"), rs.getInt("userId"), rs.getInt("postId"), rs.getInt("reportReasonId"), reportCalendar);
+                DTOPostReport pr = new DTOPostReport(rs.getInt("reportId"), rs.getInt("userId"), rs.getInt("postId"), rs.getInt("reportReasonId"), rs.getDate("reportTime"));
                 
                 result.add(pr);
             }

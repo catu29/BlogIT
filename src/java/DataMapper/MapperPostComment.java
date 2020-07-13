@@ -32,17 +32,13 @@ public class MapperPostComment extends MapperBase {
             
             while (rs.next()) {
                 DTOPostComment comment = new DTOPostComment();
-                
-                Date commentTime = rs.getDate("commentTime");
-                Calendar commentCalendar = Calendar.getInstance();
-                commentCalendar.setTime(commentTime);
-                
+                                
                 comment.setCommentId(rs.getInt("commentId"));
                 comment.setPostId(rs.getInt("postId"));
                 comment.setUserId(rs.getInt("userId"));
                 comment.setContent(rs.getString("content"));
                 comment.setParentId(rs.getInt("parentId"));
-                comment.setCommentTime(commentCalendar);
+                comment.setCommentTime(rs.getDate("commentTime"));
                 
                 result.add(comment);
             }
@@ -57,14 +53,11 @@ public class MapperPostComment extends MapperBase {
     
     public boolean insertCommentForPost(DTOPostComment comment) {
         try {
-            Calendar commentCalendar = comment.getCommentTime();
-            Date commentDate = commentCalendar.getTime();
-            
             String query = "Insert into PostComment (userId, postId, content, commentTime, parentId) values ("
                            + comment.getUserId() + ", " 
                            + comment.getPostId() + ", N'" 
                            + comment.getContent() + "', '"
-                           + commentDate + "', "
+                           + comment.getCommentTime() + "', "
                            + comment.getParentId() + ");";
             PreparedStatement stmt = connection.prepareStatement(query);
             
@@ -78,12 +71,10 @@ public class MapperPostComment extends MapperBase {
     
     public boolean updateCommentForPost(DTOPostComment comment) {
         try {
-            Calendar commentCalendar = comment.getCommentTime();
-            Date commentDate = commentCalendar.getTime();
             
             String query = "Update PostComment Set "
                          + "content = N'" + comment.getContent() + "', "
-                         + "commentTime = " + commentDate
+                         + "commentTime = " + comment.getCommentTime()
                          + " Where commentId = " + comment.getCommentId() + ";";
             
             PreparedStatement stmt = connection.prepareStatement(query);

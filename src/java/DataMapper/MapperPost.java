@@ -9,9 +9,7 @@ import DTO.DTOPost;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
 
 /**
  *
@@ -34,14 +32,10 @@ public class MapperPost extends MapperBase {
             while (rs.next()) {
                 DTOPost post = new DTOPost();
                 
-                Date postDate = rs.getDate("postTime");
-                Calendar postCalendar = Calendar.getInstance();
-                postCalendar.setTime(postDate);
-                
                 post.setPostId(rs.getInt("postId"));
                 post.setPostTitle(rs.getString("postTitle"));
                 post.setPostTitleUnsigned(rs.getString("postTitleUnsigned"));
-                post.setPostTime(postCalendar);
+                post.setPostTime(rs.getDate("postTime"));
                 post.setUserId(rs.getInt("userId"));
                 post.setSeriesId(rs.getInt("seriesId"));
                 post.setPostContent(rs.getString("postContent"));
@@ -69,14 +63,41 @@ public class MapperPost extends MapperBase {
             while (rs.next()) {
                 DTOPost post = new DTOPost();
                 
-                Date postDate = rs.getDate("postTime");
-                Calendar postCalendar = Calendar.getInstance();
-                postCalendar.setTime(postDate);
+                post.setPostId(rs.getInt("postId"));
+                post.setPostTitle(rs.getString("postTitle"));
+                post.setPostTitleUnsigned(rs.getString("postTitleUnsigned"));
+                post.setPostTime(rs.getDate("postTime"));
+                post.setUserId(rs.getInt("userId"));
+                post.setSeriesId(rs.getInt("seriesId"));
+                post.setPostContent(rs.getString("postContent"));
+                
+                result.add(post);
+            }
+            
+            return result;
+        } catch (Exception e) {
+            System.out.println("Get all posts of user error: " + e.getMessage());
+            
+            return null;
+        }
+    }
+    
+    public ArrayList<DTOPost> getPostsOfUser(int userId, int amount) {
+        try {
+            ArrayList<DTOPost> result = new ArrayList();
+            
+            String query = "Select * from Post where userId = " + userId + " Limit " + amount;
+            PreparedStatement stmt = connection.prepareStatement(query);
+            
+            ResultSet rs = stmt.executeQuery(query);
+            
+            while (rs.next()) {
+                DTOPost post = new DTOPost();
                 
                 post.setPostId(rs.getInt("postId"));
                 post.setPostTitle(rs.getString("postTitle"));
                 post.setPostTitleUnsigned(rs.getString("postTitleUnsigned"));
-                post.setPostTime(postCalendar);
+                post.setPostTime(rs.getDate("postTime"));
                 post.setUserId(rs.getInt("userId"));
                 post.setSeriesId(rs.getInt("seriesId"));
                 post.setPostContent(rs.getString("postContent"));
@@ -103,15 +124,11 @@ public class MapperPost extends MapperBase {
             
             while (rs.next()) {
                 DTOPost post = new DTOPost();
-                
-                Date postDate = rs.getDate("postTime");
-                Calendar postCalendar = Calendar.getInstance();
-                postCalendar.setTime(postDate);
-                
+                                
                 post.setPostId(rs.getInt("postId"));
                 post.setPostTitle(rs.getString("postTitle"));
                 post.setPostTitleUnsigned(rs.getString("postTitleUnsigned"));
-                post.setPostTime(postCalendar);
+                post.setPostTime(rs.getDate("postTime"));
                 post.setUserId(rs.getInt("userId"));
                 post.setSeriesId(rs.getInt("seriesId"));
                 post.setPostContent(rs.getString("postContent"));
@@ -129,13 +146,11 @@ public class MapperPost extends MapperBase {
     
     public boolean insertNewPost(DTOPost post) {
         try {
-            Calendar postCalendar = post.getPostTime();
-            Date postDate = postCalendar.getTime();
             
             String query = "Insert into Post (postTitle, postTitleUnsigned, postTime, userId, seriesId, postContent) values (N'"
                          + post.getPostTitle() + "', '"
                          + post.getPostTitleUnsigned() + "', '"
-                         + postDate + "', "
+                         + post.getPostTime() + "', "
                          + post.getUserId() + ", "
                          + post.getSeriesId() + "', N'"
                          + post.getPostContent() + "');";
@@ -150,14 +165,12 @@ public class MapperPost extends MapperBase {
     
     public boolean updatePost(DTOPost post) {
         try {
-            Calendar postCalendar = post.getPostTime();
-            Date postDate = postCalendar.getTime();
-            
+
             String query = "Update Post Set "
                          + "postTitle = N'" + post.getPostTitle() + "', "
                          + "postTitleUnsigned = '" + post.getPostTitleUnsigned() + "', "
                          + "postContent = N'" + post.getPostContent() + "', "
-                         + "postTime = '" + postDate + "' "
+                         + "postTime = '" + post.getPostTime() + "' "
                          + "seriesId = " + post.getSeriesId()
                          + " where postId = " + post.getPostId() + ";";
             PreparedStatement stmt = connection.prepareStatement(query);

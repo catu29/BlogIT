@@ -15,7 +15,7 @@
 
 
 <t:layout>
-    <jsp:attribute name="title">Create new account</jsp:attribute>
+    <jsp:attribute name="title">Login</jsp:attribute>
     <jsp:body>
         <div class="row">
             <div class="col-sm-6">               
