@@ -28,7 +28,7 @@ public class SessionBeanPost implements Serializable{
     public SessionBeanPost() {
     }
 
-    public void initFromDTO(DTOPost post) {        
+    public void initFromDTO(DTOPost post) {
         this.setPostId(post.getPostId());
         this.setPostTitle(post.getPostTitle());
         this.setPostTitleUnsigned(post.getPostTitleUnsigned());

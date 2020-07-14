@@ -20,6 +20,56 @@ public class MapperPost extends MapperBase {
         super();
     }
     
+    public DTOPost getPostInformation(int postId) {
+        try {
+            String query = "Select * from Post where postId = " + postId;
+            PreparedStatement stmt = connection.prepareStatement(query);
+            
+            ResultSet rs = stmt.executeQuery(query);
+            rs.next();
+            
+            DTOPost post = new DTOPost();
+            
+            post.setPostId(rs.getInt("postId"));
+            post.setPostTitle(rs.getString("postTitle"));
+            post.setPostTitleUnsigned(rs.getString("postTitleUnsigned"));
+            post.setPostTime(rs.getDate("postTime"));
+            post.setUserId(rs.getInt("userId"));
+            post.setSeriesId(rs.getInt("seriesId"));
+            post.setPostContent(rs.getString("postContent"));
+            
+            return post;
+        } catch (Exception e) {
+            System.out.println("Get post information by id error: " + e.getMessage());
+            return null;
+        }
+    }
+    
+    public DTOPost getPostInformation(int postId, String titleUnsigned) {
+        try {
+            String query = "Select * from Post where postId = " + postId + " and postTitleUnsigned = '" + titleUnsigned + "';";
+            PreparedStatement stmt = connection.prepareStatement(query);
+            
+            ResultSet rs = stmt.executeQuery(query);
+            rs.next();
+            
+            DTOPost post = new DTOPost();
+            
+            post.setPostId(rs.getInt("postId"));
+            post.setPostTitle(rs.getString("postTitle"));
+            post.setPostTitleUnsigned(rs.getString("postTitleUnsigned"));
+            post.setPostTime(rs.getDate("postTime"));
+            post.setUserId(rs.getInt("userId"));
+            post.setSeriesId(rs.getInt("seriesId"));
+            post.setPostContent(rs.getString("postContent"));
+            
+            return post;
+        } catch (Exception e) {
+            System.out.println("Get post information by id and title error: " + e.getMessage());
+            return null;
+        }
+    }
+    
     public ArrayList<DTOPost> getAllPosts() {
         try {
             ArrayList<DTOPost> result = new ArrayList();

@@ -16,6 +16,10 @@ import java.util.ArrayList;
 public class BOUserSeriesList {
     MapperUserSeriesList mapper = new MapperUserSeriesList();
     
+    public DTOUserSeriesList getSeriesInformation(int seriesId) {
+        return mapper.getSeriesInformation(seriesId);
+    }
+    
     public ArrayList<DTOUserSeriesList> getAllLists() {        
         return mapper.getAllLists();
     }

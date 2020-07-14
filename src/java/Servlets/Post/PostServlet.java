@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Tin Bui
  */
-public class ViewPortServlet extends HttpServlet {
+public class PostServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -47,8 +47,8 @@ public class ViewPortServlet extends HttpServlet {
             throws ServletException, IOException {
         processRequest(request, response);
         
-        RequestDispatcher view = request.getRequestDispatcher("Views/Post/view.jsp");
-        view.forward(request, response);
+        RequestDispatcher rd = request.getRequestDispatcher("Views/Post/post.jsp");
+        rd.forward(request, response);
     }
 
     /**
@@ -72,7 +72,7 @@ public class ViewPortServlet extends HttpServlet {
      */
     @Override
     public String getServletInfo() {
-        return "Short description";
+        return "Post Servlet";
     }// </editor-fold>
 
 }

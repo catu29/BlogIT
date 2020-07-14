@@ -14,12 +14,8 @@
 <c:set var="userBean" value="${sessionScope.userBean}" />
 <c:set var="listPosts" value="${sessionScope.listPosts}" />
 
-<c:url var="url" value="${pageContext.request.requestURL}">
-    <c:param name="id" value="${userBean.userId}"/>
-</c:url>
-
 <t:layout>
-    <jsp:attribute name="title">Profile</jsp:attribute>
+    <jsp:attribute name="title">${userBean.fullname}</jsp:attribute>
     <jsp:body>
         <h1>Trang cá nhân</h1>
         <div> Profile info
@@ -46,7 +42,15 @@
                     <c:forEach var="post" items="${listPosts}">
                         <div> Nội dung bài viết
                             <p>Tiêu đề: <c:out value="${post.postTitle}"/></p>
-                            <p>Tiêu đề không dấu: <c:out value="${post.postTitleUnsigned}"/></p>
+                            <p>Tiêu đề không dấu:
+                                <c:url var="postURL" value="${contextPath}/post/detail">
+                                    <c:param name="title" value="${post.postTitleUnsigned}"/>
+                                    <c:param name="%" value="${post.postId}"/>
+                                </c:url>
+                                <a href="${postURL}">
+                                    <c:out value="${post.postTitleUnsigned}"/>
+                                </a>
+                            </p>
                             <p>Thời gian: 
                                 <fmt:formatDate var="postTime" value="${post.postTime}" type="date" dateStyle="short" pattern="dd/MM/yyyy"/>
                                 <c:out value="${postTime}" />

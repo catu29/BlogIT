@@ -19,6 +19,24 @@ public class MapperUserSeriesList extends MapperBase {
         super();
     }
     
+    public DTOUserSeriesList getSeriesInformation(int seriesId) {
+        try {
+            String query = "Select * from UserSeriesList where seriesId = " + seriesId;
+            PreparedStatement stmt = connection.prepareStatement(query);
+            
+            ResultSet rs = stmt.executeQuery(query);
+            
+            rs.next();
+                
+            DTOUserSeriesList seriesDTO = new DTOUserSeriesList(rs.getInt("seriesId"), rs.getInt("userId"), rs.getString("seriesName"), rs.getString("seriesNameUnsigned"));
+
+            return seriesDTO;
+        } catch (Exception e) {
+            System.out.println("Get series list information error: " + e.getMessage());
+            return null;
+        }
+    }
+    
     /***
      * Get all series lists of all users
      * @return - ArrayList of UserSeriesList if have data.
@@ -58,7 +76,7 @@ public class MapperUserSeriesList extends MapperBase {
         try {
             ArrayList<DTOUserSeriesList> result = new ArrayList();
             
-            String query = "Select * From UserSeriesList Where userId = '" + userId + "';";
+            String query = "Select * From UserSeriesList Where userId = " + userId;
             PreparedStatement stmt = connection.prepareStatement(query);
             
             ResultSet rs = stmt.executeQuery(query);
@@ -72,7 +90,7 @@ public class MapperUserSeriesList extends MapperBase {
             
             return result;
         } catch (Exception e) {
-            System.out.println("Get all series lists error: " + e.getMessage());
+            System.out.println("Get all series lists by userId error: " + e.getMessage());
             
             return null;
         }
@@ -109,7 +127,7 @@ public class MapperUserSeriesList extends MapperBase {
      */
     public boolean deleteUserSeriesList(DTOUserSeriesList list) {
         try {
-            String query = "Delete From UserSeriesList Where seriesId = '" + list.getSeriesId() + "';";
+            String query = "Delete From UserSeriesList Where seriesId = " + list.getSeriesId();
             PreparedStatement stmt = connection.prepareStatement(query);
             
             return stmt.executeUpdate(query) > 0;
@@ -130,7 +148,7 @@ public class MapperUserSeriesList extends MapperBase {
     public boolean updateUserSeriesByCondition(DTOUserSeriesList list, String column, String condition) {
         try {
             String query = "Update UserSeriesList Set " + column + " = N'" + condition 
-                         + "' Where seriesId = '" + list.getSeriesId() + "';";
+                         + "' Where seriesId = " + list.getSeriesId();
             PreparedStatement stmt = connection.prepareStatement(query);
             
             return stmt.executeUpdate(query) > 0;
@@ -151,7 +169,7 @@ public class MapperUserSeriesList extends MapperBase {
         try {
             ArrayList<DTOUserSeriesList> result = new ArrayList();
             
-            String query = "Select * From UserSeriesList Where userId = '" + userId + "';";
+            String query = "Select * From UserSeriesList Where userId = " + userId;
             PreparedStatement stmt = connection.prepareStatement(query);
             
             

@@ -16,6 +16,14 @@ import java.util.ArrayList;
 public class BOPost {
     MapperPost mapper = new MapperPost();
     
+    public DTOPost getPostInformation(int postId) {
+        return mapper.getPostInformation(postId);
+    }
+    
+    public DTOPost getPostInformation(int postId, String titleUnsigned) {
+        return mapper.getPostInformation(postId, titleUnsigned);
+    }
+    
     public ArrayList<DTOPost> getAllPosts() {
         return mapper.getAllPosts();
     }
