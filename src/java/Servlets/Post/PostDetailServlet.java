@@ -6,21 +6,27 @@
 package Servlets.Post;
 
 import BO.BOPost;
+import BO.BOPostComment;
+import BO.BOPostLike;
 import BO.BOUser;
 import BO.BOUserSeriesList;
 import Beans.SessionBeanPost;
 import Beans.SessionBeanUser;
 import Beans.SessionBeanUserSeriesList;
 import DTO.DTOPost;
+import DTO.DTOPostComment;
+import DTO.DTOPostLike;
 import DTO.DTOUser;
 import DTO.DTOUserSeriesList;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Map;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -56,35 +62,55 @@ public class PostDetailServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-        System.out.println("Do get, post detail, request uri: " + request.getRequestURI());
-        System.out.println("Do get, post detail, servlet context path: " + getServletContext().getContextPath());
-        System.out.println("Do get, post detail, params: " + request.getQueryString());
-        System.out.println("Do get, post detail, request context path: " + request.getContextPath());
+        
         SessionBeanPost postBean = null;
         
         if (request.getParameter("%") != null && request.getParameter("title") != null) {
-            String postId = request.getParameter("%");
-            String postTitleUnsigned = request.getParameter("title");
+            String postId = request.getParameter("%"); // postId
+            String postTitleUnsigned = request.getParameter("title"); // postTitleUnsigned
             
-            BOPost postBO = new BOPost();
-            BOUserSeriesList seriesBO = new BOUserSeriesList();
-            BOUser userBO = new BOUser();        
+            BOPost postBO = new BOPost();       
 
             DTOPost postDTO = postBO.getPostInformation(Integer.parseInt(postId), postTitleUnsigned);
         
             if (postDTO != null) {
+                BOUserSeriesList seriesBO = new BOUserSeriesList();
+                BOUser userBO = new BOUser();
+                BOPostLike likeBO = new BOPostLike();
+                BOPostComment commentBO = new BOPostComment();
+            
                 DTOUserSeriesList seriesDTO = seriesBO.getSeriesInformation(postDTO.getSeriesId());
-                DTOUser userDTO = userBO.getUserInformation(postDTO.getUserId());
+                DTOUser authorDTO = userBO.getUserInformation(postDTO.getUserId());
+                
                 ArrayList<DTOPost> postsOfSeries = postBO.getAllPostsOfSeries(postDTO.getSeriesId());
                 ArrayList<DTOPost> postsOfUser = postBO.getPostsOfUser(postDTO.getUserId(), 5);
-
+                ArrayList<DTOPostLike> likesOfPost = likeBO.getAllLikesOfPost(postDTO.getPostId());
+                ArrayList<DTOPostComment> commentsOfPost = commentBO.getAllCommentsForPost(postDTO.getPostId());
+                                
+                HttpSession session = request.getSession();
 
                 SessionBeanUserSeriesList seriesBean = new SessionBeanUserSeriesList();
-                SessionBeanUser userBean = new SessionBeanUser();
-
+                SessionBeanUser authorBean = new SessionBeanUser();
+                SessionBeanUser userBean = (SessionBeanUser) session.getAttribute("userBean");
                 postBean = new SessionBeanPost();
+                
                 postBean.initFromDTO(postDTO);
-                userBean.initFromDTO(userDTO);
+                authorBean.initFromDTO(authorDTO);
+                
+                if (likesOfPost != null && !likesOfPost.isEmpty()) {
+                    ArrayList<DTOUser> likedUsers = new ArrayList();
+                    
+                    for (int i = 0; i < likesOfPost.size(); i++) {
+                        if (userBean != null && likesOfPost.get(i).getUserId() == userBean.getUserId()) {
+                            session.setAttribute("isLiked", true);
+                        }
+                        
+                        DTOUser userLike = userBO.getUserInformation(likesOfPost.get(i).getUserId());
+                        likedUsers.add(userLike);
+                    }
+                    
+                    request.setAttribute("likedUsers", likedUsers);
+                }
 
                 if (seriesDTO != null) {
                     seriesBean.initFromDTO(seriesDTO);
@@ -93,9 +119,11 @@ public class PostDetailServlet extends HttpServlet {
                 }
 
                 request.setAttribute("seriesBean", seriesBean);
-                request.setAttribute("userBean", userBean);
+                request.setAttribute("authorBean", authorBean);
                 request.setAttribute("postsOfSeries", postsOfSeries);
                 request.setAttribute("postsOfUser", postsOfUser);
+                request.setAttribute("likesOfPost", likesOfPost);
+                request.setAttribute("commentsOfPost", commentsOfPost);
             }
         }
         
@@ -126,7 +154,7 @@ public class PostDetailServlet extends HttpServlet {
      */
     @Override
     public String getServletInfo() {
-        return "Short description";
+        return "Post detail servlet";
     }// </editor-fold>
 
 }

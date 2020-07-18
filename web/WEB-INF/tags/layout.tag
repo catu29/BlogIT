@@ -74,7 +74,7 @@
                                         <button class="dropdown-toggle" type="button" id="userdropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                             <c:choose>
                                                 <c:when test="${userBean.avatar != 'null' && not empty userBean.avatar}">
-                                                    <img src="${pageContext.request.contextPath}${userBean.avatar}" alt="">
+                                                    <img src="${pageContext.request.contextPath}/Resources/img/${userBean.avatar}" alt="">
                                                 </c:when>
                                                 <c:otherwise>
                                                     <img src="${pageContext.request.contextPath}/Resources/img/default-user.png" alt="">

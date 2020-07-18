@@ -13,9 +13,13 @@
 
 <c:set var="postBean" value="${requestScope.postBean}" />
 <c:set var="seriesBean" value="${requestScope.seriesBean}" />
-<c:set var="userBean" value="${requestScope.userBean}" />
+<c:set var="authorBean" value="${requestScope.userBean}" />
 <c:set var="postsOfSeries" value="${requestScope.postsOfSeries}" />
 <c:set var="postsOfUser" value="${requestScope.postsOfUser}" />
+<c:set var="likesOfPost" value="${requestScope.likesOfPost}" />
+<c:set var="commentsOfPost" value="${requestScope.commentsOfPost}" />
+<c:set var="isLiked" value="${sessionScope.isLiked}" />
+<c:set var="likedUsers" value="${requestScope.likedUsers}" />
 
 <t:layout>
     <jsp:attribute name="title">${postBean.postTitle}</jsp:attribute>
@@ -24,23 +28,45 @@
         <div>
             <c:choose>
                 <c:when test="${postBean != null}">
-                    <p>Tiêu đề: <c:out value="${postBean.postTitle}" /></p>
-                    <p>Series:
-                        <c:choose>
-                            <c:when test="${seriesBean != null}">
-                                <c:out value="${seriesBean.seriesName}" />
-                            </c:when>
-                            <c:otherwise>
-                                <c:out value="Chưa có series"/>
-                            </c:otherwise>
-                        </c:choose>
-                    </p>
-                    <p>Tác giả: <c:out value="${userBean.fullname}" /></p>
-                    <p>Thời gian: 
-                        <fmt:formatDate var="postTime" value="${postBean.postTime}" type="date" dateStyle="short" pattern="dd/MM/yyyy"/>
-                        <c:out value="${postTime}" />
-                    </p>
-                    <p>Nội dung: ${postBean.postContent}</p>
+                    
+                    <div id="Thông tin bài viết">
+                        <p>Tiêu đề: <c:out value="${postBean.postTitle}" /></p>
+                        <p>Series:
+                            <c:choose>
+                                <c:when test="${seriesBean != null}">
+                                    <c:out value="${seriesBean.seriesName}" />
+                                </c:when>
+                                <c:otherwise>
+                                    <c:out value="Chưa có series"/>
+                                </c:otherwise>
+                            </c:choose>
+                        </p>
+                        <p>Tác giả: <c:out value="${userBean.fullname}" /></p>
+                        <p>Thời gian: 
+                            <fmt:formatDate var="postTime" value="${postBean.postTime}" type="date" dateStyle="short" pattern="dd/MM/yyyy"/>
+                            <c:out value="${postTime}" />
+                        </p>
+                    </div>
+                        
+                    <div id="Nội dung bài viết">
+                        <h2>Nội dung: </h2>
+                        ${postBean.postContent}
+                    </div>
+                    
+                    <div id="Các lượt like">
+                        <h2>Likes</h2>
+                        <c:if test="${likedUsers != null}">
+                            <p>Tổng số lượt like: <c:out value="${fn:length(likedUsers)}"/></p>
+                            <c:if test="${not empty likedUsers}">
+                                <p>Tên những người like: 
+                                    <c:forEach var="like" items="${likedUsers}">
+                                        <c:out value="${like.fullname}"/>
+                                    </c:forEach>
+                                </p>
+                            </c:if>
+                        </c:if>
+                    </div>
+                    
                 </c:when>
                 <c:otherwise>
                     <p>Bài viết không tồn tại</p>

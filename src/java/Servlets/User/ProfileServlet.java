@@ -57,6 +57,7 @@ public class ProfileServlet extends HttpServlet {
         if (userBean == null) {
             response.sendRedirect(getServletContext().getContextPath() + "/user/login");
         } else {
+            System.out.println("Avatar: " + userBean.getAvatar());
             BOPost boPost = new BOPost();
             ArrayList<DTOPost> listPosts = new ArrayList();
             

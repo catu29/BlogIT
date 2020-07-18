@@ -80,4 +80,4 @@ Create Table PostTag
     primary key(postId, tagId)
 );
 use BLogIT;
-select * from post where seriesId = 1
+Select * from Post where postId = 1 and postTitleUnsigned = 'nghe-thuat-xu-ly-background-job';
