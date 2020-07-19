@@ -30,7 +30,7 @@
         <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/Resources/css/bootstrap.min.css" />
 
         <!-- Font Awesome Icon -->
-        <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/Resources/css/fontawesome.min.css"/>
+        <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/Resources/vendors/fontawesome-free/css/all.min.css"/>
 
         <!-- Custom stlylesheet -->
         <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/Resources/css/style.css" />
