@@ -1,14 +1,22 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package DTO;
 
-package Beans;
-
-public class PostTagBean {
+/**
+ *
+ * @author TranCamTu
+ */
+public class DTOPostTag {
     int postId;
     int tagId;
 
-    public PostTagBean() {
+    public DTOPostTag() {
     }
 
-    public PostTagBean(int postId, int tagId) {
+    public DTOPostTag(int postId, int tagId) {
         this.postId = postId;
         this.tagId = tagId;
     }
@@ -28,6 +36,4 @@ public class PostTagBean {
     public void setTagId(int tagId) {
         this.tagId = tagId;
     }
-    
-    
 }

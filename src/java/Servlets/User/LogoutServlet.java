@@ -3,29 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Test;
+package Servlets.User;
 
-import BO.BOUser;
-import DTO.DTOUser;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import DataAccess.MySqlConnection;
-import DataMapper.MapperUser;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author TranCamTu
  */
-public class TestServlet extends HttpServlet{
+public class LogoutServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,6 +29,7 @@ public class TestServlet extends HttpServlet{
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
         
     }
 
@@ -53,32 +45,12 @@ public class TestServlet extends HttpServlet{
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int count = 0;
+        processRequest(request, response);
         
-        BOUser user = new BOUser();
-        DTOUser dto = new DTOUser("testPassword", "email@gmail.com", "Test full name", "avatar", 0);
-              
+        HttpSession session = request.getSession(true);
+        session.setAttribute("userBean", null);
         
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet TestServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Hello world !</h1>");
-            
-            if (user.insertNewUser(dto) == true) {
-                out.println("<p>Insert success</p>");
-            } else {
-                out.println("<p>Insert fail</p>");
-            }
-            
-            out.println("</body>");
-            out.println("</html>");
-        }
+        response.sendRedirect(getServletContext().getContextPath() + "/user/login");
     }
 
     /**

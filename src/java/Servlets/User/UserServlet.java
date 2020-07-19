@@ -3,21 +3,22 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Servlets.Post;
+package Servlets.User;
 
+import Beans.SessionBeanUser;
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author Tin Bui
+ * @author TranCamTu
  */
-public class ViewPortServlet extends HttpServlet {
+public class UserServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -47,8 +48,14 @@ public class ViewPortServlet extends HttpServlet {
             throws ServletException, IOException {
         processRequest(request, response);
         
-        RequestDispatcher view = request.getRequestDispatcher("Views/Post/view.jsp");
-        view.forward(request, response);
+        HttpSession session = request.getSession(true);
+        SessionBeanUser userBean = (SessionBeanUser) session.getAttribute("userBean");
+        
+        if (userBean != null) {
+            response.sendRedirect(getServletContext().getContextPath() + "/user/profile?id=" + userBean.getUserId());
+        } else {
+            response.sendRedirect(getServletContext().getContextPath() + "/user/login");
+        }
     }
 
     /**
@@ -72,7 +79,7 @@ public class ViewPortServlet extends HttpServlet {
      */
     @Override
     public String getServletInfo() {
-        return "Short description";
+        return "User Servlet";
     }// </editor-fold>
 
 }

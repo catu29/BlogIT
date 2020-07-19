@@ -4,13 +4,16 @@
     Author     : Tin Bui
 --%>
 
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
 <%@tag description="main layout" pageEncoding="UTF-8"%>
 
 <%-- The list of normal or fragment attributes can be specified here: --%>
 <%@attribute name="title" required="true"%>
 <%@attribute name="css" fragment="true"%>
 <%@attribute name="js" fragment="true"%>
+
+<c:set var="userBean" value="${sessionScope.userBean}" />
 
 <!DOCTYPE html>
 
@@ -66,15 +69,22 @@
                             <button class="aside-btn"><i class="fa fa-bars"></i></button>
                             
                             <c:choose>
-                                <c:when test="${1 == 1}">
+                                <c:when test="${userBean != null}">
                                     <div class="dropdown login-btn open-auth-modal">
                                         <button class="dropdown-toggle" type="button" id="userdropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                            <img src="${pageContext.request.contextPath}/Resources/img/default-user.png" alt="">
+                                            <c:choose>
+                                                <c:when test="${userBean.avatar != 'null' && not empty userBean.avatar}">
+                                                    <img src="${pageContext.request.contextPath}/Resources/img/${userBean.avatar}" alt="">
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <img src="${pageContext.request.contextPath}/Resources/img/default-user.png" alt="">
+                                                </c:otherwise>
+                                            </c:choose>
                                         </button>
                                         <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="userdropdown">
-                                            <li><a href="#">Thông tin cá nhân</a></li>
+                                            <li><a href="${pageContext.request.contextPath}/user/profile?id=${userBean.userId}">Thông tin cá nhân</a></li>
                                             <li><a href="#">Tạo bài viết</a></li>
-                                            <li><a href="#">Đăng xuất</a></li>
+                                            <li><a href="${pageContext.request.contextPath}/user/logout">Đăng xuất</a></li>
                                         </ul>
                                     </div>
                                 </c:when>

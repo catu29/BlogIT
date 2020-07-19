@@ -1,21 +1,29 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package DTO;
 
-package Beans;
+import java.util.Date;
 
-import java.util.Calendar;
-
-public class PostReportBean {
+/**
+ *
+ * @author TranCamTu
+ */
+public class DTOPostReport {
     int reportId;
-    String username;
+    int userId;
     int postId;
     int reportReasonId;
-    Calendar reportTime;
+    Date reportTime;
     
-    public PostReportBean() {
+    public DTOPostReport() {
     }
     
-    public PostReportBean(int reportId, String username, int postId, int reportReasonId, Calendar reportTime) {
+    public DTOPostReport(int reportId, int userId, int postId, int reportReasonId, Date reportTime) {
         this.reportId = reportId;
-        this.username = username;
+        this.userId = userId;
         this.postId = postId;
         this.reportReasonId = reportReasonId;
         this.reportTime = reportTime;
@@ -29,12 +37,12 @@ public class PostReportBean {
         this.reportId = reportId;
     }
 
-    public String getUserName() {
-        return username;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setUserName(String username) {
-        this.username = username;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public int getPostId() {
@@ -53,11 +61,11 @@ public class PostReportBean {
         this.reportReasonId = reportReasonId;
     }
 
-    public Calendar getReportTime() {
+    public Date getReportTime() {
         return reportTime;
     }
 
-    public void setReportTime(Calendar reportTime) {
+    public void setReportTime(Date reportTime) {
         this.reportTime = reportTime;
     }
 }

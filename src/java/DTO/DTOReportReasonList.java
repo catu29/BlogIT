@@ -1,14 +1,22 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package DTO;
 
-package Beans;
-
-public class ReportReasonListBean {
+/**
+ *
+ * @author TranCamTu
+ */
+public class DTOReportReasonList {
     int reasonId;
     String reasonContent;
 
-    public ReportReasonListBean() {
+    public DTOReportReasonList() {
     }
 
-    public ReportReasonListBean(int reasonId, String reasonContent) {
+    public DTOReportReasonList(int reasonId, String reasonContent) {
         this.reasonId = reasonId;
         this.reasonContent = reasonContent;
     }
@@ -28,5 +36,4 @@ public class ReportReasonListBean {
     public void setReasonContent(String reasonContent) {
         this.reasonContent = reasonContent;
     }
-    
 }

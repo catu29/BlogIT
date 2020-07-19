@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app 
-    version="3.1" 
-    xmlns="http://xmlns.jcp.org/xml/ns/javaee" 
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-    xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+<web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
     <!--Connect Database-->
     <resource-ref>
         <description>This is for connect to MySQL Database</description>
@@ -11,7 +7,6 @@
         <res-type>javax.sql.DataSource</res-type>
         <res-auth>Container</res-auth>
     </resource-ref>
-    
     <!--Servlets-->
     <servlet>
         <servlet-name>RegisterServlet</servlet-name>
@@ -21,7 +16,23 @@
         <servlet-name>RegisterServlet</servlet-name>
         <url-pattern>/user/register</url-pattern>
     </servlet-mapping>
-    
+    <servlet>
+        <servlet-name>LogoutServlet</servlet-name>
+        <servlet-class>Servlets.User.LogoutServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LogoutServlet</servlet-name>
+        <url-pattern>/user/logout</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>UserServlet</servlet-name>
+        <servlet-class>Servlets.User.UserServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UserServlet</servlet-name>
+        <url-pattern>/user</url-pattern>
+        <url-pattern>/user/</url-pattern>
+    </servlet-mapping>
     <servlet>
         <servlet-name>LoginServlet</servlet-name>
         <servlet-class>Servlets.User.LoginServlet</servlet-class>
@@ -30,14 +41,22 @@
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/user/login</url-pattern>
     </servlet-mapping>
-    
     <servlet>
-        <servlet-name>ViewPortServlet</servlet-name>    
-        <servlet-class>Servlets.Post.ViewPortServlet</servlet-class>
-    </servlet>    
+        <servlet-name>PostDetailServlet</servlet-name>
+        <servlet-class>Servlets.Post.PostDetailServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
-        <servlet-name>ViewPortServlet</servlet-name>
-        <url-pattern>/post</url-pattern>
+        <servlet-name>PostDetailServlet</servlet-name>
+        <url-pattern>/post/detail</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>PostServlet</servlet-name>
+        <servlet-class>Servlets.Post.PostServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PostServlet</servlet-name>
+        <url-pattern>/post</url-pattern>  
+        <url-pattern>/post/</url-pattern>        
     </servlet-mapping>
     <servlet>
         <servlet-name>TestServlet</servlet-name>
@@ -47,33 +66,18 @@
         <servlet-name>TestServlet</servlet-name>
         <url-pattern>/TestServlet</url-pattern>
     </servlet-mapping>
-    
-    
-    <!--Filters-->
-    <filter>
-        <filter-name>CheckRegisteredUserFilter</filter-name>
-        <filter-class>Filters.Register.CheckRegisteredUserFilter</filter-class>
-    </filter>
-    
-    <filter>
-        <filter-name>RegisterFilter</filter-name>
-        <filter-class>Filters.Register.RegisterFilter</filter-class>
-    </filter>
-    
-    <filter-mapping>
-        <filter-name>CheckRegisteredUserFilter</filter-name>
-        <servlet-name>RegisterServlet</servlet-name>    
-    </filter-mapping>
-    
-    <filter-mapping>
-        <filter-name>RegisterFilter</filter-name>
-        <servlet-name>RegisterServlet</servlet-name>    
-    </filter-mapping>
-    
+    <servlet>
+        <servlet-name>ProfileServlet</servlet-name>
+        <servlet-class>Servlets.User.ProfileServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ProfileServlet</servlet-name>
+        <url-pattern>/user/profile</url-pattern>
+    </servlet-mapping>
     <!--Session-->
     <session-config>
         <session-timeout>
-            30
+            60
         </session-timeout>
     </session-config>
 </web-app>

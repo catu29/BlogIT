@@ -4,7 +4,12 @@
     Author     : Tin Bui
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
+<c:set var="currentURL" value="<%=request.getRequestURL()%>"/>
+<c:set var="currentQueryString" value="<%=request.getQueryString()%>"/>
+    
 
 <div id="authenticationModal" class="modal fade modal-authentication" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
@@ -14,7 +19,7 @@
                 <h4 class="modal-title">Login</h4>
             </div>
             <div class="modal-body">
-                <form action="LoginServlet" method="POST">
+                <form action="${pageContext.request.contextPath}/user/login" method="POST">
                     <div class="form-group">
                         <label for="email">Email</label>
                         <input type="email" class="input" id="email" name="email" placeholder="Email">
@@ -27,6 +32,12 @@
                         <input type="checkbox" class="form-check-input" id="rememberCheck">
                         <label class="form-check-label" for="rememberCheck">Remember me</label>
                     </div>
+                    <div class="form-group">
+                        <c:out value="url ${currentURL}"/>
+                        <input type="hidden" id="curURI" value="${request.getRequestURL}">
+                        <c:out value="query string ${currentQueryString}"/>
+                        <input type="hidden" id="curQueryString">
+                    </div>
                     <button type="submit" class="primary-button btn-block">Đăng nhập</button>
                 </form>
                 
@@ -34,7 +45,7 @@
             <div class="modal-footer">
                 <span class="pull-left">
                     <span>Chưa có tài khoản?&nbsp;</span>
-                    <a href="user/register">Đăng ký ngay</a>
+                    <a href="${pageContext.request.contextPath}/user/register">Đăng ký ngay</a>
                 </span>        
             </div>
         </div>
