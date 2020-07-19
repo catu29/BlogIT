@@ -10,6 +10,7 @@
 
 <%-- The list of normal or fragment attributes can be specified here: --%>
 <%@attribute name="title" required="true"%>
+<%@attribute name="postHeader" fragment="true"%>
 <%@attribute name="css" fragment="true"%>
 <%@attribute name="js" fragment="true"%>
 
@@ -107,7 +108,7 @@
                         <!-- nav -->
                         <ul class="nav-menu">
                             <li class="has-dropdown">
-                                <a href="index.html">Home</a>
+                                <a href="index.html">Home&nbsp;<i class="fas fa-caret-down"></i></a>
                                 <div class="dropdown">
                                     <div class="dropdown-body">
                                         <ul class="dropdown-list">
@@ -122,7 +123,7 @@
                                 </div>
                             </li>
                             <li class="has-dropdown megamenu">
-                                <a href="#">Lifestyle</a>
+                                <a href="#">Lifestyle&nbsp;<i class="fas fa-caret-down"></i></a>
                                 <div class="dropdown tab-dropdown">
                                     <div class="row">
                                         <div class="col-md-2">
@@ -264,7 +265,7 @@
                                 </div>
                             </li>
                             <li class="has-dropdown megamenu">
-                                <a href="#">Fashion</a>
+                                <a href="#">Fashion&nbsp;<i class="fas fa-caret-down"></i></a>
                                 <div class="dropdown">
                                     <div class="dropdown-body">
                                         <div class="row">
@@ -348,6 +349,7 @@
                 <!-- /Aside Nav -->
             </div>
             <!-- /NAV -->
+            <jsp:invoke fragment="postHeader"></jsp:invoke>
             
         </header>
         <!-- /HEADER -->
@@ -366,15 +368,10 @@
                     <div class="col-md-3">
                         <div class="footer-widget">
                             <div class="footer-logo">
-                                <a href="index.html" class="logo"><img src="./img/logo-alt.png" alt=""></a>
+                                <a href="index.html" class="logo"><img src="${pageContext.request.contextPath}/Resources/img/logo-alt.png" alt=""></a>
                             </div>
                             <p>Nec feugiat nisl pretium fusce id velit ut tortor pretium. Nisl purus in mollis nunc sed. Nunc non blandit massa enim nec.</p>
-                            <ul class="contact-social">
-                                <li><a href="#" class="social-facebook"><i class="fa fa-facebook"></i></a></li>
-                                <li><a href="#" class="social-twitter"><i class="fa fa-twitter"></i></a></li>
-                                <li><a href="#" class="social-google-plus"><i class="fa fa-google-plus"></i></a></li>
-                                <li><a href="#" class="social-instagram"><i class="fa fa-instagram"></i></a></li>
-                            </ul>
+                           
                         </div>
                     </div>
                     <div class="col-md-3">
@@ -421,27 +418,6 @@
                                     <button class="primary-button">Subscribe</button>
                                 </form>
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- /row -->
-
-                <!-- row -->
-                <div class="footer-bottom row">
-                    <div class="col-md-6 col-md-push-6">
-                        <ul class="footer-nav">
-                            <li><a href="index.html">Home</a></li>
-                            <li><a href="about.html">About Us</a></li>
-                            <li><a href="contact.html">Contacts</a></li>
-                            <li><a href="#">Advertise</a></li>
-                            <li><a href="#">Privacy</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-md-6 col-md-pull-6">
-                        <div class="footer-copyright">
-                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                            Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                         </div>
                     </div>
                 </div>
