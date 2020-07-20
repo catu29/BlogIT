@@ -45,7 +45,7 @@
                                 <c:out value="${postTime}"/>
                             </li>
                             <li><i class="fa fa-comments"></i>&nbsp;3</li>
-                            <li><i class="fa fa-eye"></i>&nbsp;<c:out value="${fn:length(likedUsers)}"/></li>
+                            <li><i class="fas fa-thumbs-up"></i>&nbsp;<c:out value="${fn:length(likedUsers)}"/></li>
                         </ul>
                     </div>
                 </div>
@@ -74,7 +74,7 @@
                             </div>
                             <div class="author media">
                                 <div class="media-left">
-                                    <a href="ád">
+                                    <a href="">
                                         <img class="author-img media-object" src="${pageContext.request.contextPath}/Resources/img/avatar-1.jpg" alt="">
                                     </a>
                                 </div>
