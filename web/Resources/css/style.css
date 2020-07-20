@@ -171,6 +171,10 @@ figure>figcaption {
     margin-bottom: 30px;
 }
 
+.section-row.post-section img {
+    max-width: 100%;
+}
+
 .section-title {
     position: relative;
     margin-bottom: 20px;
@@ -256,6 +260,10 @@ textarea.input {
 .secondary-button:hover, .secondary-button:focus {
     background-color: transparent;
     color: #353535;
+}
+
+.primary-background {
+    background: #ee4266 !important; 
 }
 
 /*----------------------------*\
@@ -466,12 +474,6 @@ textarea.input {
     position: relative;
 }
 
-.nav-menu li.has-dropdown>a:after {
-    font-family: 'FontAwesome';
-    content: "\f0d7";
-    margin-left: 5px;
-}
-
 .nav-menu li.has-dropdown>.dropdown {
     position: absolute;
     left: 0;
@@ -625,12 +627,6 @@ textarea.input {
 
 .nav-aside-menu li.has-dropdown>a {
     cursor: pointer;
-}
-
-.nav-aside-menu li.has-dropdown>a:after {
-    font-family: 'FontAwesome';
-    content: "\f0d7";
-    float: right;
 }
 
 .nav-aside-menu li.has-dropdown>.dropdown {
