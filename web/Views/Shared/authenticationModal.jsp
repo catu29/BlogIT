@@ -9,7 +9,7 @@
 
 <c:set var="currentURL" value="<%=request.getRequestURL()%>"/>
 <c:set var="currentQueryString" value="<%=request.getQueryString()%>"/>
-    
+
 
 <div id="authenticationModal" class="modal fade modal-authentication" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
@@ -33,10 +33,8 @@
                         <label class="form-check-label" for="rememberCheck">Remember me</label>
                     </div>
                     <div class="form-group">
-                        <c:out value="url ${currentURL}"/>
-                        <input type="hidden" id="curURI" value="${request.getRequestURL}">
-                        <c:out value="query string ${currentQueryString}"/>
-                        <input type="hidden" id="curQueryString">
+                        <input type="hidden" id="curURL" value="${currentURL}">
+                        <input type="hidden" id="curQueryString" value="${currentQueryString}">
                     </div>
                     <button type="submit" class="primary-button btn-block">Đăng nhập</button>
                 </form>

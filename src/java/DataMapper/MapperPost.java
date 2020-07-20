@@ -8,6 +8,7 @@ package DataMapper;
 import DTO.DTOPost;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -196,11 +197,11 @@ public class MapperPost extends MapperBase {
     
     public boolean insertNewPost(DTOPost post) {
         try {
-            
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss"); 
             String query = "Insert into Post (postTitle, postTitleUnsigned, postTime, userId, seriesId, postContent) values (N'"
                          + post.getPostTitle() + "', '"
                          + post.getPostTitleUnsigned() + "', '"
-                         + post.getPostTime() + "', "
+                         + formatter.format(post.getPostTime()) + "', "
                          + post.getUserId() + ", "
                          + post.getSeriesId() + "', N'"
                          + post.getPostContent() + "');";
@@ -215,12 +216,12 @@ public class MapperPost extends MapperBase {
     
     public boolean updatePost(DTOPost post) {
         try {
-
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss"); 
             String query = "Update Post Set "
                          + "postTitle = N'" + post.getPostTitle() + "', "
                          + "postTitleUnsigned = '" + post.getPostTitleUnsigned() + "', "
                          + "postContent = N'" + post.getPostContent() + "', "
-                         + "postTime = '" + post.getPostTime() + "' "
+                         + "postTime = '" + formatter.format(post.getPostTime()) + "' "
                          + "seriesId = " + post.getSeriesId()
                          + " where postId = " + post.getPostId() + ";";
             PreparedStatement stmt = connection.prepareStatement(query);

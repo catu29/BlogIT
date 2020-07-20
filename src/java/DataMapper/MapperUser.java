@@ -252,7 +252,7 @@ public class MapperUser extends MapperBase {
             
             return user;
         } catch (Exception e) {
-            System.out.println("Search users error: " + e.getMessage());
+            System.out.println("Get users info by email error: " + e.getMessage());
             
             return null;
         }
@@ -272,7 +272,27 @@ public class MapperUser extends MapperBase {
             
             return user;
         } catch (Exception e) {
-            System.out.println("Search users error: " + e.getMessage());
+            System.out.println("Get users info by id error: " + e.getMessage());
+            
+            return null;
+        }
+    }
+    
+    public DTOUser getUserInformation(int id, String name) {
+        try {           
+            String query = "Select * From User Where userId = " + id + " and fullname = '" + name + "';";
+            PreparedStatement stmt = connection.prepareStatement(query);
+            
+            ResultSet rs = stmt.executeQuery(query);
+            
+            rs.next();
+            DTOUser user = new DTOUser(rs.getInt("userId"), rs.getString("password"), rs.getString("email"), rs.getString("fullName"), rs.getString("avatar"), rs.getInt("role"));
+            
+            stmt.close();
+            
+            return user;
+        } catch (Exception e) {
+            System.out.println("Get users info by id and name error: " + e.getMessage());
             
             return null;
         }
@@ -296,7 +316,7 @@ public class MapperUser extends MapperBase {
             
             return result;
         } catch (Exception e) {
-            System.out.println("Search users error: " + e.getMessage());
+            System.out.println("Search users by particular string column error: " + e.getMessage());
             
             return null;
         }
@@ -320,7 +340,7 @@ public class MapperUser extends MapperBase {
             
             return result;
         } catch (Exception e) {
-            System.out.println("Search users error: " + e.getMessage());
+            System.out.println("Search users by particular int column error: " + e.getMessage());
             
             return null;
         }
@@ -349,7 +369,7 @@ public class MapperUser extends MapperBase {
             
             return result;
         } catch (Exception e) {
-            System.out.println("Search users error: " + e.getMessage());
+            System.out.println("Search users by any condition error: " + e.getMessage());
             
             return null;
         }

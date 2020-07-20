@@ -11,17 +11,17 @@
 <%@taglib uri = "http://java.sun.com/jsp/jstl/fmt" prefix = "fmt" %>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 
-<c:set var="userBean" value="${sessionScope.userBean}" />
-<c:set var="listPosts" value="${sessionScope.listPosts}" />
+<c:set var="userProfile" value="${requestScope.userProfile}" />
+<c:set var="listPosts" value="${requestScope.listPosts}" />
 
 <t:layout>
-    <jsp:attribute name="title">${userBean.fullname}</jsp:attribute>
+    <jsp:attribute name="title">${userProfile.fullname}</jsp:attribute>
     <jsp:body>
         <h1>Trang cá nhân</h1>
         <div> Profile info
-            <p>Avatar: <c:out value="${userBean.avatar}" /></p>
-            <p>Full name: <c:out value="${userBean.fullname}" /></p>
-            <p>Email: <c:out value="${userBean.email}" /></p>
+            <p>Avatar: <c:out value="${userProfile.avatar}" /></p>
+            <p>Full name: <c:out value="${userProfile.fullname}" /></p>
+            <p>Email: <c:out value="${userProfile.email}" /></p>
             <p>Số bài viết:
                 <c:choose>
                     <c:when test="${listPosts == null || empty listPosts}">
@@ -44,7 +44,7 @@
                             <p>Tiêu đề: <c:out value="${post.postTitle}"/></p>
                             <p>Tiêu đề không dấu:
                                 <c:url var="postURL" value="${contextPath}/post/detail">
-                                    <c:param name="title" value="${post.postTitleUnsigned}"/>
+                                    <c:param name="name" value="${post.postTitleUnsigned}"/>
                                     <c:param name="%" value="${post.postId}"/>
                                 </c:url>
                                 <a href="${postURL}">

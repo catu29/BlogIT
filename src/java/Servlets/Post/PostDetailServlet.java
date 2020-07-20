@@ -20,6 +20,7 @@ import DTO.DTOUser;
 import DTO.DTOUserSeriesList;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -65,9 +66,9 @@ public class PostDetailServlet extends HttpServlet {
         
         SessionBeanPost postBean = null;
         
-        if (request.getParameter("%") != null && request.getParameter("title") != null) {
+        if (request.getParameter("%") != null && request.getParameter("name") != null) {
             String postId = request.getParameter("%"); // postId
-            String postTitleUnsigned = request.getParameter("title"); // postTitleUnsigned
+            String postTitleUnsigned = request.getParameter("name"); // postTitleUnsigned
             
             BOPost postBO = new BOPost();       
 
@@ -86,7 +87,7 @@ public class PostDetailServlet extends HttpServlet {
                 ArrayList<DTOPost> postsOfUser = postBO.getPostsOfUser(postDTO.getUserId(), 5);
                 ArrayList<DTOPostLike> likesOfPost = likeBO.getAllLikesOfPost(postDTO.getPostId());
                 ArrayList<DTOPostComment> commentsOfPost = commentBO.getAllCommentsForPost(postDTO.getPostId());
-                                
+                                                
                 HttpSession session = request.getSession();
 
                 SessionBeanUserSeriesList seriesBean = new SessionBeanUserSeriesList();
@@ -102,7 +103,7 @@ public class PostDetailServlet extends HttpServlet {
                     
                     for (int i = 0; i < likesOfPost.size(); i++) {
                         if (userBean != null && likesOfPost.get(i).getUserId() == userBean.getUserId()) {
-                            session.setAttribute("isLiked", true);
+                            request.setAttribute("isLiked", true);
                         }
                         
                         DTOUser userLike = userBO.getUserInformation(likesOfPost.get(i).getUserId());
@@ -110,6 +111,18 @@ public class PostDetailServlet extends HttpServlet {
                     }
                     
                     request.setAttribute("likedUsers", likedUsers);
+                }
+                
+                if (commentsOfPost != null && !commentsOfPost.isEmpty()) {
+                    //Map<Integer, DTOUser> commentUser = new HashMap<>();
+                    Map<Integer, String> commentUser = new HashMap<>();
+                    for (int i = 0; i < commentsOfPost.size(); i++) {
+                        DTOUser userComment = userBO.getUserInformation(commentsOfPost.get(i).getUserId());
+                        commentUser.put(commentsOfPost.get(i).getUserId(), userComment.getFullname());
+                        //System.out.println("Id = ")
+                    }
+                    
+                    request.setAttribute("commentUser", commentUser);
                 }
 
                 if (seriesDTO != null) {

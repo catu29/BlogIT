@@ -28,7 +28,7 @@ public class BOPostComment {
         return mapper.updateCommentForPost(comment);
     }
     
-    public boolean deleteCommentForPost(DTOPostComment comment) {
-        return mapper.deleteCommentForPost(comment);
+    public boolean deleteCommentForPost(int commentId) {
+        return mapper.deleteCommentForPost(commentId);
     }
 }

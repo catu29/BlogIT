@@ -11,6 +11,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -99,11 +100,12 @@ public class MapperPostReport extends MapperBase {
     
     public boolean insertNewReport(DTOPostReport report) {
         try {
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss"); 
             String query = "Insert into PostReport(userId, postId, reasonId, reportTime) values ("
                          + report.getUserId() + ", "
                          + report.getPostId() + ", "
                          + report.getReportReasonId() + ", '"
-                         + report.getReportTime() + "');";
+                         + formatter.format(report.getReportTime()) + "');";
             PreparedStatement stmt = connection.prepareStatement(query);
             
             return stmt.executeUpdate(query) > 0;
