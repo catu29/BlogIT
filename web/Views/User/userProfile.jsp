@@ -17,48 +17,75 @@
 <t:layout>
     <jsp:attribute name="title">${userProfile.fullname}</jsp:attribute>
     <jsp:body>
-        <h1>Trang cá nhân</h1>
-        <div> Profile info
-            <p>Avatar: <c:out value="${userProfile.avatar}" /></p>
-            <p>Full name: <c:out value="${userProfile.fullname}" /></p>
-            <p>Email: <c:out value="${userProfile.email}" /></p>
-            <p>Số bài viết:
-                <c:choose>
-                    <c:when test="${listPosts == null || empty listPosts}">
-                    <p>0</p>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="mb-4">
+                    <img class="user-avt" src="${pageContext.request.contextPath}/Resources/img/avatar-2.jpg" alt="">
+                </div>
+                <p>
+                <h3><c:out value="${userBean.fullname}"/></h3>
+                </p>
+                <div>
+                    <c:out value="${userBean.email}" />
+                </div>
+                <p>Số bài viết:
+                    <c:choose>
+                        <c:when test="${listPosts == null || empty listPosts}">
+                        <p>0</p>
                     </c:when>
                     <c:when test="${listPosts != null}">
                         <c:out value="${fn:length(listPosts)}"/>
                     </c:when>
                 </c:choose>
-            </p>
+                </p>
+            </div>
+            <div class="col-md-8">
+                <div class="row">
+                    <c:choose>
+                        <c:when test="${listPosts == null || empty listPosts}">
+                            <p>Chưa có bài viết</p>
+                        </c:when>
+                        <c:when test="${listPosts != null}">
+                            <c:forEach var="post" items="${listPosts}">
+                                <div class="post col-md-12">
+                                    <c:url var="postURL" value="${contextPath}/post/detail">
+                                        <c:param name="title" value="${post.postTitleUnsigned}"/>
+                                        <c:param name="%" value="${post.postId}"/>
+                                    </c:url>
+                                    <a class="post-img" href="${postURL}">
+                                        <img src="${pageContext.request.contextPath}/Resources/img/header-1.jpg" alt="">
+                                    </a>
+                                    <div class="post-body">
+                                        <h3 class="post-title title-sm">
+                                            <a href="${postURL}">
+                                                <c:out value="${post.postTitle}"/>
+                                            </a>
+                                        </h3>
+                                        <ul class="post-meta">
+                                            <li>
+                                                <fmt:formatDate var="postTime" value="${post.postTime}" type="date" dateStyle="short" pattern="dd/MM/yyyy"/>
+                                                <c:out value="${postTime}" />
+                                            </li>
+                                            <li><i class="fa fa-comments"></i>&nbsp;3</li>
+                                            <li><i class="fas fa-thumbs-up"></i>&nbsp;<c:out value="${fn:length(likedUsers)}"/></li>
+                                        </ul>
+                                        <p>
+                                            Hê lô bà con cô bác họ hàng gần xa bà con khối phố. Lại là mình đây, Minh Monmen trong những chia sẻ vụn vặt về quá trình làm những sản phẩm siêu to khổng lồ (tự huyễn hoặc bản thân vậy cho có động lực). Hôm nay mình xin hân hạnh gửi đến các bạn phần tiếp theo của series Nghệ thuật xử lý background job mà mình vừa mới nghĩ được ra thêm.
+                                        </p>
+                                        <div>
+                                            <button class="primary-button">Cập nhật</button>
+                                            <button class="secondary-button">Xóa bài viết</button>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                </div>
+                            </c:forEach>
+                        </c:when>
+                    </c:choose>
+                </div>
+            </div>
         </div>
-        <div> Danh sách bài viết
-            <c:choose>
-                <c:when test="${listPosts == null || empty listPosts}">
-                <p>Chưa có bài viết</p>
-                </c:when>
-                <c:when test="${listPosts != null}">
-                    <c:forEach var="post" items="${listPosts}">
-                        <div> Nội dung bài viết
-                            <p>Tiêu đề: <c:out value="${post.postTitle}"/></p>
-                            <p>Tiêu đề không dấu:
-                                <c:url var="postURL" value="${contextPath}/post/detail">
-                                    <c:param name="name" value="${post.postTitleUnsigned}"/>
-                                    <c:param name="%" value="${post.postId}"/>
-                                </c:url>
-                                <a href="${postURL}">
-                                    <c:out value="${post.postTitleUnsigned}"/>
-                                </a>
-                            </p>
-                            <p>Thời gian: 
-                                <fmt:formatDate var="postTime" value="${post.postTime}" type="date" dateStyle="short" pattern="dd/MM/yyyy"/>
-                                <c:out value="${postTime}" />
-                            </p>
-                        </div>
-                    </c:forEach>
-                </c:when>
-            </c:choose>
-        </div>
+
+
     </jsp:body>
 </t:layout>

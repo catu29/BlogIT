@@ -1496,6 +1496,19 @@ textarea.input {
     margin: 40px auto;
 }
 
+
+/*=========================================================
+        PROFILE
+===========================================================*/
+
+.user-avt {
+    width: 180px;
+    height: 180px;
+    background-size: cover; 
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
 /*=========================================================
         RESPONSIVE
 ===========================================================*/
