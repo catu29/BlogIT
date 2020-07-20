@@ -10,21 +10,25 @@ Create Table User
     email varchar(254) unique,
     fullName nvarchar(50),
     avatar tinytext,
+    bio text,
     role int -- 1 = admin
 );
--- TODO: Thêm bio
+-- TODO: Thêm bio (DONE)
 
 Create Table Post
 (
 	postId int auto_increment primary key,
     postTitle tinytext,
     postTitleUnsigned tinytext,
+    postSubTitle text,
     postTime datetime,
     userId int,
     seriesId int,
+    seriesOrder int,
+    image tinytext,
     postContent text
-);
--- TODO: Thêm cover, order in series, bio
+); 
+-- TODO: Thêm cover, order in series, bio (DONE)
 
 Create Table PostComment
 (
@@ -82,3 +86,4 @@ Create Table PostTag
     primary key(postId, tagId)
 );
 use BLogIT;
+select * from post where seriesId = 1

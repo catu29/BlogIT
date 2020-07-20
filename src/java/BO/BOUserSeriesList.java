@@ -39,11 +39,7 @@ public class BOUserSeriesList {
     public boolean updateUserSeriesByCondition(DTOUserSeriesList list, String column, String condition) {
         return mapper.updateUserSeriesByCondition(list, column, condition);
     }
-    
-    public ArrayList<DTOUserSeriesList> searchSeriesList(int userId) {
-        return mapper.searchSeriesList(userId);
-    }
-    
+        
     public ArrayList<DTOUserSeriesList> searchSeriesList(String condition) {
         return mapper.searchSeriesList(condition);
     }

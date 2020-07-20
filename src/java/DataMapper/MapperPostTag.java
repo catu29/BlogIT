@@ -86,7 +86,7 @@ public class MapperPostTag extends MapperBase {
         try {
             ArrayList<DTOPost> result = new ArrayList();
             
-            String query = "select Post.postId, postTitle, postTitleUnsigned, postTime, userId, seriesId, postContent"
+            String query = "select Post.postId, postTitle, postTitleUnsigned, postSubTitle, postTime, userId, seriesId, seriesOrder, image, postContent"
                     + " from Post inner join PostTag On Post.postId = PostTag.postId "
                     + "Where PostTag.tagId = '" + tagId + "';";
             PreparedStatement stmt = connection.prepareStatement(query);
@@ -99,9 +99,12 @@ public class MapperPostTag extends MapperBase {
                 post.setPostId(rs.getInt("postId"));
                 post.setPostTitle(rs.getString("postTitle"));
                 post.setPostTitleUnsigned(rs.getString("postTitleUnsigned"));
+                post.setPostSubTitle(rs.getString("postSubTitle"));
                 post.setPostTime(rs.getDate("postTime"));
                 post.setUserId(rs.getInt("userId"));
                 post.setSeriesId(rs.getInt("seriesId"));
+                post.setSeriesOrder(rs.getInt("seriesOrder"));
+                post.setImage(rs.getString("image"));
                 post.setPostContent(rs.getString("postContent"));
                 
                 result.add(post);

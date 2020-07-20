@@ -34,9 +34,12 @@ public class MapperPost extends MapperBase {
             post.setPostId(rs.getInt("postId"));
             post.setPostTitle(rs.getString("postTitle"));
             post.setPostTitleUnsigned(rs.getString("postTitleUnsigned"));
+            post.setPostSubTitle(rs.getString("postSubTitle"));
             post.setPostTime(rs.getDate("postTime"));
             post.setUserId(rs.getInt("userId"));
             post.setSeriesId(rs.getInt("seriesId"));
+            post.setSeriesOrder(rs.getInt("seriesOrder"));
+            post.setImage(rs.getString("image"));
             post.setPostContent(rs.getString("postContent"));
             
             return post;
@@ -59,9 +62,12 @@ public class MapperPost extends MapperBase {
             post.setPostId(rs.getInt("postId"));
             post.setPostTitle(rs.getString("postTitle"));
             post.setPostTitleUnsigned(rs.getString("postTitleUnsigned"));
+            post.setPostSubTitle(rs.getString("postSubTitle"));
             post.setPostTime(rs.getDate("postTime"));
             post.setUserId(rs.getInt("userId"));
             post.setSeriesId(rs.getInt("seriesId"));
+            post.setSeriesOrder(rs.getInt("seriesOrder"));
+            post.setImage(rs.getString("image"));
             post.setPostContent(rs.getString("postContent"));
             
             return post;
@@ -86,9 +92,12 @@ public class MapperPost extends MapperBase {
                 post.setPostId(rs.getInt("postId"));
                 post.setPostTitle(rs.getString("postTitle"));
                 post.setPostTitleUnsigned(rs.getString("postTitleUnsigned"));
+                post.setPostSubTitle(rs.getString("postSubTitle"));
                 post.setPostTime(rs.getDate("postTime"));
                 post.setUserId(rs.getInt("userId"));
                 post.setSeriesId(rs.getInt("seriesId"));
+                post.setSeriesOrder(rs.getInt("seriesOrder"));
+                post.setImage(rs.getString("image"));
                 post.setPostContent(rs.getString("postContent"));
                 
                 result.add(post);
@@ -117,9 +126,12 @@ public class MapperPost extends MapperBase {
                 post.setPostId(rs.getInt("postId"));
                 post.setPostTitle(rs.getString("postTitle"));
                 post.setPostTitleUnsigned(rs.getString("postTitleUnsigned"));
+                post.setPostSubTitle(rs.getString("postSubTitle"));
                 post.setPostTime(rs.getDate("postTime"));
                 post.setUserId(rs.getInt("userId"));
                 post.setSeriesId(rs.getInt("seriesId"));
+                post.setSeriesOrder(rs.getInt("seriesOrder"));
+                post.setImage(rs.getString("image"));
                 post.setPostContent(rs.getString("postContent"));
                 
                 result.add(post);
@@ -148,9 +160,12 @@ public class MapperPost extends MapperBase {
                 post.setPostId(rs.getInt("postId"));
                 post.setPostTitle(rs.getString("postTitle"));
                 post.setPostTitleUnsigned(rs.getString("postTitleUnsigned"));
+                post.setPostSubTitle(rs.getString("postSubTitle"));
                 post.setPostTime(rs.getDate("postTime"));
                 post.setUserId(rs.getInt("userId"));
                 post.setSeriesId(rs.getInt("seriesId"));
+                post.setSeriesOrder(rs.getInt("seriesOrder"));
+                post.setImage(rs.getString("image"));
                 post.setPostContent(rs.getString("postContent"));
                 
                 result.add(post);
@@ -158,7 +173,7 @@ public class MapperPost extends MapperBase {
             
             return result;
         } catch (Exception e) {
-            System.out.println("Get all posts of user error: " + e.getMessage());
+            System.out.println("Get n posts of user error: " + e.getMessage());
             
             return null;
         }
@@ -179,9 +194,12 @@ public class MapperPost extends MapperBase {
                 post.setPostId(rs.getInt("postId"));
                 post.setPostTitle(rs.getString("postTitle"));
                 post.setPostTitleUnsigned(rs.getString("postTitleUnsigned"));
+                post.setPostSubTitle(rs.getString("postSubTitle"));
                 post.setPostTime(rs.getDate("postTime"));
                 post.setUserId(rs.getInt("userId"));
                 post.setSeriesId(rs.getInt("seriesId"));
+                post.setSeriesOrder(rs.getInt("seriesOrder"));
+                post.setImage(rs.getString("image"));
                 post.setPostContent(rs.getString("postContent"));
                 
                 result.add(post);
@@ -200,10 +218,13 @@ public class MapperPost extends MapperBase {
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss"); 
             String query = "Insert into Post (postTitle, postTitleUnsigned, postTime, userId, seriesId, postContent) values (N'"
                          + post.getPostTitle() + "', '"
-                         + post.getPostTitleUnsigned() + "', '"
+                         + post.getPostTitleUnsigned() + "', N'"
+                         + post.getPostSubTitle() + "', "
                          + formatter.format(post.getPostTime()) + "', "
                          + post.getUserId() + ", "
-                         + post.getSeriesId() + "', N'"
+                         + post.getSeriesId() + "', "
+                         + post.getSeriesOrder() + ", '"
+                         + post.getImage() + "', N'"
                          + post.getPostContent() + "');";
             PreparedStatement stmt = connection.prepareStatement(query);
             
@@ -220,10 +241,13 @@ public class MapperPost extends MapperBase {
             String query = "Update Post Set "
                          + "postTitle = N'" + post.getPostTitle() + "', "
                          + "postTitleUnsigned = '" + post.getPostTitleUnsigned() + "', "
+                         + "postSubTitle = N'" + post.getPostTitleUnsigned() + "', "
                          + "postContent = N'" + post.getPostContent() + "', "
                          + "postTime = '" + formatter.format(post.getPostTime()) + "' "
                          + "seriesId = " + post.getSeriesId()
-                         + " where postId = " + post.getPostId() + ";";
+                         + "seriesOrder = " + post.getSeriesOrder()
+                         + "image = '" + post.getImage() + "' "
+                         + "where postId = " + post.getPostId() + ";";
             PreparedStatement stmt = connection.prepareStatement(query);
             
             return stmt.executeUpdate(query) > 0;

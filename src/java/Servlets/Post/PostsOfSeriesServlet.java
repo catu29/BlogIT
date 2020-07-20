@@ -5,13 +5,13 @@
  */
 package Servlets.Post;
 
-import BO.BOPostTag;
-import BO.BOTagList;
+import BO.BOPost;
 import BO.BOUser;
-import Beans.SessionBeanTagList;
+import BO.BOUserSeriesList;
+import Beans.SessionBeanUserSeriesList;
 import DTO.DTOPost;
-import DTO.DTOTagList;
 import DTO.DTOUser;
+import DTO.DTOUserSeriesList;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,7 +26,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author TranCamTu
  */
-public class PostsOfTagServlet extends HttpServlet {
+public class PostsOfSeriesServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,6 +40,7 @@ public class PostsOfTagServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -55,41 +56,40 @@ public class PostsOfTagServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-
+                    
         if (request.getParameter("id") != null) {
-            String tagId = request.getParameter("id");
-
-            BOTagList listBO = new BOTagList();
-            BOPostTag tagBO = new BOPostTag();
-            BOUser userBO = new BOUser();
-
-            DTOTagList listDTO = listBO.searchTagById(tagId);
-            ArrayList<DTOPost> postsOfTag = tagBO.getAllPostsForTag(tagId);
-
-            SessionBeanTagList tagBean = new SessionBeanTagList();
-
-            if (listDTO != null) {
-                tagBean.initFromDTO(listDTO);
-                request.setAttribute("mainName", tagBean.getTagName());
+            String seriesId = request.getParameter("id");
+                        
+            BOUserSeriesList seriesBO = new BOUserSeriesList();
+            DTOUserSeriesList seriesDTO = seriesBO.getSeriesInformation(Integer.parseInt(seriesId));
+            
+            if (seriesDTO != null) {
+                SessionBeanUserSeriesList seriesBean = new SessionBeanUserSeriesList();
+                seriesBean.initFromDTO(seriesDTO);
+                
+                request.setAttribute("mainBean", seriesBean);
             } else {
-                tagBean = null;
+                request.setAttribute("mainBean", null);
             }
-
-            if (postsOfTag != null && !postsOfTag.isEmpty()) {
+            
+            BOPost postBO = new BOPost();
+            ArrayList<DTOPost> postList = postBO.getAllPostsOfSeries(Integer.parseInt(seriesId));
+            
+            if (postList != null && !postList.isEmpty()) {
                 Map<Integer, DTOUser> authorOfPost = new HashMap<>();
-
-                for (DTOPost post : postsOfTag) {
+                BOUser userBO = new BOUser();
+                
+                for (DTOPost post : postList) {
                     DTOUser authorDTO = userBO.getUserInformation(post.getUserId());
                     authorOfPost.put(post.getPostId(), authorDTO);
                 }
 
                 request.setAttribute("authorOfPost", authorOfPost);
             }
-
-            request.setAttribute("mainBean", tagBean);
-            request.setAttribute("listPosts", postsOfTag);
-
-            RequestDispatcher rd = request.getRequestDispatcher("/Views/Post/postsOfTag.jsp");
+            
+            request.setAttribute("listPosts", postList);
+            
+            RequestDispatcher rd = request.getRequestDispatcher("/Views/Post/postsOfSeries.jsp");
             rd.forward(request, response);
         }
     }
@@ -115,7 +115,7 @@ public class PostsOfTagServlet extends HttpServlet {
      */
     @Override
     public String getServletInfo() {
-        return "Post of tag servlet";
+        return "Posts of series servlet";
     }// </editor-fold>
 
 }

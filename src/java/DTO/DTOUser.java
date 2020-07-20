@@ -15,16 +15,18 @@ public class DTOUser {
     String email;
     String fullname;
     String avatar;
+    String bio;
     int role;
     
     public DTOUser() { }
     
-    public DTOUser(int userId, String password, String email, String fullname, String avatar, int role) {
+    public DTOUser(int userId, String password, String email, String fullname, String avatar, String bio, int role) {
         this.userId = userId;
         this.password = password;
         this.email = email;
         this.fullname = fullname;
         this.avatar = avatar;
+        this.bio = bio;
         this.role = role;
     }
     
@@ -75,7 +77,15 @@ public class DTOUser {
     public void setAvatar(String avatar) {
         this.avatar = avatar;
     }
-    
+
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
+        
     public int getRole() {
         return role;
     }

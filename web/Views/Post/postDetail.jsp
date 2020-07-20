@@ -6,9 +6,7 @@
 
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
 <%@taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
-<%@taglib uri = "http://java.sun.com/jsp/jstl/fmt" prefix = "fmt" %>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 
 <c:set var="postBean" value="${requestScope.postBean}" />
@@ -28,19 +26,24 @@
     <jsp:attribute name="postHeader">
         <!-- PAGE HEADER -->
         <div id="post-header" class="page-header">
-            <div class="page-header-bg" style="background-image: url('${pageContext.request.contextPath}/Resources/img/header-1.jpg');" data-stellar-background-ratio="0.5"></div>
+            <div class="page-header-bg" style="background-image: url('${pageContext.request.contextPath}/Resources/img/${postBean.image}.jpg');" data-stellar-background-ratio="0.5"></div>
             <div class="container">
                 <div class="row">
                     <div class="col-md-10">
                         <div class="post-category">
                             <c:if test="${seriesBean != null}">
-                                <a href="">${seriesBean.seriesName}</a>
-                                <!--TODO: Build series of posts page -->
+                                <c:url var="seriesURL" value="${contextPath}/series">
+                                    <c:param name="id" value="${seriesBean.seriesId}"/>
+                                </c:url>
+                                <a href="${seriesURL}">${seriesBean.seriesName}</a>
                             </c:if>
                         </div>
                         <h1>${postBean.postTitle}</h1>
                         <ul class="post-meta">
-                            <li><a href="">${authorBean.fullname}</a></li>
+                            <c:url var="authorURL" value="${contextPath}/user/profile">
+                                <c:param name="id" value="${authorBean.userId}"/>
+                            </c:url>
+                            <li><a href="authorURL">${authorBean.fullname}</a></li>
                             <li>
                                 <fmt:formatDate var="postTime" value="${postBean.postTime}" type="date" dateStyle="short" pattern="dd/MM/yyyy"/>
                                 <c:out value="${postTime}"/>
@@ -91,8 +94,7 @@
                                     </a>
                                 </div>
                                 <div class="media-body">
-                                    <p>Thêm cột bio cho author</p>
-                                    <!-- TODO: Add bio for author -->
+                                    <p>${authorBean.bio}</p>                               
                                 </div>
                             </div>
                         </div>
@@ -198,7 +200,7 @@
                                     <c:param name="%" value="${post.postId}"/>
                                 </c:url>
                                 <a class="post-img" href="${postURL}">
-                                    <img src="${pageContext.request.contextPath}/Resources/img/header-1.jpg" alt="${postURL}">
+                                    <img src="${pageContext.request.contextPath}/Resources/img/${post.image}" alt="${postURL}">
                                 </a>
                                 <div class="post-body">
                                     <h4 class="post-title">
@@ -223,14 +225,14 @@
                         <h3 class="title">Cùng tác giả</h3>
                     </div>
                     <c:forEach var="post" items="${postsOfUser}">
-                        <c:if test="${post.postId != postBean.postId}">
+                        <c:if test="${post.postId != postBean.postId && post.seriesId != seriesBean.seriesId}">
                             <div class="post post-widget">
                                 <c:url var="postURL" value="${contextPath}/post/detail">
-                                    <c:param name="title" value="${post.postTitleUnsigned}"/>
+                                    <c:param name="name" value="${post.postTitleUnsigned}"/>
                                     <c:param name="%" value="${post.postId}"/>
                                 </c:url>
                                 <a class="post-img" href="${postURL}">
-                                    <img src="${pageContext.request.contextPath}/Resources/img/header-1.jpg" alt="${postURL}">
+                                    <img src="${pageContext.request.contextPath}/Resources/img/${post.image}" alt="${postURL}">
                                 </a>
                                 <div class="post-body">
                                     <h4 class="post-title">

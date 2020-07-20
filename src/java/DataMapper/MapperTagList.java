@@ -35,7 +35,7 @@ public class MapperTagList extends MapperBase {
                         
             return stmt.executeUpdate(query) > 0;
         } catch (Exception e) {
-            System.out.println("Update tag error: " + e.getMessage());
+            System.out.println("Update tag name error: " + e.getMessage());
             
             return false;
         }
@@ -48,7 +48,7 @@ public class MapperTagList extends MapperBase {
             
             return stmt.executeUpdate(query) > 0;
         } catch (Exception e) {
-            System.out.println("Update tag error: " + e.getMessage());
+            System.out.println("Delete tag error: " + e.getMessage());
             
             return false;
         }
@@ -86,7 +86,7 @@ public class MapperTagList extends MapperBase {
             
             return new DTOTagList(rs.getString("tagId"), rs.getString("tagName"));
         } catch (Exception e) {
-            System.out.println("Search tags error: " + e.getMessage());
+            System.out.println("Search tags by id error: " + e.getMessage());
             
             return null;
         }
@@ -109,7 +109,7 @@ public class MapperTagList extends MapperBase {
             
             return result;
         } catch (Exception e) {
-            System.out.println("Search tags error: " + e.getMessage());
+            System.out.println("Search tags by name error: " + e.getMessage());
             
             return null;
         }

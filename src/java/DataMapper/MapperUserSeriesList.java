@@ -158,36 +158,7 @@ public class MapperUserSeriesList extends MapperBase {
             return false;
         }
     }
-    
-    /***
-     * Search all series of a particular user
-     * @param userId - the user who wanted to be searched
-     * @return - ArrayList of DTOUserSeriesList if found.
-     *         - null if nothing found
-     */
-    public ArrayList<DTOUserSeriesList> searchSeriesList(int userId) {
-        try {
-            ArrayList<DTOUserSeriesList> result = new ArrayList();
-            
-            String query = "Select * From UserSeriesList Where userId = " + userId;
-            PreparedStatement stmt = connection.prepareStatement(query);
-            
-            
-            ResultSet rs = stmt.executeQuery(query);
-            
-            while(rs.next()) {
-                DTOUserSeriesList list = new DTOUserSeriesList(rs.getInt("seriesId"), rs.getInt("userId"), rs.getString("seriesName"), rs.getString("seriesNameUnsigned"));
-                result.add(list);
-            }
-            
-            return result;
-        } catch (Exception e) {
-            System.out.println("Search user series list error: " + e.getMessage());
-            
-            return null;
-        }
-    }
-    
+        
     /***
      * Search all series lists match condition
      * @param condition - which info will be searched

@@ -49,6 +49,10 @@ public class BOUser {
         return mapper.updateUserAvatar(user, avatar);
     }
     
+    public boolean updateUserBio(DTOUser user, String bio) {
+        return mapper.updateUserBio(user, bio);
+    }
+    
     public boolean updateUserRole(DTOUser user, int role) {
         return mapper.updateUserRole(user, role);
     }

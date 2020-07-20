@@ -123,8 +123,6 @@ public class PostDetailServlet extends HttpServlet {
                     for (int i = 0; i < commentsOfPost.size(); i++) {
                         DTOUser userComment = userBO.getUserInformation(commentsOfPost.get(i).getUserId());
                         commentedUsers.put(commentsOfPost.get(i).getUserId(), userComment);
-                        System.out.println("Comment id: " + commentsOfPost.get(i).getCommentId());
-                        System.out.println("Parent id: " + commentsOfPost.get(i).getParentId());
                     }
                     
                     request.setAttribute("commentedUsers", commentedUsers);

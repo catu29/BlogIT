@@ -15,21 +15,31 @@ public class DTOPost {
     int postId;
     String postTitle;
     String postTitleUnsigned;
+    String postSubTitle;
     Date postTime;
     int userId;
     int seriesId;
+    int seriesOrder;
+    String image;
     String postContent;
 
     public DTOPost() {
     }
 
-    public DTOPost(int postId, String postTitle, String postTitleUnsigned, Date postTime, int userId, int seriesId, String postContent) {
+    public DTOPost(int postId, 
+            String postTitle, String postTitleUnsigned, String postSubTitle, 
+            Date postTime, int userId, 
+            int seriesId, int seriesOrder, 
+            String image, String postContent) {
         this.postId = postId;
         this.postTitle = postTitle;
         this.postTitleUnsigned = postTitleUnsigned;
+        this.postSubTitle = postSubTitle;
         this.postTime = postTime;
         this.userId = userId;
         this.seriesId = seriesId;
+        this.seriesId = seriesId;
+        this.image = image;
         this.postContent = postContent;
     }
 
@@ -57,6 +67,14 @@ public class DTOPost {
         this.postTitleUnsigned = postTitleUnsigned;
     }
 
+    public String getPostSubTitle() {
+        return postSubTitle;
+    }
+
+    public void setPostSubTitle(String postSubTitle) {
+        this.postSubTitle = postSubTitle;
+    }
+
     public Date getPostTime() {
         return postTime;
     }
@@ -79,6 +97,22 @@ public class DTOPost {
 
     public void setSeriesId(int seriesId) {
         this.seriesId = seriesId;
+    }
+
+    public int getSeriesOrder() {
+        return seriesOrder;
+    }
+
+    public void setSeriesOrder(int seriesOrder) {
+        this.seriesOrder = seriesOrder;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public String getPostContent() {
