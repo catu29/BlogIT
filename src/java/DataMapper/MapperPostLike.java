@@ -8,6 +8,7 @@ package DataMapper;
 import DTO.DTOPostLike;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 /**
@@ -82,12 +83,28 @@ public class MapperPostLike extends MapperBase {
         }
     }
     
+    public boolean isLiked(int postId, int userId) {
+        try {
+            String query = "Select * From PostLike where postId = " + postId + " and userId = " + userId;
+            PreparedStatement stmt = connection.prepareStatement(query);
+            
+            ResultSet rs = stmt.executeQuery(query);
+            
+            return rs.next();
+        } catch (Exception e) {
+            System.out.println("Check isLiked error: " + e.getMessage());
+            return false;
+        }
+    }
+    
     public boolean insertNewLike(DTOPostLike like) {
         try {
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss"); 
+            
             String query = "Insert into PostLike values ("
                            + like.getPostId() + ", "
                            + like.getUserId() + ", '" 
-                           + like.getLikeTime() + "');";
+                           + formatter.format(like.getLikeTime()) + "');";
             PreparedStatement stmt = connection.prepareStatement(query);
             
             return stmt.executeUpdate(query) > 0;

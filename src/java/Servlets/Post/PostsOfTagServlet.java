@@ -3,32 +3,21 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Test;
+package Servlets.Post;
 
-import BO.BOPostReport;
-import BO.BOUser;
-import DTO.DTOPostReport;
-import DTO.DTOUser;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import DataAccess.MySqlConnection;
-import DataMapper.MapperUser;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-
 /**
  *
  * @author TranCamTu
  */
-public class TestServlet extends HttpServlet{
+public class PostsOfTagServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,7 +30,7 @@ public class TestServlet extends HttpServlet{
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+        response.setContentType("text/html;charset=UTF-8");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -56,14 +45,11 @@ public class TestServlet extends HttpServlet{
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        BOPostReport reportBO = new BOPostReport();
-        ArrayList<DTOPostReport> reportList = reportBO.getAllPostReport();
+        processRequest(request, response);
         
-        if (reportList == null) {
-            System.out.println("Report list null");
-        } else {
-            System.out.println("Report list size: " + reportList.size());
-        }
+        
+        RequestDispatcher rd = request.getRequestDispatcher("Views/Post/postsOfTag.jsp");
+        rd.forward(request, response);
     }
 
     /**

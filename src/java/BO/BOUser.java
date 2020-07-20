@@ -71,6 +71,10 @@ public class BOUser {
         return mapper.getUserInformation(id);
     }
     
+    public DTOUser getUserInformation(int id, String name) {
+        return mapper.getUserInformation(id, name);
+    }
+    
     public ArrayList<DTOUser> searchUser(String column, String condition) {
         return mapper.searchUser(column, condition);
     }

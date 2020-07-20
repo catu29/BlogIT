@@ -9,6 +9,7 @@ import DTO.DTOPostComment;
 import java.util.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -53,11 +54,12 @@ public class MapperPostComment extends MapperBase {
     
     public boolean insertCommentForPost(DTOPostComment comment) {
         try {
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss"); 
             String query = "Insert into PostComment (userId, postId, content, commentTime, parentId) values ("
                            + comment.getUserId() + ", " 
                            + comment.getPostId() + ", N'" 
                            + comment.getContent() + "', '"
-                           + comment.getCommentTime() + "', "
+                           + formatter.format(comment.getCommentTime()) + "', "
                            + comment.getParentId() + ");";
             PreparedStatement stmt = connection.prepareStatement(query);
             
@@ -71,11 +73,11 @@ public class MapperPostComment extends MapperBase {
     
     public boolean updateCommentForPost(DTOPostComment comment) {
         try {
-            
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
             String query = "Update PostComment Set "
                          + "content = N'" + comment.getContent() + "', "
-                         + "commentTime = " + comment.getCommentTime()
-                         + " Where commentId = " + comment.getCommentId() + ";";
+                         + "commentTime = '" + formatter.format(comment.getCommentTime())
+                         + "' Where commentId = " + comment.getCommentId() + ";";
             
             PreparedStatement stmt = connection.prepareStatement(query);
             
@@ -87,15 +89,15 @@ public class MapperPostComment extends MapperBase {
         }
     }
     
-    public boolean deleteCommentForPost(DTOPostComment comment) {
+    public boolean deleteCommentForPost(int commentId) {
         try {            
-            String query = "Delete From PostComment Where commentId = " + comment.getCommentId() + ";";
+            String query = "Delete From PostComment Where commentId = " + commentId + " or parentId = " + commentId;
             
             PreparedStatement stmt = connection.prepareStatement(query);
             
             return stmt.executeUpdate(query) > 0;
         } catch (Exception e) {
-            System.out.println("Update Comment error: " + e.getMessage());
+            System.out.println("Delete Comment error: " + e.getMessage());
             
             return false;
         }

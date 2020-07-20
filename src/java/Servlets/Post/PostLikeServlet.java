@@ -3,32 +3,27 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Test;
+package Servlets.Post;
 
-import BO.BOPostReport;
-import BO.BOUser;
-import DTO.DTOPostReport;
-import DTO.DTOUser;
+import BO.BOPostLike;
+import Beans.SessionBeanUser;
+import DTO.DTOPostLike;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.util.Date;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import DataAccess.MySqlConnection;
-import DataMapper.MapperUser;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author TranCamTu
  */
-public class TestServlet extends HttpServlet{
+public class PostLikeServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,7 +36,7 @@ public class TestServlet extends HttpServlet{
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+        response.setContentType("text/html;charset=UTF-8");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -56,14 +51,43 @@ public class TestServlet extends HttpServlet{
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        BOPostReport reportBO = new BOPostReport();
-        ArrayList<DTOPostReport> reportList = reportBO.getAllPostReport();
+                
+        processRequest(request, response);
         
-        if (reportList == null) {
-            System.out.println("Report list null");
+        HttpSession session = request.getSession(true);
+        SessionBeanUser userBean = (SessionBeanUser) session.getAttribute("userBean");
+        
+        String result;
+        
+        if (userBean != null & request.getParameter("postId") != null) {
+            String postId = request.getParameter("postId");                         
+            Date date = new Date();
+            
+            DTOPostLike likeDTO = new DTOPostLike(Integer.parseInt(postId), userBean.getUserId(), date);
+            BOPostLike likeBO = new BOPostLike();
+            
+            boolean isLiked = likeBO.isLiked(Integer.parseInt(postId), userBean.getUserId());            
+
+            if ((!isLiked && likeBO.insertNewLike(likeDTO)) || (isLiked && likeBO.deleteLike(Integer.parseInt(postId), userBean.getUserId()))) {
+                result = "succeeded";                
+            } else {
+                result = "failed";
+            }
         } else {
-            System.out.println("Report list size: " + reportList.size());
+            if (userBean == null) {
+                System.out.println("User bean null");
+            }
+            
+            if (request.getParameter("postId") == null) {
+                System.out.println("Post id null");
+            }
+                        
+            result = "failed";
         }
+        
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().write(result);
     }
 
     /**

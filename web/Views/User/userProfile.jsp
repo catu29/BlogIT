@@ -11,11 +11,11 @@
 <%@taglib uri = "http://java.sun.com/jsp/jstl/fmt" prefix = "fmt" %>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 
-<c:set var="userBean" value="${sessionScope.userBean}" />
-<c:set var="listPosts" value="${sessionScope.listPosts}" />
+<c:set var="userProfile" value="${requestScope.userProfile}" />
+<c:set var="listPosts" value="${requestScope.listPosts}" />
 
 <t:layout>
-    <jsp:attribute name="title">${userBean.fullname}</jsp:attribute>
+    <jsp:attribute name="title">${userProfile.fullname}</jsp:attribute>
     <jsp:body>
         <div class="row">
             <div class="col-md-4">

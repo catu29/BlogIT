@@ -28,6 +28,10 @@ public class BOPostLike {
         return mapper.getAllLikesOfUser(userId);
     }
     
+    public boolean isLiked(int postId, int userId) {
+        return mapper.isLiked(postId, userId);
+    }
+    
     public boolean insertNewLike(DTOPostLike like) {
         return mapper.insertNewLike(like);
     }

@@ -131,7 +131,6 @@ public class RegisterServlet extends HttpServlet {
                     session.setAttribute("userBean", userBean);
                     
                     response.sendRedirect(getServletContext().getContextPath() + "/user/profile?id=" + userBean.getUserId());
-                    
                 } else {
                     request.setAttribute("message", "Đã có lỗi xảy ra.");             
                     request.setAttribute("userDTO", userDTO);
