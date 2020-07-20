@@ -17,22 +17,6 @@
 <t:layout>
     <jsp:attribute name="title">Login</jsp:attribute>
     <jsp:body>
-        <button id="testajax" type="button">TEST</button>
-        <script>
-            $.ajax({
-                method: 'GET',
-                url: "${contextPath}/post/detail/like",
-                params: {
-                    postId: '3',
-                    userId: '1'
-                },
-                success: function (data) {
-                    alert(data);
-                },
-                error: function () {
-                    alert('error');
-                }
-            });
-        </script>
+        Tag page
     </jsp:body>    
 </t:layout>

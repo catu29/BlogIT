@@ -5,13 +5,13 @@
  */
 package Servlets.Post;
 
+import BO.BOPostComment;
 import BO.BOPostLike;
 import Beans.SessionBeanUser;
+import DTO.DTOPostComment;
 import DTO.DTOPostLike;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.SimpleDateFormat;
-import java.time.Instant;
 import java.util.Date;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -23,7 +23,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author TranCamTu
  */
-public class PostLikeServlet extends HttpServlet {
+public class PostCommentServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -51,7 +51,21 @@ public class PostLikeServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-                
+        processRequest(request, response);
+               
+    }
+
+    /**
+     * Handles the HTTP <code>POST</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         processRequest(request, response);
         
         HttpSession session = request.getSession(true);
@@ -59,17 +73,32 @@ public class PostLikeServlet extends HttpServlet {
         
         String result;
         
-        if (userBean != null & request.getParameter("postId") != null) {
-            String postId = request.getParameter("postId");                         
+        if (request.getParameter("message") == null|| request.getParameter("message").trim().isEmpty()){
+            result = "failed";
+        } 
+        else if (userBean != null && request.getParameter("postId") != null) {
+            String postId = request.getParameter("postId");
+            String message = request.getParameter("message");
             Date date = new Date();
+            int parentId;
             
-            DTOPostLike likeDTO = new DTOPostLike(Integer.parseInt(postId), userBean.getUserId(), date);
-            BOPostLike likeBO = new BOPostLike();
+            if (request.getParameter("parentId") == null) {
+                parentId = 0;
+            } else {
+                parentId = Integer.parseInt(request.getParameter("parentId"));
+            }
             
-            boolean isLiked = likeBO.isLiked(Integer.parseInt(postId), userBean.getUserId());            
-
-            if ((!isLiked && likeBO.insertNewLike(likeDTO)) || (isLiked && likeBO.deleteLike(Integer.parseInt(postId), userBean.getUserId()))) {
-                result = "succeeded";                
+            DTOPostComment commentDTO = new DTOPostComment();
+            commentDTO.setPostId(Integer.parseInt(postId));
+            commentDTO.setUserId(userBean.getUserId());
+            commentDTO.setContent(message);
+            commentDTO.setCommentTime(date);
+            commentDTO.setParentId(parentId);
+            
+            BOPostComment commentBO = new BOPostComment();
+            
+            if (commentBO.insertCommentForPost(commentDTO)) {
+                result = "succeeded";
             } else {
                 result = "failed";
             }
@@ -91,27 +120,13 @@ public class PostLikeServlet extends HttpServlet {
     }
 
     /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
-
-    /**
      * Returns a short description of the servlet.
      *
      * @return a String containing servlet description
      */
     @Override
     public String getServletInfo() {
-        return "Short description";
+        return "Post comment servlet";
     }// </editor-fold>
 
 }

@@ -17,10 +17,11 @@
 <c:set var="postsOfSeries" value="${requestScope.postsOfSeries}" />
 <c:set var="postsOfUser" value="${requestScope.postsOfUser}" />
 <c:set var="likesOfPost" value="${requestScope.likesOfPost}" />
-<c:set var="commentsOfPost" value="${requestScope.commentsOfPost}" />
 <c:set var="isLiked" value="${requestScope.isLiked}" />
 <c:set var="likedUsers" value="${requestScope.likedUsers}" />
-<c:set var="commentUser" value="${requestScope.commentUser}" />
+<c:set var="commentsOfPost" value="${requestScope.commentsOfPost}" />
+<c:set var="commentedUsers" value="${requestScope.commentedUsers}" />
+<c:set var="tagsOfPost" value="${requestScope.tagsOfPost}" />
 
 <t:layout>
     <jsp:attribute name="title">${postBean.postTitle}</jsp:attribute>
@@ -59,12 +60,16 @@
                 <c:choose>
                     <c:when test="${postBean != null}">
                         <div class="section-row">
-                            <div class="post-share">
-                                <a href="" class="primary-background">Tag 1</a>
-                                <a href="" class="primary-background">Tag 1</a>
-                                <a href="" class="primary-background">Tag 1</a>
-                                <!--TODO: Build list posts of tag page -->
-                            </div>
+                            <c:if test="${tagsOfPost != null && not empty tagsOfPost}">
+                                <div class="post-share">
+                                    <c:forEach var="tag" items="${tagsOfPost}">                                    
+                                        <c:url var="tagURL" value="${contextPath}/tag">
+                                            <c:param name="id" value="${tag.tagId}"/>
+                                        </c:url>
+                                        <a href="${tagURL}" class="primary-background"><c:out value="${tag.tagName}"/></a>                                                                       
+                                    </c:forEach>
+                                </div>
+                            </c:if>
                         </div>
                         <div class="section-row post-section">
                             ${postBean.postContent}
@@ -96,7 +101,7 @@
                             <div class="section-title">
                                 <h3 class="title">Gửi bình luận</h3>
                             </div>
-                            <form class="post-reply">
+                            <form class="post-reply" action="${pageContext.request.contextPath}/post/detail/comment" method="POST">
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
@@ -111,84 +116,62 @@
                             </form>
                         </div>
                         <!-- /post reply -->
-                        <!-- post comments -->
-                        <!-- <div id="Các lượt bình luận">
-                            <h2>Comments</h2>
-                            <c:if test="${commentsOfPost != null && not empty commentsOfPost}">
-                                <p>
+                        <!-- post comments -->                        
+                        <div class="section-row">
+                            <div class="section-title">
+                                <h3 class="title"><c:out value="${fn:length(commentsOfPost)} bình luận"/></h3>
+                            </div>
+                            <div class="post-comments">                                
+                                <c:if test="${commentsOfPost != null && not empty commentsOfPost}">
                                     <c:forEach var="comment" items="${commentsOfPost}">
                                         <c:set var="userId" value="${comment.userId}"/>
                                         <c:url var="profileURL" value="${contextPath}/user/profile">
                                             <c:param name="id" value="${userId}"/>
                                         </c:url>
-                                        <a href="${profileURL}"><c:out value="${commentUser[userId]} " /></a>
-                                        <c:out value="${comment.content}" /> </br>                                    
-                                        <fmt:formatDate var="commentTime" value="${comment.commentTime}" type="date" dateStyle="short" pattern="HH:mm:ss dd/MM/yyyy"/>
-                                        <c:out value="${commentTime}" /> </br></br>
-                                    </c:forEach>
-                                </p>
-                            </c:if>
-                        </div>
-                         -->
-                        <!-- TODO: Render comments data-->
-                        <div class="section-row">
-                            <div class="section-title">
-                                <h3 class="title">3 Bình luận</h3>
-                            </div>
-                            <div class="post-comments">
-                                <!-- comment -->
-                                <div class="media">
-                                    <div class="media-left">
-                                        <img class="media-object" src="${pageContext.request.contextPath}/Resources/img/avatar-2.jpg" alt="">
-                                    </div>
-                                    <div class="media-body">
-                                        <div class="media-heading">
-                                            <h4>John Doe</h4>
-                                            <span class="time">5 min ago</span>
-                                        </div>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-                                        <a href="#" class="reply">Reply</a>
                                         <!-- comment -->
-                                        <div class="media media-author">
-                                            <div class="media-left">
-                                                <img class="media-object" src="${pageContext.request.contextPath}/Resources/img/avatar-1.jpg" alt="">
-                                            </div>
-                                            <div class="media-body">
-                                                <div class="media-heading">
-                                                    <h4>John Doe</h4>
-                                                    <span class="time">5 min ago</span>
+                                        <c:if test="${comment.parentId == 0}">
+                                            <div class="media">
+                                                <div class="media-left">
+                                                    <a href="${profileURL}"><img class="media-object" src="${pageContext.request.contextPath}/Resources/img/${commentedUsers[userId].avatar}" alt=""></a>
                                                 </div>
-                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-                                                <a href="#" class="reply">Reply</a>
+                                                <div class="media-body">
+                                                    <div class="media-heading">
+                                                        <h4><a href="${profileURL}"><c:out value="${commentedUsers[userId].fullname}"/></a></h4>
+                                                        <span class="time">
+                                                            <fmt:formatDate var="commentTime" value="${comment.commentTime}" type="date" dateStyle="short" pattern="HH:mm:ss dd/MM/yyyy"/>
+                                                            <c:out value="${commentTime}" />
+                                                        </span>
+                                                    </div>
+                                                    <p><c:out value="${comment.content}" /></p>
+                                                    <a href="#" class="reply">Reply</a>
+                                                    <!-- comment -->
+                                                    <div class="media media-author">
+                                                        <div class="media-left">
+                                                            <img class="media-object" src="${pageContext.request.contextPath}/Resources/img/avatar-1.jpg" alt="">
+                                                        </div>
+                                                        <div class="media-body">
+                                                            <div class="media-heading">
+                                                                <h4>John Doe</h4>
+                                                                <span class="time">5 min ago</span>
+                                                            </div>
+                                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                                                            <a href="#" class="reply">Reply</a>
+                                                        </div>
+                                                    </div>
+                                                    <!-- TODO: Style for reply--> 
+                                                    <!-- /comment -->
+                                                </div>
                                             </div>
-                                        </div>
+                                        </c:if>
                                         <!-- /comment -->
-                                    </div>
-                                </div>
-                                <!-- /comment -->
-
-                                <!-- comment -->
-                                <div class="media">
-                                    <div class="media-left">
-                                        <img class="media-object" src="${pageContext.request.contextPath}/Resources/img/avatar-3.jpg" alt="">
-                                    </div>
-                                    <div class="media-body">
-                                        <div class="media-heading">
-                                            <h4>John Doe</h4>
-                                            <span class="time">5 min ago</span>
-                                        </div>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-                                        <a href="#" class="reply">Reply</a>
-                                    </div>
-                                </div>
-                                <!-- /comment -->
+                                    </c:forEach>
+                                </c:if>
                             </div>
                         </div>
                         <!-- /post comments -->
                         <p>
                             <c:url var="likePostURL" value="${contextPath}/post/detail/like">
                                 <c:param name="postId" value="${postBean.postId}" />
-                                <c:param name="userId" value="${userBean.userId}" />
                             </c:url>
                             <a href="${likePostURL}">Like this post</a>
                         </p>

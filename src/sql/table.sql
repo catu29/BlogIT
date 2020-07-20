@@ -82,4 +82,3 @@ Create Table PostTag
     primary key(postId, tagId)
 );
 use BLogIT;
-Select * from PostReport;

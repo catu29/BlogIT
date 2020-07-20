@@ -5,25 +5,19 @@
  */
 package Servlets.Post;
 
-import BO.BOPostLike;
-import Beans.SessionBeanUser;
-import DTO.DTOPostLike;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.util.Date;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author TranCamTu
  */
-public class PostLikeServlet extends HttpServlet {
+public class PostsOfTagServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -51,43 +45,11 @@ public class PostLikeServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-                
         processRequest(request, response);
         
-        HttpSession session = request.getSession(true);
-        SessionBeanUser userBean = (SessionBeanUser) session.getAttribute("userBean");
         
-        String result;
-        
-        if (userBean != null & request.getParameter("postId") != null) {
-            String postId = request.getParameter("postId");                         
-            Date date = new Date();
-            
-            DTOPostLike likeDTO = new DTOPostLike(Integer.parseInt(postId), userBean.getUserId(), date);
-            BOPostLike likeBO = new BOPostLike();
-            
-            boolean isLiked = likeBO.isLiked(Integer.parseInt(postId), userBean.getUserId());            
-
-            if ((!isLiked && likeBO.insertNewLike(likeDTO)) || (isLiked && likeBO.deleteLike(Integer.parseInt(postId), userBean.getUserId()))) {
-                result = "succeeded";                
-            } else {
-                result = "failed";
-            }
-        } else {
-            if (userBean == null) {
-                System.out.println("User bean null");
-            }
-            
-            if (request.getParameter("postId") == null) {
-                System.out.println("Post id null");
-            }
-                        
-            result = "failed";
-        }
-        
-        response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
-        response.getWriter().write(result);
+        RequestDispatcher rd = request.getRequestDispatcher("Views/Post/postsOfTag.jsp");
+        rd.forward(request, response);
     }
 
     /**

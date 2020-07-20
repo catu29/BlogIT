@@ -8,6 +8,7 @@ package Servlets.Post;
 import BO.BOPost;
 import BO.BOPostComment;
 import BO.BOPostLike;
+import BO.BOPostTag;
 import BO.BOUser;
 import BO.BOUserSeriesList;
 import Beans.SessionBeanPost;
@@ -16,6 +17,7 @@ import Beans.SessionBeanUserSeriesList;
 import DTO.DTOPost;
 import DTO.DTOPostComment;
 import DTO.DTOPostLike;
+import DTO.DTOTagList;
 import DTO.DTOUser;
 import DTO.DTOUserSeriesList;
 import java.io.IOException;
@@ -79,6 +81,7 @@ public class PostDetailServlet extends HttpServlet {
                 BOUser userBO = new BOUser();
                 BOPostLike likeBO = new BOPostLike();
                 BOPostComment commentBO = new BOPostComment();
+                BOPostTag tagBO = new BOPostTag();
             
                 DTOUserSeriesList seriesDTO = seriesBO.getSeriesInformation(postDTO.getSeriesId());
                 DTOUser authorDTO = userBO.getUserInformation(postDTO.getUserId());
@@ -87,6 +90,7 @@ public class PostDetailServlet extends HttpServlet {
                 ArrayList<DTOPost> postsOfUser = postBO.getPostsOfUser(postDTO.getUserId(), 5);
                 ArrayList<DTOPostLike> likesOfPost = likeBO.getAllLikesOfPost(postDTO.getPostId());
                 ArrayList<DTOPostComment> commentsOfPost = commentBO.getAllCommentsForPost(postDTO.getPostId());
+                ArrayList<DTOTagList> tagsOfPost = tagBO.getAllTagsForPost(postDTO.getPostId());
                                                 
                 HttpSession session = request.getSession();
 
@@ -114,15 +118,16 @@ public class PostDetailServlet extends HttpServlet {
                 }
                 
                 if (commentsOfPost != null && !commentsOfPost.isEmpty()) {
-                    //Map<Integer, DTOUser> commentUser = new HashMap<>();
-                    Map<Integer, String> commentUser = new HashMap<>();
+                    Map<Integer, DTOUser> commentedUsers = new HashMap<>();
+                   
                     for (int i = 0; i < commentsOfPost.size(); i++) {
                         DTOUser userComment = userBO.getUserInformation(commentsOfPost.get(i).getUserId());
-                        commentUser.put(commentsOfPost.get(i).getUserId(), userComment.getFullname());
-                        //System.out.println("Id = ")
+                        commentedUsers.put(commentsOfPost.get(i).getUserId(), userComment);
+                        System.out.println("Comment id: " + commentsOfPost.get(i).getCommentId());
+                        System.out.println("Parent id: " + commentsOfPost.get(i).getParentId());
                     }
                     
-                    request.setAttribute("commentUser", commentUser);
+                    request.setAttribute("commentedUsers", commentedUsers);
                 }
 
                 if (seriesDTO != null) {
@@ -137,6 +142,7 @@ public class PostDetailServlet extends HttpServlet {
                 request.setAttribute("postsOfUser", postsOfUser);
                 request.setAttribute("likesOfPost", likesOfPost);
                 request.setAttribute("commentsOfPost", commentsOfPost);
+                request.setAttribute("tagsOfPost", tagsOfPost);
             }
         }
         

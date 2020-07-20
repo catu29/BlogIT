@@ -91,7 +91,7 @@ public class MapperPostComment extends MapperBase {
     
     public boolean deleteCommentForPost(int commentId) {
         try {            
-            String query = "Delete From PostComment Where commentId = " + commentId + ";";
+            String query = "Delete From PostComment Where commentId = " + commentId + " or parentId = " + commentId;
             
             PreparedStatement stmt = connection.prepareStatement(query);
             
