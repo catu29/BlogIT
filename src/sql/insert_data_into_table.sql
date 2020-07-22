@@ -3,15 +3,15 @@ Use BlogIT;
 --------------- INSERT DATA -----------------
 
 Insert into User values
-(1, 'admin', 'admin@gmail.com', N'Admin', 'defaut-user.png', N'Hiền lành, dễ thương, vui tính', 1),
-(2, 'minhmonmen', 'minhmonmen@gmail.com', N'Minh Monmen', 'minhmonmen.jpg', N'Bio của Minh mon men',0),
-(3, 'hoangxuantruong', 'hoangxuantruong@gmail.com', N'Hoàng Xuân Trường', 'logoava.jpg', N'Bio của Hoàng Xuân Trường', 0),
-(4, 'dainguyen', 'dainguyen@gmail.com', N'Dai Nguyen', 'dog.jpg', N'Bio của Đại Nguyễn', 0),
-(5, 'luuxuantrong', 'luuxuantrong@gmail.com', N'Lưu Xuân Trọng', 'logoava.jpg', N'Bio của Lưu Xuân Trọng', 0),
-(6, 'anhnc', 'anhnc@gmail.com', N'Anh NC', 'cat.jpg', N'Bio của Anh NC', 0),
-(7, 'dangxuanthanh', 'dangxuanthanh@gmail.com', N'Đặng Xuân Thành', 'flower.jpg', N'Bio của Đặng Xuân Thành', 0),
-(8, 'junookyo', 'junookyo@gmail.com', N'Juno_okyo', 'djunookyo.jpg', N'Bio của Mạnh Tuấn', 0),
-(9, 'beautyoncode', 'beautyoncode@gmail.com', N'BeautyOnCode', 'beautyoncode.jpg', 'Đam mê Python', 0);
+(1, 'admin', 'admin@gmail.com', N'Admin', 'default-user.png', N'Hiền lành, dễ thương, vui tính', 0),
+(2, 'minhmonmen', 'minhmonmen@gmail.com', N'Minh Monmen', 'minhmonmen.jpg', N'Bio của Minh mon men', 1),
+(3, 'hoangxuantruong', 'hoangxuantruong@gmail.com', N'Hoàng Xuân Trường', 'logoava.jpg', N'Bio của Hoàng Xuân Trường', 1),
+(4, 'dainguyen', 'dainguyen@gmail.com', N'Dai Nguyen', 'dog.jpg', N'Bio của Đại Nguyễn', 1),
+(5, 'luuxuantrong', 'luuxuantrong@gmail.com', N'Lưu Xuân Trọng', 'logoava.jpg', N'Bio của Lưu Xuân Trọng', 1),
+(6, 'anhnc', 'anhnc@gmail.com', N'Anh NC', 'cat.jpg', N'Bio của Anh NC', 1),
+(7, 'dangxuanthanh', 'dangxuanthanh@gmail.com', N'Đặng Xuân Thành', 'flower.jpg', N'Bio của Đặng Xuân Thành', 1),
+(8, 'junookyo', 'junookyo@gmail.com', N'Juno_okyo', 'djunookyo.jpg', N'Bio của Mạnh Tuấn', 1),
+(9, 'beautyoncode', 'beautyoncode@gmail.com', N'BeautyOnCode', 'beautyoncode.jpg', 'Đam mê Python', 1);
 
 
 Insert into PostComment values

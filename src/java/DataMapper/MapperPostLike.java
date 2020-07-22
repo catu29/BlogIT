@@ -24,7 +24,7 @@ public class MapperPostLike extends MapperBase {
         try {
             ArrayList<DTOPostLike> result = new ArrayList();
             
-            String query = "Select * From PostLike;";
+            String query = "Select * From PostLike order by likeTime desc;";
             PreparedStatement stmt = connection.prepareStatement(query);
             
             ResultSet rs = stmt.executeQuery(query);

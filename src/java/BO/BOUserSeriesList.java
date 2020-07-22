@@ -24,8 +24,8 @@ public class BOUserSeriesList {
         return mapper.getAllLists();
     }
     
-    public ArrayList<DTOUserSeriesList> getAllLists(int userId) {
-        return mapper.getAllLists(userId);
+    public ArrayList<DTOUserSeriesList> getUserLists(int userId) {
+        return mapper.getUserLists(userId);
     }
     
     public boolean insertNewUserSeriesList(DTOUserSeriesList list) {

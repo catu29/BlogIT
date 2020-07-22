@@ -23,7 +23,7 @@ public class MapperPost extends MapperBase {
     
     public DTOPost getPostInformation(int postId) {
         try {
-            String query = "Select * from Post where postId = " + postId;
+            String query = "Select * from Post where postId = " + postId + " order by postTime desc;";
             PreparedStatement stmt = connection.prepareStatement(query);
             
             ResultSet rs = stmt.executeQuery(query);
@@ -51,7 +51,7 @@ public class MapperPost extends MapperBase {
     
     public DTOPost getPostInformation(int postId, String titleUnsigned) {
         try {
-            String query = "Select * from Post where postId = " + postId + " and postTitleUnsigned = '" + titleUnsigned + "';";
+            String query = "Select * from Post where postId = " + postId + " and postTitleUnsigned = '" + titleUnsigned + "' order by postTime desc;";
             PreparedStatement stmt = connection.prepareStatement(query);
             
             ResultSet rs = stmt.executeQuery(query);
@@ -81,7 +81,7 @@ public class MapperPost extends MapperBase {
         try {
             ArrayList<DTOPost> result = new ArrayList();
             
-            String query = "Select * from Post;";
+            String query = "Select * from Post order by postTime desc;";
             PreparedStatement stmt = connection.prepareStatement(query);
             
             ResultSet rs = stmt.executeQuery(query);
@@ -115,7 +115,7 @@ public class MapperPost extends MapperBase {
         try {
             ArrayList<DTOPost> result = new ArrayList();
             
-            String query = "Select * from Post where userId = " + userId + ";";
+            String query = "Select * from Post where userId = " + userId + " order by postTime desc;";
             PreparedStatement stmt = connection.prepareStatement(query);
             
             ResultSet rs = stmt.executeQuery(query);
@@ -149,7 +149,7 @@ public class MapperPost extends MapperBase {
         try {
             ArrayList<DTOPost> result = new ArrayList();
             
-            String query = "Select * from Post where userId = " + userId + " Limit " + amount;
+            String query = "Select * from Post where userId = " + userId + " order by postTime desc Limit " + amount;
             PreparedStatement stmt = connection.prepareStatement(query);
             
             ResultSet rs = stmt.executeQuery(query);
@@ -183,7 +183,7 @@ public class MapperPost extends MapperBase {
         try {
             ArrayList<DTOPost> result = new ArrayList();
             
-            String query = "Select * from Post where seriesId = " + seriesId + ";";
+            String query = "Select * from Post where seriesId = " + seriesId + " order by seriesOrder asc;";
             PreparedStatement stmt = connection.prepareStatement(query);
             
             ResultSet rs = stmt.executeQuery(query);

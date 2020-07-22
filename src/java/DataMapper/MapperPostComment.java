@@ -26,7 +26,7 @@ public class MapperPostComment extends MapperBase {
         try {
             ArrayList<DTOPostComment> result = new ArrayList();
             
-            String query = "Select * from PostComment where postId = " + postId + ";";
+            String query = "Select * from PostComment where postId = " + postId + " order by commentTime desc;";
             PreparedStatement stmt = connection.prepareStatement(query);
             
             ResultSet rs = stmt.executeQuery(query);

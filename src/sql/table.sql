@@ -11,7 +11,7 @@ Create Table User
     fullName nvarchar(50),
     avatar tinytext,
     bio text,
-    role int -- 1 = admin
+    role int -- 0 = admin
 );
 -- TODO: Thêm bio (DONE)
 
@@ -86,4 +86,4 @@ Create Table PostTag
     primary key(postId, tagId)
 );
 use BLogIT;
-select * from post where seriesId = 1
+select * from user

@@ -55,6 +55,10 @@
         <servlet-name>PostOfSeries</servlet-name>
         <servlet-class>Servlets.Post.PostsOfSeriesServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>PostUpdateServlet</servlet-name>
+        <servlet-class>Servlets.Post.PostUpdateServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PostCommentServlet</servlet-name>
         <url-pattern>/post/detail/comment</url-pattern>
@@ -106,8 +110,8 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>PostServlet</servlet-name>
-        <url-pattern>/post</url-pattern>  
-        <url-pattern>/post/</url-pattern>        
+        <url-pattern>/post</url-pattern>
+        <url-pattern>/post/</url-pattern>
     </servlet-mapping>
     <servlet>
         <servlet-name>TestServlet</servlet-name>
@@ -118,16 +122,20 @@
         <url-pattern>/TestServlet</url-pattern>
     </servlet-mapping>
     <servlet>
-        <servlet-name>ProfileServlet</servlet-name>
-        <servlet-class>Servlets.User.ProfileServlet</servlet-class>
+        <servlet-name>UserProfileServlet</servlet-name>
+        <servlet-class>Servlets.User.UserProfileServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>ProfileServlet</servlet-name>
+        <servlet-name>UserProfileServlet</servlet-name>
         <url-pattern>/user/profile</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>PostOfSeries</servlet-name>
         <url-pattern>/series</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PostUpdateServlet</servlet-name>
+        <url-pattern>/post/detail/update</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

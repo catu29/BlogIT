@@ -72,7 +72,7 @@ public class MapperUserSeriesList extends MapperBase {
      * @return - ArrayList of UserSeriesList if have data.
      *         - null if nothing found.
      */
-    public ArrayList<DTOUserSeriesList> getAllLists(int userId) {
+    public ArrayList<DTOUserSeriesList> getUserLists(int userId) {
         try {
             ArrayList<DTOUserSeriesList> result = new ArrayList();
             
