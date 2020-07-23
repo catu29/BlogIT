@@ -70,15 +70,15 @@ public class MapperUser extends MapperBase {
         boolean result = false;
         
         try {            
-            String query = "Insert Into User (password, email, fullName, avatar, role) Values ('"
+            String query = "Insert Into User (password, email, fullName, avatar, bio, role) Values ('"
                     + newUser.getPassword() + "', '"
                     + newUser.getEmail() + "', N'"
                     + newUser.getFullname() + "', '"
-                    + newUser.getAvatar() + "', "
+                    + newUser.getAvatar() + "', N'"
+                    + newUser.getBio() + "', "
                     + newUser.getRole() + ")";
             
-            PreparedStatement stmt = connection.prepareStatement(query);
-            
+            PreparedStatement stmt = connection.prepareStatement(query);            
             
             result = stmt.executeUpdate(query) > 0;
             
@@ -102,7 +102,7 @@ public class MapperUser extends MapperBase {
         boolean result = false;      
         
         try {
-            String query = "Update User Set email = '" + email + "' Where userId = '" + user.getUserId() + "';";
+            String query = "Update User Set email = '" + email + "' Where userId = " + user.getUserId();
             PreparedStatement stmt = connection.prepareStatement(query);
         
             result = stmt.executeUpdate(query) > 0;
@@ -121,7 +121,7 @@ public class MapperUser extends MapperBase {
         boolean result = false;      
         
         try {
-            String query = "Update User Set password = '" + password + "' Where userId = '" + user.getUserId() + "';";
+            String query = "Update User Set password = '" + password + "' Where userId = " + user.getUserId();
             PreparedStatement stmt = connection.prepareStatement(query);
         
             result = stmt.executeUpdate(query) > 0;
@@ -140,7 +140,7 @@ public class MapperUser extends MapperBase {
         boolean result = false;      
         
         try {
-            String query = "Update User Set fullName = N'" + fullname + "' Where userId = '" + user.getUserId() + "';";
+            String query = "Update User Set fullName = N'" + fullname + "' Where userId = " + user.getUserId();
             PreparedStatement stmt = connection.prepareStatement(query);
         
             result = stmt.executeUpdate(query) > 0;
@@ -159,7 +159,26 @@ public class MapperUser extends MapperBase {
         boolean result = false;      
         
         try {
-            String query = "Update User Set avatar = '" + avatar + "' Where userId = '" + user.getUserId() + "';";
+            String query = "Update User Set avatar = '" + avatar + "' Where userId = " + user.getUserId();
+            PreparedStatement stmt = connection.prepareStatement(query);
+        
+            result = stmt.executeUpdate(query) > 0;
+            
+            stmt.close();
+        } catch (Exception e) {
+            result = false;
+            
+            System.out.println("Update user avatar error: " + e.getMessage());
+        }
+        
+        return result;
+    }
+    
+    public boolean updateUserBio(DTOUser user, String bio) {
+        boolean result = false;      
+        
+        try {
+            String query = "Update User Set bio = N'" + bio + "' Where userId = " + user.getUserId();
             PreparedStatement stmt = connection.prepareStatement(query);
         
             result = stmt.executeUpdate(query) > 0;
@@ -178,7 +197,7 @@ public class MapperUser extends MapperBase {
         boolean result = false;      
         
         try {
-            String query = "Update User Set role = " + role + " Where userId = '" + user.getUserId() + "';";
+            String query = "Update User Set role = " + role + " Where userId = " + user.getUserId();
             PreparedStatement stmt = connection.prepareStatement(query);
         
             result = stmt.executeUpdate(query) > 0;
@@ -197,11 +216,9 @@ public class MapperUser extends MapperBase {
         boolean result = false;
         
         try {
-            String query = "Delete From User Where userId = ?;";
+            String query = "Delete From User Where userId = " + user.getUserId();
             PreparedStatement stmt = connection.prepareStatement(query);
-            
-            stmt.setInt(1, user.getUserId());
-            
+                        
             result = stmt.executeUpdate(query) > 0;
             
             stmt.close();
@@ -224,7 +241,7 @@ public class MapperUser extends MapperBase {
             ResultSet rs = stmt.executeQuery(query);
             
             while (rs.next()) {
-                DTOUser user = new DTOUser(rs.getInt("userId"), rs.getString("password"), rs.getString("email"), rs.getString("fullName"), rs.getString("avatar"), rs.getInt("role"));
+                DTOUser user = new DTOUser(rs.getInt("userId"), rs.getString("password"), rs.getString("email"), rs.getString("fullName"), rs.getString("avatar"), rs.getString("bio"), rs.getInt("role"));
                 result.add(user);
             }
             
@@ -246,7 +263,7 @@ public class MapperUser extends MapperBase {
             ResultSet rs = stmt.executeQuery(query);
             
             rs.next();
-            DTOUser user = new DTOUser(rs.getInt("userId"), rs.getString("password"), rs.getString("email"), rs.getString("fullName"), rs.getString("avatar"), rs.getInt("role"));
+            DTOUser user = new DTOUser(rs.getInt("userId"), rs.getString("password"), rs.getString("email"), rs.getString("fullName"), rs.getString("avatar"), rs.getString("bio"), rs.getInt("role"));
             
             stmt.close();
             
@@ -260,13 +277,13 @@ public class MapperUser extends MapperBase {
     
     public DTOUser getUserInformation(int id) {
         try {           
-            String query = "Select * From User Where userId = " + id + ";";
+            String query = "Select * From User Where userId = " + id;
             PreparedStatement stmt = connection.prepareStatement(query);
             
             ResultSet rs = stmt.executeQuery(query);
             
             rs.next();
-            DTOUser user = new DTOUser(rs.getInt("userId"), rs.getString("password"), rs.getString("email"), rs.getString("fullName"), rs.getString("avatar"), rs.getInt("role"));
+            DTOUser user = new DTOUser(rs.getInt("userId"), rs.getString("password"), rs.getString("email"), rs.getString("fullName"), rs.getString("avatar"), rs.getString("bio"), rs.getInt("role"));
             
             stmt.close();
             
@@ -286,7 +303,7 @@ public class MapperUser extends MapperBase {
             ResultSet rs = stmt.executeQuery(query);
             
             rs.next();
-            DTOUser user = new DTOUser(rs.getInt("userId"), rs.getString("password"), rs.getString("email"), rs.getString("fullName"), rs.getString("avatar"), rs.getInt("role"));
+            DTOUser user = new DTOUser(rs.getInt("userId"), rs.getString("password"), rs.getString("email"), rs.getString("fullName"), rs.getString("avatar"), rs.getString("bio"), rs.getInt("role"));
             
             stmt.close();
             
@@ -308,7 +325,7 @@ public class MapperUser extends MapperBase {
             ResultSet rs = stmt.executeQuery(query);
             
             while (rs.next()) {
-                DTOUser user = new DTOUser(rs.getInt("userId"), rs.getString("password"), rs.getString("email"), rs.getString("fullName"), rs.getString("avatar"), rs.getInt("role"));
+                DTOUser user = new DTOUser(rs.getInt("userId"), rs.getString("password"), rs.getString("email"), rs.getString("fullName"), rs.getString("avatar"), rs.getString("bio"), rs.getInt("role"));
                 result.add(user);
             }
             
@@ -332,7 +349,7 @@ public class MapperUser extends MapperBase {
             ResultSet rs = stmt.executeQuery(query);
             
             while (rs.next()) {
-                DTOUser user = new DTOUser(rs.getInt("userId"), rs.getString("password"), rs.getString("email"), rs.getString("fullName"), rs.getString("avatar"), rs.getInt("role"));
+                DTOUser user = new DTOUser(rs.getInt("userId"), rs.getString("password"), rs.getString("email"), rs.getString("fullName"), rs.getString("avatar"), rs.getString("bio"), rs.getInt("role"));
                 result.add(user);
             }
             
@@ -363,7 +380,7 @@ public class MapperUser extends MapperBase {
             stmt.close();
             
             while (rs.next()) {
-                DTOUser user = new DTOUser(rs.getInt("userId"), rs.getString("password"), rs.getString("email"), rs.getString("fullName"), rs.getString("avatar"), rs.getInt("role"));
+                DTOUser user = new DTOUser(rs.getInt("userId"), rs.getString("password"), rs.getString("email"), rs.getString("fullName"), rs.getString("avatar"),rs.getString("bio"), rs.getInt("role"));
                 result.add(user);
             }
             

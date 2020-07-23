@@ -7,13 +7,10 @@ package DataMapper;
 
 import DTO.DTOPostReport;
 import DTO.DTOReportReasonList;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 
 /**
  *
@@ -28,7 +25,7 @@ public class MapperPostReport extends MapperBase {
         try {
             ArrayList<DTOPostReport> result = new ArrayList();
             
-            String query = "Select * From PostReport;";
+            String query = "Select * From PostReport order by reportTime desc;";
             PreparedStatement stmt = connection.prepareStatement(query);
             
             ResultSet rs = stmt.executeQuery(query);
@@ -55,7 +52,7 @@ public class MapperPostReport extends MapperBase {
             String query = "select ReportReasonList.reasonId, ReportReasonList.reasonContent "
                            + "from ReportReasonList inner join PostReport "
                            + "on ReportReasonList.reasonId = PostReport.reasonId "
-                           + "where PostReport.postId = " + postId + ";";
+                           + "where PostReport.postId = " + postId + " order by reportTime desc;";
             PreparedStatement stmt = connection.prepareStatement(query);
             
             ResultSet rs = stmt.executeQuery(query);
@@ -80,7 +77,7 @@ public class MapperPostReport extends MapperBase {
             String query = "select ReportReasonList.reasonId, ReportReasonList.reasonContent "
                            + "from ReportReasonList inner join PostReport "
                            + "on ReportReasonList.reasonId = PostReport.reasonId "
-                           + "where PostReport.postId = " + postId + " and PostReport.userId = " + userId + ";";
+                           + "where PostReport.postId = " + postId + " and PostReport.userId = " + userId + " order by reportTime desc;";
             PreparedStatement stmt = connection.prepareStatement(query);
             
             ResultSet rs = stmt.executeQuery(query);

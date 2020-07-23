@@ -21,6 +21,7 @@ public class SessionBeanUser implements Serializable {
     String email;
     String fullname;
     String avatar;
+    String bio;
     int role;
     
     public SessionBeanUser() { }
@@ -31,6 +32,7 @@ public class SessionBeanUser implements Serializable {
         this.setEmail(user.getEmail());
         this.setFullname(user.getFullname());
         this.setAvatar(user.getAvatar());
+        this.setBio(user.getBio());
         this.setRole(user.getRole());
     }
 
@@ -72,6 +74,14 @@ public class SessionBeanUser implements Serializable {
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
     }
     
     public int getRole() {

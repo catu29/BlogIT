@@ -24,8 +24,8 @@ public class BOUserSeriesList {
         return mapper.getAllLists();
     }
     
-    public ArrayList<DTOUserSeriesList> getAllLists(int userId) {
-        return mapper.getAllLists(userId);
+    public ArrayList<DTOUserSeriesList> getUserLists(int userId) {
+        return mapper.getUserLists(userId);
     }
     
     public boolean insertNewUserSeriesList(DTOUserSeriesList list) {
@@ -39,11 +39,7 @@ public class BOUserSeriesList {
     public boolean updateUserSeriesByCondition(DTOUserSeriesList list, String column, String condition) {
         return mapper.updateUserSeriesByCondition(list, column, condition);
     }
-    
-    public ArrayList<DTOUserSeriesList> searchSeriesList(int userId) {
-        return mapper.searchSeriesList(userId);
-    }
-    
+        
     public ArrayList<DTOUserSeriesList> searchSeriesList(String condition) {
         return mapper.searchSeriesList(condition);
     }

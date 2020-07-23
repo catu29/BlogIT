@@ -3,17 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Servlets.User;
+package Servlets.Post;
 
 import BO.BOPost;
-import BO.BOPostComment;
-import BO.BOPostLike;
 import BO.BOUser;
-import Beans.SessionBeanUser;
+import BO.BOUserSeriesList;
+import Beans.SessionBeanUserSeriesList;
 import DTO.DTOPost;
-import DTO.DTOPostComment;
-import DTO.DTOPostLike;
 import DTO.DTOUser;
+import DTO.DTOUserSeriesList;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,13 +21,12 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author TranCamTu
  */
-public class UserProfileServlet extends HttpServlet {
+public class PostsOfSeriesServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -43,6 +40,7 @@ public class UserProfileServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -58,41 +56,40 @@ public class UserProfileServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-        HttpSession session = request.getSession(true);
-        
-        if (request.getParameter("id") != null) {
-            String userId = request.getParameter("id"); // userId
-              
-            BOUser userBO = new BOUser();
-            DTOUser userDTO = userBO.getUserInformation(Integer.parseInt(userId));
-            request.setAttribute("userProfile", userDTO);
-
-            BOPost boPost = new BOPost();
-            BOPostLike likeBO = new BOPostLike();
-            BOPostComment commentBO = new BOPostComment();
-            
-            ArrayList<DTOPost> listPosts = boPost.getAllPostsOfUser(Integer.parseInt(userId));
-            
-            if (listPosts != null && !listPosts.isEmpty()) {
-                Map<Integer, Integer> countLike = new HashMap<>();
-                Map<Integer, Integer> countComment = new HashMap<>();
-                
-                for (DTOPost post : listPosts) {
-                    ArrayList<DTOPostLike> likesOfPost = likeBO.getAllLikesOfPost(post.getPostId());
-                    ArrayList<DTOPostComment> commentsOfPost = commentBO.getAllCommentsForPost(post.getPostId());
                     
-                    countLike.put(post.getPostId(), likesOfPost.size());
-                    countComment.put(post.getPostId(), commentsOfPost.size());
-                }
+        if (request.getParameter("id") != null) {
+            String seriesId = request.getParameter("id");
+                        
+            BOUserSeriesList seriesBO = new BOUserSeriesList();
+            DTOUserSeriesList seriesDTO = seriesBO.getSeriesInformation(Integer.parseInt(seriesId));
+            
+            if (seriesDTO != null) {
+                SessionBeanUserSeriesList seriesBean = new SessionBeanUserSeriesList();
+                seriesBean.initFromDTO(seriesDTO);
                 
-                request.setAttribute("countLike", countLike);
-                request.setAttribute("countComment", countComment);
-            }                        
+                request.setAttribute("mainBean", seriesBean);
+            } else {
+                request.setAttribute("mainBean", null);
+            }
             
-            request.setAttribute("listPosts", listPosts);
-            request.setAttribute("userId", userId);
+            BOPost postBO = new BOPost();
+            ArrayList<DTOPost> postList = postBO.getAllPostsOfSeries(Integer.parseInt(seriesId));
             
-            RequestDispatcher rd = request.getRequestDispatcher("/Views/User/userProfile.jsp");
+            if (postList != null && !postList.isEmpty()) {
+                Map<Integer, DTOUser> authorOfPost = new HashMap<>();
+                BOUser userBO = new BOUser();
+                
+                for (DTOPost post : postList) {
+                    DTOUser authorDTO = userBO.getUserInformation(post.getUserId());
+                    authorOfPost.put(post.getPostId(), authorDTO);
+                }
+
+                request.setAttribute("authorOfPost", authorOfPost);
+            }
+            
+            request.setAttribute("listPosts", postList);
+            
+            RequestDispatcher rd = request.getRequestDispatcher("/Views/Post/postsOfSeries.jsp");
             rd.forward(request, response);
         }
     }
@@ -118,7 +115,7 @@ public class UserProfileServlet extends HttpServlet {
      */
     @Override
     public String getServletInfo() {
-        return "Profile Servlet";
+        return "Posts of series servlet";
     }// </editor-fold>
 
 }

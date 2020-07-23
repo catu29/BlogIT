@@ -5,8 +5,17 @@
  */
 package Servlets.Post;
 
+import BO.BOPostTag;
+import BO.BOTagList;
+import BO.BOUser;
+import Beans.SessionBeanTagList;
+import DTO.DTOPost;
+import DTO.DTOTagList;
+import DTO.DTOUser;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -46,10 +55,43 @@ public class PostsOfTagServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-        
-        
-        RequestDispatcher rd = request.getRequestDispatcher("Views/Post/postsOfTag.jsp");
-        rd.forward(request, response);
+
+        if (request.getParameter("id") != null) {
+            String tagId = request.getParameter("id");
+
+            BOTagList listBO = new BOTagList();
+            BOPostTag tagBO = new BOPostTag();
+            BOUser userBO = new BOUser();
+
+            DTOTagList listDTO = listBO.searchTagById(tagId);
+            ArrayList<DTOPost> postsOfTag = tagBO.getAllPostsForTag(tagId);
+
+            SessionBeanTagList tagBean = new SessionBeanTagList();
+
+            if (listDTO != null) {
+                tagBean.initFromDTO(listDTO);
+                request.setAttribute("mainName", tagBean.getTagName());
+            } else {
+                tagBean = null;
+            }
+
+            if (postsOfTag != null && !postsOfTag.isEmpty()) {
+                Map<Integer, DTOUser> authorOfPost = new HashMap<>();
+
+                for (DTOPost post : postsOfTag) {
+                    DTOUser authorDTO = userBO.getUserInformation(post.getUserId());
+                    authorOfPost.put(post.getPostId(), authorDTO);
+                }
+
+                request.setAttribute("authorOfPost", authorOfPost);
+            }
+
+            request.setAttribute("mainBean", tagBean);
+            request.setAttribute("listPosts", postsOfTag);
+
+            RequestDispatcher rd = request.getRequestDispatcher("/Views/Post/postsOfTag.jsp");
+            rd.forward(request, response);
+        }
     }
 
     /**
@@ -73,7 +115,7 @@ public class PostsOfTagServlet extends HttpServlet {
      */
     @Override
     public String getServletInfo() {
-        return "Short description";
+        return "Post of tag servlet";
     }// </editor-fold>
 
 }

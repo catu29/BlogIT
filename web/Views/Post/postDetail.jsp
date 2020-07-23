@@ -9,7 +9,6 @@
 <%@page session="true" %>
 <%@taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
 <%@taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
-<%@taglib uri = "http://java.sun.com/jsp/jstl/fmt" prefix = "fmt" %>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 
 <c:set var="postBean" value="${requestScope.postBean}" />
@@ -32,19 +31,24 @@
     <jsp:attribute name="postHeader">
         <!-- PAGE HEADER -->
         <div id="post-header" class="page-header">
-            <div class="page-header-bg" style="background-image: url('${pageContext.request.contextPath}/Resources/img/header-1.jpg');" data-stellar-background-ratio="0.5"></div>
+            <div class="page-header-bg" style="background-image: url('${pageContext.request.contextPath}/Resources/img/${postBean.image}.jpg');" data-stellar-background-ratio="0.5"></div>
             <div class="container">
                 <div class="row">
                     <div class="col-md-10">
                         <div class="post-category">
                             <c:if test="${seriesBean != null}">
-                                <a href="">${seriesBean.seriesName}</a>
-                                <!--TODO: Build series of posts page -->
+                                <c:url var="seriesURL" value="${contextPath}/series">
+                                    <c:param name="id" value="${seriesBean.seriesId}"/>
+                                </c:url>
+                                <a href="${seriesURL}">${seriesBean.seriesName}</a>
                             </c:if>
                         </div>
                         <h1>${postBean.postTitle}</h1>
                         <ul class="post-meta">
-                            <li><a href="">${authorBean.fullname}</a></li>
+                            <c:url var="authorURL" value="${contextPath}/user/profile">
+                                <c:param name="id" value="${authorBean.userId}"/>
+                            </c:url>
+                            <li><a href="authorURL">${authorBean.fullname}</a></li>
                             <li>
                                 <fmt:formatDate var="postTime" value="${postBean.postTime}" type="date" dateStyle="short" pattern="dd/MM/yyyy"/>
                                 <c:out value="${postTime}"/>
@@ -95,8 +99,7 @@
                                     </a>
                                 </div>
                                 <div class="media-body">
-                                    <p>Thêm cột bio cho author</p>
-                                    <!-- TODO: Add bio for author -->
+                                    <p>${authorBean.bio}</p>                               
                                 </div>
                             </div>
                         </div>

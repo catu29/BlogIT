@@ -20,9 +20,12 @@ public class SessionBeanPost implements Serializable{
     int postId;
     String postTitle;
     String postTitleUnsigned;
+    String postSubTitle;
     Date postTime;
     int userId;
     int seriesId;
+    int seriesOrder;
+    String image;
     String postContent;
 
     public SessionBeanPost() {
@@ -32,9 +35,12 @@ public class SessionBeanPost implements Serializable{
         this.setPostId(post.getPostId());
         this.setPostTitle(post.getPostTitle());
         this.setPostTitleUnsigned(post.getPostTitleUnsigned());
+        this.setPostSubTitle(post.getPostSubTitle());
         this.setPostTime(post.getPostTime());
         this.setUserId(post.getUserId());
         this.setSeriesId(post.getSeriesId());
+        this.setSeriesOrder(post.getSeriesOrder());
+        this.setImage(post.getImage());
         this.setPostContent(post.getPostContent());
     }
     
@@ -62,6 +68,14 @@ public class SessionBeanPost implements Serializable{
         this.postTitleUnsigned = postTitleUnsigned;
     }
 
+    public String getPostSubTitle() {
+        return postSubTitle;
+    }
+
+    public void setPostSubTitle(String postSubTitle) {
+        this.postSubTitle = postSubTitle;
+    }
+
     public Date getPostTime() {
         return postTime;
     }
@@ -84,6 +98,22 @@ public class SessionBeanPost implements Serializable{
 
     public void setSeriesId(int seriesId) {
         this.seriesId = seriesId;
+    }
+
+    public int getSeriesOrder() {
+        return seriesOrder;
+    }
+
+    public void setSeriesOrder(int seriesOrder) {
+        this.seriesOrder = seriesOrder;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public String getPostContent() {
