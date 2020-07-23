@@ -7,74 +7,108 @@
         <res-type>javax.sql.DataSource</res-type>
         <res-auth>Container</res-auth>
     </resource-ref>
-    <!--Servlets-->
+    
+    <servlet>
+        <servlet-name>PostCommentServlet</servlet-name>
+        <servlet-class>Servlets.Post.PostCommentServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PostsOfTagServlet</servlet-name>
+        <servlet-class>Servlets.Post.PostsOfTagServlet</servlet-class>
+    </servlet>
     <servlet>
         <servlet-name>RegisterServlet</servlet-name>
         <servlet-class>Servlets.User.RegisterServlet</servlet-class>
     </servlet>
-    <servlet-mapping>
-        <servlet-name>RegisterServlet</servlet-name>
-        <url-pattern>/user/register</url-pattern>
-    </servlet-mapping>
+    <servlet>
+        <servlet-name>PostLikeServlet</servlet-name>
+        <servlet-class>Servlets.Post.PostLikeServlet</servlet-class>
+    </servlet>
     <servlet>
         <servlet-name>LogoutServlet</servlet-name>
         <servlet-class>Servlets.User.LogoutServlet</servlet-class>
     </servlet>
-    <servlet-mapping>
-        <servlet-name>LogoutServlet</servlet-name>
-        <url-pattern>/user/logout</url-pattern>
-    </servlet-mapping>
     <servlet>
         <servlet-name>UserServlet</servlet-name>
         <servlet-class>Servlets.User.UserServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>LoginServlet</servlet-name>
+        <servlet-class>Servlets.User.LoginServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PostDetailServlet</servlet-name>
+        <servlet-class>Servlets.Post.PostDetailServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PostServlet</servlet-name>
+        <servlet-class>Servlets.Post.PostServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>TestServlet</servlet-name>
+        <servlet-class>Test.TestServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UserProfileServlet</servlet-name>
+        <servlet-class>Servlets.User.UserProfileServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PostCreateServlet</servlet-name>
+        <servlet-class>Servlets.Post.PostCreateServlet</servlet-class>
+    </servlet>
+    
+    
+    <servlet-mapping>
+        <servlet-name>PostCommentServlet</servlet-name>
+        <url-pattern>/post/detail/comment</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PostsOfTagServlet</servlet-name>
+        <url-pattern>/tag</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RegisterServlet</servlet-name>
+        <url-pattern>/user/register</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PostLikeServlet</servlet-name>
+        <url-pattern>/post/detail/like</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LogoutServlet</servlet-name>
+        <url-pattern>/user/logout</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>UserServlet</servlet-name>
         <url-pattern>/user</url-pattern>
         <url-pattern>/user/</url-pattern>
     </servlet-mapping>
-    <servlet>
-        <servlet-name>LoginServlet</servlet-name>
-        <servlet-class>Servlets.User.LoginServlet</servlet-class>
-    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/user/login</url-pattern>
     </servlet-mapping>
-    <servlet>
-        <servlet-name>PostDetailServlet</servlet-name>
-        <servlet-class>Servlets.Post.PostDetailServlet</servlet-class>
-    </servlet>
     <servlet-mapping>
         <servlet-name>PostDetailServlet</servlet-name>
         <url-pattern>/post/detail</url-pattern>
     </servlet-mapping>
-    <servlet>
-        <servlet-name>PostServlet</servlet-name>
-        <servlet-class>Servlets.Post.PostServlet</servlet-class>
-    </servlet>
     <servlet-mapping>
         <servlet-name>PostServlet</servlet-name>
-        <url-pattern>/post</url-pattern>  
-        <url-pattern>/post/</url-pattern>        
+        <url-pattern>/post</url-pattern>
+        <url-pattern>/post/</url-pattern>
     </servlet-mapping>
-    <servlet>
-        <servlet-name>TestServlet</servlet-name>
-        <servlet-class>Test.TestServlet</servlet-class>
-    </servlet>
     <servlet-mapping>
         <servlet-name>TestServlet</servlet-name>
         <url-pattern>/TestServlet</url-pattern>
     </servlet-mapping>
-    <servlet>
-        <servlet-name>ProfileServlet</servlet-name>
-        <servlet-class>Servlets.User.ProfileServlet</servlet-class>
-    </servlet>
     <servlet-mapping>
-        <servlet-name>ProfileServlet</servlet-name>
+        <servlet-name>UserProfileServlet</servlet-name>
         <url-pattern>/user/profile</url-pattern>
     </servlet-mapping>
-    <!--Session-->
+    <servlet-mapping>
+        <servlet-name>PostCreateServlet</servlet-name>
+        <url-pattern>/post/create</url-pattern>
+    </servlet-mapping>
+    
     <session-config>
         <session-timeout>
             60
