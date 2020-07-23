@@ -6,6 +6,7 @@
 
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page session="true" %>
 <%@taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
 <%@taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
 <%@taglib uri = "http://java.sun.com/jsp/jstl/fmt" prefix = "fmt" %>
@@ -24,6 +25,9 @@
 <c:set var="tagsOfPost" value="${requestScope.tagsOfPost}" />
 
 <t:layout>
+    <jsp:attribute name="js">
+        <script src="${pageContext.request.contextPath}/Resources/Post/postDetail.js"></script>
+    </jsp:attribute>
     <jsp:attribute name="title">${postBean.postTitle}</jsp:attribute>
     <jsp:attribute name="postHeader">
         <!-- PAGE HEADER -->
@@ -45,8 +49,9 @@
                                 <fmt:formatDate var="postTime" value="${postBean.postTime}" type="date" dateStyle="short" pattern="dd/MM/yyyy"/>
                                 <c:out value="${postTime}"/>
                             </li>
-							<li><i class="fa fa-comments"></i>&nbsp;<c:out value="${fn:length(commentsOfPost)}"/></li>
-                            <li><i class="fa fa-eye"></i>&nbsp;<c:out value="${fn:length(likesOfPost)}"/></li>                        </ul>
+                            <li><i class="fa fa-comments"></i>&nbsp;<c:out value="${fn:length(commentsOfPost)}"/></li>
+                            <li><i class="fa fa-eye"></i>&nbsp;<c:out value="${fn:length(likesOfPost)}"/></li>                        
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -95,26 +100,6 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- post reply -->
-                        <div class="section-row">
-                            <div class="section-title">
-                                <h3 class="title">Gửi bình luận</h3>
-                            </div>
-                            <form class="post-reply" action="${pageContext.request.contextPath}/post/detail/comment" method="POST">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <textarea class="input" name="message" placeholder="Nhập bình luận"></textarea>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <button class="primary-button">Gửi</button>
-                                    </div>
-
-                                </div>
-                            </form>
-                        </div>
-                        <!-- /post reply -->
                         <!-- post comments -->                        
                         <div class="section-row">
                             <div class="section-title">
@@ -134,28 +119,70 @@
                                                     <a href="${profileURL}"><img class="media-object" src="${pageContext.request.contextPath}/Resources/img/${commentedUsers[userId].avatar}" alt=""></a>
                                                 </div>
                                                 <div class="media-body">
-                                                    <div class="media-heading">
-                                                        <h4><a href="${profileURL}"><c:out value="${commentedUsers[userId].fullname}"/></a></h4>
-                                                        <span class="time">
-                                                            <fmt:formatDate var="commentTime" value="${comment.commentTime}" type="date" dateStyle="short" pattern="HH:mm:ss dd/MM/yyyy"/>
-                                                            <c:out value="${commentTime}" />
-                                                        </span>
+                                                    <div class="comment">
+                                                        <div class="media-heading">
+                                                            <h4>
+                                                                <a href="${profileURL}" class="username" data-username=" ${commentedUsers[userId].fullname}">
+                                                                    ${commentedUsers[userId].fullname}
+                                                                </a>
+                                                            </h4>
+                                                            <span class="time">
+                                                                <fmt:formatDate var="commentTime" value="${comment.commentTime}" type="date" dateStyle="short" pattern="HH:mm:ss dd/MM/yyyy"/>
+                                                                <c:out value="${commentTime}" />
+                                                            </span>
+                                                        </div>
+                                                        <p><c:out value="${comment.content}" /></p>
+                                                        <a data-toggle="collapse" href="#formReplyTo_${comment.commentId}" role="button" aria-expanded="false" aria-controls="formReplyTo_${comment.commentId}">Trả lời</a>
+
                                                     </div>
-                                                    <p><c:out value="${comment.content}" /></p>
-                                                    <a href="#" class="reply">Reply</a>
+
                                                     <!-- comment -->
-                                                    <div class="media media-author">
-                                                        <div class="media-left">
-                                                            <img class="media-object" src="${pageContext.request.contextPath}/Resources/img/avatar-1.jpg" alt="">
-                                                        </div>
-                                                        <div class="media-body">
-                                                            <div class="media-heading">
-                                                                <h4>John Doe</h4>
-                                                                <span class="time">5 min ago</span>
+                                                    <c:forEach var="childComment" items="${commentsOfPost}">
+                                                        <c:set var="childUserId" value="${childComment.userId}"/>
+                                                        <c:url var="childPofileURL" value="${contextPath}/user/profile">
+                                                            <c:param name="id" value="${childUserId}"/>
+                                                        </c:url>
+                                                        <c:if test="${childComment.parentId == comment.commentId}">
+                                                            <div class="media media-author">
+                                                                <div class="media-left">
+                                                                    <a href="${childPofileURL}"><img class="media-object" src="${pageContext.request.contextPath}/Resources/img/${commentedUsers[childUserId].avatar}" alt=""></a>
+                                                                </div>
+                                                                <div class="media-body">
+                                                                    <div class="comment">
+                                                                        <div class="media-heading">
+                                                                            <h4>
+                                                                                <a href="${childPofileURL}" class="username" data-username=" ${commentedUsers[childUserId].fullname}">
+                                                                                    ${commentedUsers[childUserId].fullname}
+                                                                                </a>
+                                                                            </h4>
+                                                                            <span class="time">
+                                                                                <fmt:formatDate var="childCommentTime" value="${childComment.commentTime}" type="date" dateStyle="short" pattern="HH:mm:ss dd/MM/yyyy"/>
+                                                                                <c:out value="${childCommentTime}" />
+                                                                            </span>
+                                                                        </div>
+                                                                        <p><c:out value="${childComment.content}" /></p>
+                                                                        <a data-toggle="collapse" href="#formReplyTo_${comment.commentId}" role="button" aria-expanded="false" aria-controls="formReplyTo_${childComment.commentId}">Trả lời</a>
+                                                                    </div>
+                                                                </div>
                                                             </div>
-                                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-                                                            <a href="#" class="reply">Reply</a>
-                                                        </div>
+                                                        </c:if>
+                                                    </c:forEach>
+                                                    <div class="collapse" id="formReplyTo_${comment.commentId}">
+                                                        <br>
+                                                        <form class="post-reply" action="${pageContext.request.contextPath}/post/detail/comment" method="POST">
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <input name="postId" value="${postBean.postId}" type="hidden">
+                                                                    <input name="parentId" value="${comment.commentId}" type="hidden">
+                                                                    <div class="form-group">
+                                                                        <textarea class="input" name="message" placeholder="Nhập bình luận" required="true"></textarea>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-12">
+                                                                    <button class="primary-button">Gửi</button>
+                                                                </div>
+                                                            </div>
+                                                        </form>
                                                     </div>
                                                     <!-- TODO: Style for reply--> 
                                                     <!-- /comment -->
@@ -168,6 +195,37 @@
                             </div>
                         </div>
                         <!-- /post comments -->
+                        <c:choose>
+                            <c:when test="${sessionScope.userBean != null}">
+                                <!-- post reply -->
+                                <div class="section-row">
+                                    <form class="post-reply" action="${pageContext.request.contextPath}/post/detail/comment" method="POST">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <input name="postId" value="${postBean.postId}" type="hidden">
+                                                <input name="parentId" value="0" type="hidden">
+                                                <div class="form-group">
+                                                    <textarea class="input" name="message" placeholder="Nhập bình luận" required="true"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <button class="primary-button">Gửi</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <!-- /post reply -->
+                            </c:when>    
+                            <c:otherwise>
+                                <em>Bạn cần phải đăng nhập để gửi bình luận</em>
+                                &nbsp;
+                                <b>
+                                    <a class="dropdown-toggle" href="javascript:void" data-toggle="modal" data-target="#authenticationModal">
+                                        Đăng nhập
+                                    </a>
+                                </b>
+                            </c:otherwise>
+                        </c:choose>
                         <p>
                             <c:url var="likePostURL" value="${contextPath}/post/detail/like">
                                 <c:param name="postId" value="${postBean.postId}" />
@@ -183,69 +241,90 @@
             </div>
 
             <div class="col-md-4">
-                <!-- post widget -->
-                <div class="aside-widget">
-                    <div class="section-title">
-                        <h3 class="title">${seriesBean.seriesName}</h3>
+                <div class="sticky-top-mt-8">
+                    <div class="aside-widget">
+                        <c:url var="likePostURL" value="${contextPath}/post/detail/like">
+                            <c:param name="postId" value="${postBean.postId}" />
+                        </c:url>
+                        <button id="likePostBtn" class="btn btn-primary" data-postId="${postBean.postId}" data-action="${likePostURL}" data-isLiked="${isLiked}">
+                            <c:choose>
+                                <c:when test="${!isLiked}">
+                                    <i class="far fa-heart"></i>
+                                    &nbsp;
+                                    Like
+                                </c:when>
+                                <c:otherwise>
+                                    <i class="fas fa-heart"></i>
+                                    &nbsp;
+                                    Liked
+                                </c:otherwise>
+                            </c:choose>
+                        </button>
                     </div>
-                    <c:forEach var="post" items="${postsOfSeries}">
-                        <c:if test="${post.postId != postBean.postId}">
-                            <!-- post -->
-                            <div class="post post-widget">
-                                <c:url var="postURL" value="${contextPath}/post/detail">
-                                    <c:param name="name" value="${post.postTitleUnsigned}"/>
-                                    <c:param name="%" value="${post.postId}"/>
-                                </c:url>
-                                <a class="post-img" href="${postURL}">
-                                    <img src="${pageContext.request.contextPath}/Resources/img/header-1.jpg" alt="${postURL}">
-                                </a>
-                                <div class="post-body">
-                                    <h4 class="post-title">
-                                        <a href="${postURL}"><c:out value="${post.postTitle}"/></a>
-                                    </h4>
-                                    <br>
-                                    <small>
-                                        <fmt:formatDate var="postTime" value="${post.postTime}" type="date" dateStyle="short" pattern="dd/MM/yyyy"/>
-                                        <c:out value="${postTime}"/>
-                                    </small>
+                    <!-- post widget -->
+                    <div class="aside-widget">
+                        <div class="section-title">
+                            <h3 class="title">${seriesBean.seriesName}</h3>
+                        </div>
+                        <c:forEach var="post" items="${postsOfSeries}">
+                            <c:if test="${post.postId != postBean.postId}">
+                                <!-- post -->
+                                <div class="post post-widget">
+                                    <c:url var="postURL" value="${contextPath}/post/detail">
+                                        <c:param name="name" value="${post.postTitleUnsigned}"/>
+                                        <c:param name="%" value="${post.postId}"/>
+                                    </c:url>
+                                    <a class="post-img" href="${postURL}">
+                                        <img src="${pageContext.request.contextPath}/Resources/img/header-1.jpg" alt="${postURL}">
+                                    </a>
+                                    <div class="post-body">
+                                        <h4 class="post-title">
+                                            <a href="${postURL}"><c:out value="${post.postTitle}"/></a>
+                                        </h4>
+                                        <br>
+                                        <small>
+                                            <fmt:formatDate var="postTime" value="${post.postTime}" type="date" dateStyle="short" pattern="dd/MM/yyyy"/>
+                                            <c:out value="${postTime}"/>
+                                        </small>
+                                    </div>
                                 </div>
-                            </div>
-                            <!-- /post -->
-                        </c:if>
-                    </c:forEach>
-                </div>
-                <!-- /post widget -->
-                <br>
-                <!-- author post widget -->
-                <div class="aside-widget">
-                    <div class="section-title">
-                        <h3 class="title">Cùng tác giả</h3>
+                                <!-- /post -->
+                            </c:if>
+                        </c:forEach>
                     </div>
-                    <c:forEach var="post" items="${postsOfUser}">
-                        <c:if test="${post.postId != postBean.postId}">
-                            <div class="post post-widget">
-                                <c:url var="postURL" value="${contextPath}/post/detail">
-                                    <c:param name="title" value="${post.postTitleUnsigned}"/>
-                                    <c:param name="%" value="${post.postId}"/>
-                                </c:url>
-                                <a class="post-img" href="${postURL}">
-                                    <img src="${pageContext.request.contextPath}/Resources/img/header-1.jpg" alt="${postURL}">
-                                </a>
-                                <div class="post-body">
-                                    <h4 class="post-title">
-                                        <a href="${postURL}"><c:out value="${post.postTitle}"/></a>
-                                    </h4>
-                                    <br>
-                                    <small>
-                                        <fmt:formatDate var="postTime" value="${post.postTime}" type="date" dateStyle="short" pattern="dd/MM/yyyy"/>
-                                        <c:out value="${postTime}"/>
-                                    </small>
+                    <!-- /post widget -->
+                    <br>
+                    <!-- author post widget -->
+                    <div class="aside-widget">
+                        <div class="section-title">
+                            <h3 class="title">Cùng tác giả</h3>
+                        </div>
+                        <c:forEach var="post" items="${postsOfUser}">
+                            <c:if test="${post.postId != postBean.postId}">
+                                <div class="post post-widget">
+                                    <c:url var="postURL" value="${contextPath}/post/detail">
+                                        <c:param name="name" value="${post.postTitleUnsigned}"/>
+                                        <c:param name="%" value="${post.postId}"/>
+                                    </c:url>
+                                    <a class="post-img" href="${postURL}">
+                                        <img src="${pageContext.request.contextPath}/Resources/img/header-1.jpg" alt="${postURL}">
+                                    </a>
+                                    <div class="post-body">
+                                        <h4 class="post-title">
+                                            <a href="${postURL}"><c:out value="${post.postTitle}"/></a>
+                                        </h4>
+                                        <br>
+                                        <small>
+                                            <fmt:formatDate var="postTime" value="${post.postTime}" type="date" dateStyle="short" pattern="dd/MM/yyyy"/>
+                                            <c:out value="${postTime}"/>
+                                        </small>
+                                    </div>
                                 </div>
-                            </div>
-                        </c:if>
-                    </c:forEach>
+                            </c:if>
+                        </c:forEach>
+                    </div>
+                    <!-- /author post widget -->
                 </div>
-                <!-- /author post widget -->
             </div>
         </div>   
     </jsp:body>

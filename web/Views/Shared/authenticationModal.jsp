@@ -15,8 +15,8 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
+                <h4 class="modal-title">Đăng nhập</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Login</h4>
             </div>
             <div class="modal-body">
                 <form action="${pageContext.request.contextPath}/user/login" method="POST">
@@ -29,16 +29,12 @@
                         <input type="password" class="input" id="password" name="password" placeholder="Password">
                     </div>
                     <div class="form-group">
-                        <input type="checkbox" class="form-check-input" id="rememberCheck">
-                        <label class="form-check-label" for="rememberCheck">Remember me</label>
-                    </div>
-                    <div class="form-group">
                         <input type="hidden" id="curURL" value="${currentURL}">
                         <input type="hidden" id="curQueryString" value="${currentQueryString}">
                     </div>
                     <button type="submit" class="primary-button btn-block">Đăng nhập</button>
                 </form>
-                
+
             </div>
             <div class="modal-footer">
                 <span class="pull-left">
