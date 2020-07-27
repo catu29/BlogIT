@@ -84,7 +84,7 @@ public class PostCreateServlet extends HttpServlet {
             request.setAttribute("listPosts", listPosts);
         }
         
-        RequestDispatcher rd = request.getRequestDispatcher("/Views/Post/postEdit.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("/Views/Post/postCreate.jsp");
         rd.forward(request, response);
     }
 

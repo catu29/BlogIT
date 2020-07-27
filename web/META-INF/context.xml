@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Context path="/BlogIT">
-
-<Resource name="jdbc/MySqlDatabase"
-    auth="Container"
-    type="javax.sql.DataSource"
-    
-    username="root"
-    password="root"
-    
-    driverClassName="com.mysql.jdbc.Driver"
-    url="jdbc:mysql://127.0.0.1:3306/BlogIT"/>
-
+    <Resource 
+        auth="Container" 
+        driverClassName="com.mysql.jdbc.Driver" 
+        name="jdbc/MySqlDatabase" 
+        type="javax.sql.DataSource" 
+        url="jdbc:mysql://127.0.0.1:3306/blogit" 
+        username="root"
+        password="btt13091998" />
 </Context>
