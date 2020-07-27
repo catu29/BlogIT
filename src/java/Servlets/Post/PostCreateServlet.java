@@ -14,6 +14,7 @@ import DTO.DTOPost;
 import DTO.DTOPostTag;
 import DTO.DTOTagList;
 import DTO.DTOUserSeriesList;
+import com.google.gson.Gson;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -118,6 +119,7 @@ public class PostCreateServlet extends HttpServlet {
                                               
             if (request.getParameter("title") != null && !request.getParameter("title").isEmpty()) {
                 title = request.getParameter("title");
+                System.out.println("title " + title);
             } else {
                 title = "";
                 count++;
@@ -125,6 +127,7 @@ public class PostCreateServlet extends HttpServlet {
             
             if (request.getParameterValues("tags") != null && request.getParameterValues("tags").length != 0) {
                 tags = request.getParameterValues("tags");  
+                System.out.println("tag " + tags[0]);
             } else {
                 tags = null;
                 count++;
@@ -132,6 +135,7 @@ public class PostCreateServlet extends HttpServlet {
             
             if (request.getParameter("description") != null && !request.getParameter("description").isEmpty()) {
                 description = request.getParameter("description");
+                System.out.println("des " + description);
             } else {
                 description = "";
                 count++;
@@ -139,13 +143,13 @@ public class PostCreateServlet extends HttpServlet {
             
             if (request.getParameter("content") != null && !request.getParameter("content").isEmpty()) {
                 content = request.getParameter("content");
+                System.out.println("content " + content);
             } else {
                 content = "";
                 count++;
             }
             
-            DTOPost postDTO = new DTOPost();
-            
+            DTOPost postDTO = new DTOPost();            
             Date createTime = new Date();
             
             postDTO.setPostTitle(title);
@@ -157,18 +161,22 @@ public class PostCreateServlet extends HttpServlet {
             if (request.getParameter("series") != null && !request.getParameter("series").isEmpty()) {
                 series = request.getParameter("series");
                 postDTO.setSeriesId(Integer.parseInt(series));
+                
+                if (request.getParameter("seriesOrder") != null && !request.getParameter("seriesOrder").isEmpty()) {
+                    seriesOrder = request.getParameter("seriesOrder");
+                    postDTO.setSeriesOrder(Integer.parseInt(seriesOrder));
+                } else {
+                    seriesOrder = "";
+                    postDTO.setSeriesOrder(0);
+                }
             } else {
                 series = "";
+                seriesOrder = "";
+                postDTO.setSeriesOrder(0);
                 postDTO.setSeriesId(0);
             }
             
-            if (request.getParameter("seriesOrder") != null && !request.getParameter("seriesOrder").isEmpty()) {
-                seriesOrder = request.getParameter("seriesOrder");
-                postDTO.setSeriesOrder(Integer.parseInt(seriesOrder));
-            } else {
-                seriesOrder = "";
-                postDTO.setSeriesOrder(0);
-            }
+            
                                     
             Part filePart = request.getPart("image");
             if (filePart != null) {                
@@ -216,13 +224,13 @@ public class PostCreateServlet extends HttpServlet {
                 request.setAttribute("postDTO", postDTO);
                 request.setAttribute("isInvalide", true);
                 
-                RequestDispatcher rd = request.getRequestDispatcher("/Views/Post/postEdit.jsp");
+                RequestDispatcher rd = request.getRequestDispatcher("/Views/Post/postCreate.jsp");
                 rd.forward(request, response);
             }
         } else {
             session.setAttribute("message", "Vui lòng đăng nhập");
             
-            RequestDispatcher rd = request.getRequestDispatcher("/Views/Post/postEdit.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("/Views/Post/postCreate.jsp");
             rd.forward(request, response);
         }
     }

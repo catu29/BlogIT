@@ -245,13 +245,13 @@ public class MapperPost extends MapperBase {
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
             String postTitleUnsigned = convertToUnsigned(post.getPostTitle().trim());
             
-            String query = "Insert into Post (postTitle, postTitleUnsigned, postTime, userId, seriesId, postContent) values (N'"
+            String query = "Insert into Post (postTitle, postTitleUnsigned, postSubTitle, postTime, userId, seriesId, seriesOrder, image, postContent) values (N'"
                          + post.getPostTitle() + "', '"
                          + postTitleUnsigned + "', N'"
-                         + post.getPostSubTitle() + "', "
+                         + post.getPostSubTitle() + "', '"
                          + formatter.format(post.getPostTime()) + "', "
                          + post.getUserId() + ", "
-                         + post.getSeriesId() + "', "
+                         + post.getSeriesId() + ", "
                          + post.getSeriesOrder() + ", '"
                          + post.getImage() + "', N'"
                          + post.getPostContent() + "');";

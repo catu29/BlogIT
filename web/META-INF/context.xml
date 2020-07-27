@@ -7,5 +7,5 @@
         type="javax.sql.DataSource" 
         url="jdbc:mysql://127.0.0.1:3306/blogit" 
         username="root"
-        password="btt13091998" />
+        password="root" />
 </Context>

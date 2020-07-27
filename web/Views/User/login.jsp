@@ -15,7 +15,7 @@
 
 
 <t:layout>
-    <jsp:attribute name="title">Login</jsp:attribute>
+    <jsp:attribute name="title">Đăng nhập</jsp:attribute>
     <jsp:body>
         <div class="row">
             <div class="col-sm-6">               

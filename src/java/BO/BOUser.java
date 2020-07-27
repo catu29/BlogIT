@@ -57,6 +57,10 @@ public class BOUser {
         return mapper.updateUserRole(user, role);
     }
     
+    public boolean updateUserInfo(DTOUser user) {
+        return mapper.updateUserInfo(user);
+    }
+    
     public boolean deleteUser(DTOUser user) {
         return mapper.isExisting(user.getEmail()) ? mapper.deleteUser(user) : false;
     }

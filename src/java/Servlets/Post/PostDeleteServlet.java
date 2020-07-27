@@ -13,6 +13,7 @@ import BO.BOPostTag;
 import Beans.SessionBeanUser;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -81,9 +82,17 @@ public class PostDeleteServlet extends HttpServlet {
                     System.out.println("Delete all comments for post " + postId + " succeed");
                 }
                 
-                // TODO: delete all reports of post
+                if (reportBO.deletePostReport(postId)) {
+                    System.out.println("Delete all reports of post " + postId + " succeed");
+                }
             } else {
                 System.out.println("Delete post " + postId + " fail");
+            }
+            
+            if (userBean.getRole() != 0) {
+                response.sendRedirect(getServletContext().getContextPath() + "/user/manage-post");
+            } else {
+                response.sendRedirect(getServletContext().getContextPath() + "/admin/manage-post");
             }
         }
     }
@@ -110,7 +119,7 @@ public class PostDeleteServlet extends HttpServlet {
      */
     @Override
     public String getServletInfo() {
-        return "Short description";
+        return "Post delete servlet";
     }// </editor-fold>
 
 }

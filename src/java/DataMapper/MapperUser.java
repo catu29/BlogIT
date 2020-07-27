@@ -212,6 +212,23 @@ public class MapperUser extends MapperBase {
         return result;
     }
     
+    public boolean updateUserInfo(DTOUser user) {
+        try {
+            String query = "Update User Set "
+                    + "fullname = N'" + user.getFullname() + "', "
+                    + "avatar = '" + user.getAvatar() + "', "
+                    + "bio = N'" + user.getBio() + "', "
+                    + "password = '" + user.getPassword() + "' "
+                    + "where userId = " + user.getUserId();
+            PreparedStatement stmt = connection.prepareStatement(query);
+        
+            return stmt.executeUpdate(query) > 0;
+        } catch (Exception e) {
+            System.out.println("Update user infor error: " + e.getMessage());
+            return false;
+        }
+    }
+    
     public boolean deleteUser(DTOUser user) {
         boolean result = false;
         

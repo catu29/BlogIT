@@ -36,4 +36,8 @@ public class BOPostReport {
     public boolean deleteReport(int reportId) {
         return mapper.deleteReport(reportId);
     }
+    
+    public boolean deletePostReport(int postId) {
+        return mapper.deletePostReport(postId);
+    }
 }
