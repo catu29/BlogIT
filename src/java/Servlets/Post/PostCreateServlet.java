@@ -14,7 +14,6 @@ import DTO.DTOPost;
 import DTO.DTOPostTag;
 import DTO.DTOTagList;
 import DTO.DTOUserSeriesList;
-import com.google.gson.Gson;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -196,19 +195,37 @@ public class PostCreateServlet extends HttpServlet {
                 BOPostTag postTagBO = new BOPostTag();
                 BOUserSeriesList seriesBO = new BOUserSeriesList();
                                 
-                String uploadPath = getServletContext().getRealPath("/Resources/img") + File.separator + String.valueOf(userBean.getUserId());
-                File fileDir = new File(uploadPath);
+                String realPath = getServletContext().getRealPath("");
                 
-                if (!fileDir.exists()) {
-                    if (fileDir.mkdirs()) {
-                        System.out.println("Make director success: " + fileDir.getAbsolutePath());
+                // buildLocation use for displaying immediately when changes had occured, this value is temporary and will change at next build-time
+                String buildLocation = realPath + getServletContext().getInitParameter("upload.location") + String.valueOf(userBean.getUserId()) + File.separator;
+                File builFileDir = new File(buildLocation);
+                
+                if (!builFileDir.exists()) {
+                    if (builFileDir.mkdirs()) {
+                        System.out.println("Make director on build success: " + builFileDir.getAbsolutePath());
                     } else {
-                        System.out.println("Make director fail");
+                        System.out.println("Make director on build fail");
+                    }
+                }
+
+                String savePath = realPath.replace("\\build\\web\\", "\\web");
+                
+                // saveLocation use for save permanently data in application context
+                String saveLocation = savePath + getServletContext().getInitParameter("upload.location") + String.valueOf(userBean.getUserId()) + File.separatorChar;
+                File saveFileDir = new File(saveLocation);
+                
+                if (!saveFileDir.exists()) {
+                    if (saveFileDir.mkdirs()) {
+                        System.out.println("Make wep application director success: " + saveFileDir.getAbsolutePath());
+                    } else {
+                        System.out.println("Make wep application director fail");
                     }
                 }
                 
                 InputStream fileContent = filePart.getInputStream();
-                Files.copy(fileContent, Paths.get(fileDir + File.separator + image), StandardCopyOption.REPLACE_EXISTING);
+                Files.copy(fileContent, Paths.get(builFileDir + File.separator + image), StandardCopyOption.REPLACE_EXISTING);
+                Files.copy(fileContent, Paths.get(saveFileDir + File.separator + image), StandardCopyOption.REPLACE_EXISTING);
                 
                 postDTO.setImage(image);
                 

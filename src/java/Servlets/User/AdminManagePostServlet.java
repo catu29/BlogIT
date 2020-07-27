@@ -73,7 +73,7 @@ public class AdminManagePostServlet extends HttpServlet {
             BOUserSeriesList seriesBO = new BOUserSeriesList();
             BOUser userBO = new BOUser();
             
-            ArrayList<DTOPost> listPosts = boPost.getAllPostsOfUser(userBean.getUserId());
+            ArrayList<DTOPost> listPosts = boPost.getAllPosts();
             
             if (listPosts != null && !listPosts.isEmpty()) {
                 Map<Integer, Integer> countLike = new HashMap();
@@ -101,7 +101,7 @@ public class AdminManagePostServlet extends HttpServlet {
             
             request.setAttribute("listPosts", listPosts);
             
-            RequestDispatcher rd = request.getRequestDispatcher("/Views/User/userManagePosts.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("/Views/Admin/adminManagePosts.jsp");
             rd.forward(request, response);
         } else {
             response.sendRedirect(getServletContext().getContextPath() + "/user/login");
