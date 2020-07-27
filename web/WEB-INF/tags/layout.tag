@@ -200,6 +200,7 @@
     <!-- /FOOTER -->
 
     <jsp:include page="../../Views/Shared/authenticationModal.jsp" />
+    <jsp:include page="../../Views/Shared/addNewSeriesModal.jsp" />
 
     <!-- libraries-->
     <script src="${pageContext.request.contextPath}/Resources/vendors/bootstrap/jquery-3.5.1.slim.min.js"></script>
