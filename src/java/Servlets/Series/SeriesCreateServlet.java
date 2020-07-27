@@ -8,6 +8,8 @@ package Servlets.Series;
 import BO.BOUserSeriesList;
 import Beans.SessionBeanUser;
 import DTO.DTOUserSeriesList;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -87,9 +89,12 @@ public class SeriesCreateServlet extends HttpServlet {
             }
         }
         
+        Gson gson = new Gson();
+        String json = gson.toJson(seriesList);
+        
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
-        //response.getWriter().write(seriesList);
+        response.getWriter().write(json);
     }
 
     /**

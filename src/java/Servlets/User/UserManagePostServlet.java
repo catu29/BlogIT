@@ -92,6 +92,8 @@ public class UserManagePostServlet extends HttpServlet {
             
             RequestDispatcher rd = request.getRequestDispatcher("/Views/User/userManagePosts.jsp");
             rd.forward(request, response);
+        } else {
+            response.sendRedirect(getServletContext().getContextPath() + "/user/login");
         }
     }
 

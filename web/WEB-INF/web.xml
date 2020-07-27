@@ -84,6 +84,11 @@
         <servlet-name>SeriesCreateServlet</servlet-name>
         <servlet-class>Servlets.Series.SeriesCreateServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>UserEditProfileServlet</servlet-name>
+        <servlet-class>Servlets.User.UserEditProfileServlet</servlet-class>
+        <multipart-config/>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PostCommentServlet</servlet-name>
         <url-pattern>/post/detail/comment</url-pattern>
@@ -155,6 +160,10 @@
     <servlet-mapping>
         <servlet-name>SeriesCreateServlet</servlet-name>
         <url-pattern>/series/create</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UserEditProfileServlet</servlet-name>
+        <url-pattern>/user/edit-profile</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
