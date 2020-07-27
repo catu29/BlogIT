@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/WorkSpace/SubjectProject/JEE/BlogIT/web/Views/Shared/authenticationModal.jsp</file>
-            <file>file:/D:/WorkSpace/SubjectProject/JEE/BlogIT/web/Views/User/login.jsp</file>
-            <file>file:/D:/WorkSpace/SubjectProject/JEE/BlogIT/src/java/Servlets/User/LoginServlet.java</file>
-            <file>file:/D:/WorkSpace/SubjectProject/JEE/BlogIT/web/WEB-INF/web.xml</file>
-            <file>file:/D:/WorkSpace/SubjectProject/JEE/BlogIT/src/java/Servlets/User/RegisterServlet.java</file>
-            <file>file:/D:/WorkSpace/SubjectProject/JEE/BlogIT/web/Views/User/register.jsp</file>
-            <file>file:/D:/WorkSpace/SubjectProject/JEE/BlogIT/web/WEB-INF/tags/layout.tag</file>
+            <file>file:/F:/SoftwareEngineeringCourses/N4HK2_J2EE/Project/BlogIT/web/Resources/Root/helper.js</file>
+            <file>file:/F:/SoftwareEngineeringCourses/N4HK2_J2EE/Project/BlogIT/src/java/Servlets/Post/PostDetailServlet.java</file>
+            <file>file:/F:/SoftwareEngineeringCourses/N4HK2_J2EE/Project/BlogIT/web/Views/Post/postDetail.jsp</file>
+            <file>file:/F:/SoftwareEngineeringCourses/N4HK2_J2EE/Project/BlogIT/web/Resources/Post/postDetail.js</file>
+            <file>file:/F:/SoftwareEngineeringCourses/N4HK2_J2EE/Project/BlogIT/src/java/Servlets/Post/PostCommentServlet.java</file>
+            <file>file:/F:/SoftwareEngineeringCourses/N4HK2_J2EE/Project/BlogIT/web/WEB-INF/tags/layout.tag</file>
         </group>
     </open-files>
 </project-private>
