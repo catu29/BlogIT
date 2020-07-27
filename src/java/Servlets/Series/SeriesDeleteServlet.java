@@ -3,24 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Servlets.User;
+package Servlets.Series;
 
-import BO.BOPost;
-import BO.BOPostComment;
-import BO.BOPostLike;
-import BO.BOUser;
 import BO.BOUserSeriesList;
-import Beans.SessionBeanUser;
-import DTO.DTOPost;
-import DTO.DTOPostComment;
-import DTO.DTOUser;
-import DTO.DTOPostLike;
-import DTO.DTOUserSeriesList;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import javax.servlet.RequestDispatcher;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -31,8 +18,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author TranCamTu
  */
-
-public class AdminManagePostServlet extends HttpServlet {
+public class SeriesDeleteServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -62,47 +48,16 @@ public class AdminManagePostServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+        
         HttpSession session = request.getSession(true);
         
         if (session.getAttribute("userBean") != null) {
-            SessionBeanUser userBean = (SessionBeanUser) session.getAttribute("userBean");
-              
-            BOPost boPost = new BOPost();
-            BOPostLike likeBO = new BOPostLike();
-            BOPostComment commentBO = new BOPostComment();
-            BOUserSeriesList seriesBO = new BOUserSeriesList();
-            BOUser userBO = new BOUser();
+            if (request.getParameter("id") != null && !request.getParameter("id").trim().isEmpty()) {
+                BOUserSeriesList seriesBO = new BOUserSeriesList();
+                seriesBO.deleteUserSeriesList(Integer.parseInt(request.getParameter("id")));
+            }
             
-            ArrayList<DTOPost> listPosts = boPost.getAllPosts();
-            
-            if (listPosts != null && !listPosts.isEmpty()) {
-                Map<Integer, Integer> countLike = new HashMap();
-                Map<Integer, Integer> countComment = new HashMap();
-                Map<Integer, DTOUserSeriesList> seriesList = new HashMap();
-                Map<Integer, DTOUser> authorList = new HashMap();
-                
-                for (DTOPost post : listPosts) {
-                    ArrayList<DTOPostLike> likesOfPost = likeBO.getAllLikesOfPost(post.getPostId());
-                    ArrayList<DTOPostComment> commentsOfPost = commentBO.getAllCommentsForPost(post.getPostId());
-                    DTOUserSeriesList seriesDTO = seriesBO.getSeriesInformation(post.getSeriesId());
-                    DTOUser userDTO = userBO.getUserInformation(post.getUserId());
-                    
-                    countLike.put(post.getPostId(), likesOfPost.size());
-                    countComment.put(post.getPostId(), commentsOfPost.size());
-                    seriesList.put(post.getPostId(), seriesDTO);
-                    authorList.put(post.getPostId(), userDTO);
-                }
-                
-                request.setAttribute("countLike", countLike);
-                request.setAttribute("countComment", countComment);
-                request.setAttribute("seriesList", seriesList);
-                request.setAttribute("authorList", authorList);
-            }                        
-            
-            request.setAttribute("listPosts", listPosts);
-            
-            RequestDispatcher rd = request.getRequestDispatcher("/Views/Admin/adminManagePosts.jsp");
-            rd.forward(request, response);
+            response.sendRedirect(getServletContext().getContextPath() + "/user/manage-series");
         } else {
             response.sendRedirect(getServletContext().getContextPath() + "/user/login");
         }

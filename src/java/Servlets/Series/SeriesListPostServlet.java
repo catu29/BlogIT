@@ -59,7 +59,6 @@ public class SeriesListPostServlet extends HttpServlet {
                     
         if (request.getParameter("id") != null) {
             String seriesId = request.getParameter("id");
-                        
             BOUserSeriesList seriesBO = new BOUserSeriesList();
             DTOUserSeriesList seriesDTO = seriesBO.getSeriesInformation(Integer.parseInt(seriesId));
             
@@ -76,20 +75,25 @@ public class SeriesListPostServlet extends HttpServlet {
             ArrayList<DTOPost> postList = postBO.getAllPostsOfSeries(Integer.parseInt(seriesId));
             
             if (postList != null && !postList.isEmpty()) {
-                Map<Integer, DTOUser> authorOfPost = new HashMap<>();
+                Map<Integer, DTOUser> authorOfPost = new HashMap();
+                Map<Integer, DTOUserSeriesList> seriesOfPost = new HashMap();
                 BOUser userBO = new BOUser();
                 
                 for (DTOPost post : postList) {
                     DTOUser authorDTO = userBO.getUserInformation(post.getUserId());
+                    DTOUserSeriesList series = seriesBO.getSeriesInformation(post.getSeriesId());
+                    
                     authorOfPost.put(post.getPostId(), authorDTO);
+                    seriesOfPost.put(post.getPostId(), series);
                 }
 
                 request.setAttribute("authorOfPost", authorOfPost);
+                request.setAttribute("seriesOfPost", seriesOfPost);
             }
             
             request.setAttribute("listPosts", postList);
             
-            RequestDispatcher rd = request.getRequestDispatcher("/Views/Post/postsOfSeries.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("/Views/Series/seriesListPost.jsp");
             rd.forward(request, response);
         }
     }

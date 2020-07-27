@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.apache.catalina.core.ApplicationContext;
 
 /**
  *
@@ -130,14 +131,7 @@ public class RegisterServlet extends HttpServlet {
                     userBean.initFromDTO(userDTO);
                     
                     session.setAttribute("userBean", userBean);
-                    
-                    File file = new File(getServletContext().getRealPath("/Resources/img") + File.separator + String.valueOf(userBean.getUserId()));
-                    if (file.mkdirs()) {
-                        System.out.println(file.getAbsolutePath() + " success");
-                    } else {
-                        System.out.println(file.getAbsolutePath() + " fail");
-                    }
-                    
+                                        
                     response.sendRedirect(getServletContext().getContextPath() + "/user/profile?id=" + userBean.getUserId());
                 } else {
                     request.setAttribute("message", "Đã có lỗi xảy ra.");             

@@ -121,6 +121,7 @@ public class MapperUserSeriesList extends MapperBase {
      *         - false - if insert fail
      */
     public boolean insertNewUserSeriesList(DTOUserSeriesList list) {
+        
         try {
             String seriesNameUnsigned = convertToUnsigned(list.getSeriesName().trim());
             
@@ -145,14 +146,31 @@ public class MapperUserSeriesList extends MapperBase {
      * @return - true - if remove succeed.
      *         - false - if remove fail
      */
-    public boolean deleteUserSeriesList(DTOUserSeriesList list) {
+    public boolean deleteUserSeriesList(int seriesId) {
         try {
-            String query = "Delete From UserSeriesList Where seriesId = " + list.getSeriesId();
+            String query = "Delete From UserSeriesList Where seriesId = " + seriesId;
             PreparedStatement stmt = connection.prepareStatement(query);
             
             return stmt.executeUpdate(query) > 0;
         } catch (Exception e) {
             System.out.println("Delete user series list error: " + e.getMessage());
+            
+            return false;
+        }
+    }
+    
+    public boolean updateUserSeriesListName(DTOUserSeriesList list) {
+        try {
+            String nameUnsigned = convertToUnsigned(list.getSeriesName());
+            String query = "Update UserSeriesList Set "
+                         + "seriesName = N'" + list.getSeriesName() + "', "
+                         + "seriesNameUnsigned = '" + nameUnsigned + "' "
+                         + "where seriesId = " + list.getSeriesId();
+            PreparedStatement stmt = connection.prepareStatement(query);
+            
+            return stmt.executeUpdate(query) > 0;
+        } catch (Exception e) {
+            System.out.println("Update user series list name error: " + e.getMessage());
             
             return false;
         }

@@ -8,10 +8,12 @@ package Servlets.Post;
 import BO.BOPostTag;
 import BO.BOTagList;
 import BO.BOUser;
+import BO.BOUserSeriesList;
 import Beans.SessionBeanTagList;
 import DTO.DTOPost;
 import DTO.DTOTagList;
 import DTO.DTOUser;
+import DTO.DTOUserSeriesList;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -76,14 +78,21 @@ public class PostsOfTagServlet extends HttpServlet {
             }
 
             if (postsOfTag != null && !postsOfTag.isEmpty()) {
-                Map<Integer, DTOUser> authorOfPost = new HashMap<>();
+                Map<Integer, DTOUser> authorOfPost = new HashMap();
+                Map<Integer, DTOUserSeriesList> seriesOfPost = new HashMap();
 
+                BOUserSeriesList seriesBO = new BOUserSeriesList();
+                
                 for (DTOPost post : postsOfTag) {
                     DTOUser authorDTO = userBO.getUserInformation(post.getUserId());
                     authorOfPost.put(post.getPostId(), authorDTO);
+                    
+                    DTOUserSeriesList series = seriesBO.getSeriesInformation(post.getSeriesId());
+                    seriesOfPost.put(post.getPostId(), series);
                 }
 
                 request.setAttribute("authorOfPost", authorOfPost);
+                request.setAttribute("seriesOfPost", seriesOfPost);
             }
 
             request.setAttribute("mainBean", tagBean);

@@ -6,15 +6,8 @@
 package Servlets.User;
 
 import BO.BOPost;
-import BO.BOPostComment;
-import BO.BOPostLike;
-import BO.BOUser;
 import BO.BOUserSeriesList;
 import Beans.SessionBeanUser;
-import DTO.DTOPost;
-import DTO.DTOPostComment;
-import DTO.DTOUser;
-import DTO.DTOPostLike;
 import DTO.DTOUserSeriesList;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -31,8 +24,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author TranCamTu
  */
-
-public class AdminManagePostServlet extends HttpServlet {
+public class UserManageSeriesServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -62,46 +54,27 @@ public class AdminManagePostServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+        
         HttpSession session = request.getSession(true);
         
         if (session.getAttribute("userBean") != null) {
             SessionBeanUser userBean = (SessionBeanUser) session.getAttribute("userBean");
-              
-            BOPost boPost = new BOPost();
-            BOPostLike likeBO = new BOPostLike();
-            BOPostComment commentBO = new BOPostComment();
+            
             BOUserSeriesList seriesBO = new BOUserSeriesList();
-            BOUser userBO = new BOUser();
+            ArrayList<DTOUserSeriesList> seriesList = seriesBO.getUserLists(userBean.getUserId());
             
-            ArrayList<DTOPost> listPosts = boPost.getAllPosts();
+            BOPost postBO = new BOPost();
+            Map<Integer, Integer> countPost = new HashMap();
             
-            if (listPosts != null && !listPosts.isEmpty()) {
-                Map<Integer, Integer> countLike = new HashMap();
-                Map<Integer, Integer> countComment = new HashMap();
-                Map<Integer, DTOUserSeriesList> seriesList = new HashMap();
-                Map<Integer, DTOUser> authorList = new HashMap();
-                
-                for (DTOPost post : listPosts) {
-                    ArrayList<DTOPostLike> likesOfPost = likeBO.getAllLikesOfPost(post.getPostId());
-                    ArrayList<DTOPostComment> commentsOfPost = commentBO.getAllCommentsForPost(post.getPostId());
-                    DTOUserSeriesList seriesDTO = seriesBO.getSeriesInformation(post.getSeriesId());
-                    DTOUser userDTO = userBO.getUserInformation(post.getUserId());
-                    
-                    countLike.put(post.getPostId(), likesOfPost.size());
-                    countComment.put(post.getPostId(), commentsOfPost.size());
-                    seriesList.put(post.getPostId(), seriesDTO);
-                    authorList.put(post.getPostId(), userDTO);
-                }
-                
-                request.setAttribute("countLike", countLike);
-                request.setAttribute("countComment", countComment);
-                request.setAttribute("seriesList", seriesList);
-                request.setAttribute("authorList", authorList);
-            }                        
+            for (DTOUserSeriesList series: seriesList) {
+                int count = postBO.getAllPostsOfSeries(series.getSeriesId()).size();
+                countPost.put(series.getSeriesId(), count);
+            }
             
-            request.setAttribute("listPosts", listPosts);
+            request.setAttribute("seriesList", seriesList);
+            request.setAttribute("countPost", countPost);
             
-            RequestDispatcher rd = request.getRequestDispatcher("/Views/Admin/adminManagePosts.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("/Views/User/userManageSeries.jsp");
             rd.forward(request, response);
         } else {
             response.sendRedirect(getServletContext().getContextPath() + "/user/login");

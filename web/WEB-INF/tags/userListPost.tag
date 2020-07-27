@@ -32,7 +32,7 @@
                             <c:param name="%" value="${post.postId}"/>
                         </c:url>
                         <a class="post-img" href="${postURL}">
-                            <img src="${pageContext.request.contextPath}/Resources/img/${userBean.userId}/${post.image}" alt="">
+                            <img src="${pageContext.request.contextPath}/Resources/img/${post.userId}/${post.image}" alt="">
                         </a>
                         <div class="post-body">
                             <h3 class="post-title title-sm">
@@ -41,13 +41,13 @@
                                 </a>
                             </h3>
                             <c:if test="${userBean != null && userBean.role == 0}">
-                                <ul clase="post-umeta">
+                                <ul class="post-umeta">
                                     <c:url var="authorURL" value="${pageContext.request.contextPath}/user/profile">
                                         <c:param name="id" value="${post.userId}"/>
                                     </c:url>
                                     <li><a href="${authorURL}">${authorList[post.postId].fullname}</a></li>
                                     <c:if test="${seriesList != null && not empty seriesList}">
-                                        <c:url var="seriesURL" value="${contextPath}/series">
+                                        <c:url var="seriesURL" value="${pageContext.request.contextPath}/series">
                                             <c:param name="id" value="${post.seriesId}"/>
                                         </c:url>
                                     <li><a href="${seriesURL}">${seriesList[post.postId].seriesName}</a></li>
