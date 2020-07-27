@@ -39,4 +39,17 @@
     $.stellar({
         responsive: true
     });
+
+    $('.select2').each(function () {
+        $(this).select2({
+            theme: 'bootstrap'
+        })
+    });
+    
+    $('.select2-multi').each(function () {
+        $(this).select2({
+            theme: 'classic'
+        })
+    });
+    
 })(jQuery);
