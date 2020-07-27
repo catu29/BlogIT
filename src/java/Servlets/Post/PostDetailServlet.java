@@ -104,6 +104,7 @@ public class PostDetailServlet extends HttpServlet {
                 
                 if (likesOfPost != null && !likesOfPost.isEmpty()) {
                     ArrayList<DTOUser> likedUsers = new ArrayList();
+                    request.setAttribute("isLiked", false);
                     
                     for (int i = 0; i < likesOfPost.size(); i++) {
                         if (userBean != null && likesOfPost.get(i).getUserId() == userBean.getUserId()) {
@@ -138,6 +139,7 @@ public class PostDetailServlet extends HttpServlet {
                 request.setAttribute("authorBean", authorBean);
                 request.setAttribute("postsOfSeries", postsOfSeries);
                 request.setAttribute("postsOfUser", postsOfUser);
+                
                 request.setAttribute("likesOfPost", likesOfPost);
                 request.setAttribute("commentsOfPost", commentsOfPost);
                 request.setAttribute("tagsOfPost", tagsOfPost);

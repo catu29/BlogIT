@@ -62,7 +62,7 @@
                             <c:forEach var="post" items="${listPosts}">
                                 <div class="post col-md-12">
                                     <c:url var="postURL" value="${contextPath}/post/detail">
-                                        <c:param name="title" value="${post.postTitleUnsigned}"/>
+                                        <c:param name="name" value="${post.postTitleUnsigned}"/>
                                         <c:param name="%" value="${post.postId}"/>
                                     </c:url>
                                     <a class="post-img" href="${postURL}">

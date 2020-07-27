@@ -11,6 +11,8 @@
 <%@taglib uri = "http://java.sun.com/jsp/jstl/fmt" prefix = "fmt" %>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 
+
+<c:set var="tagsOfPost" value="${requestScope.tagsOfPost}" />
 <c:set var="userProfile" value="${requestScope.userProfile}" />
 <c:set var="listPosts" value="${requestScope.listPosts}" />
 
@@ -52,11 +54,20 @@
                         </div>
                         <div class="form-group">
                             <label for="tags">Tags</label>
-                            <input name="tags" type="text" class="form-control" id="tags">
+                            <select class="select2-multi form-control" multiple="true" name="tags" type="text" id="tags">
+                                <option value="1">tag1</option> 
+                                <option value="2">tag2</option> 
+                                <option value="3">tag3</option> 
+                            </select>
                         </div>
                         <div class="form-group">
                             <label for="series">Series</label>
-                            <input name="series" type="text" class="form-control" id="series">
+                            <select name="series" type="text" class="select2 form-control" id="series">
+                                <option value="">Select an option...</option> 
+                                <option value="1">tag1</option> 
+                                <option value="2">tag2</option> 
+                                <option value="3">tag3</option> 
+                            </select>
                         </div>
                         <div class="form-group">
                             <label for="description">Mô tả</label>
@@ -73,7 +84,5 @@
                 </div>
             </div>
         </div>
-
-
     </jsp:body>
 </t:layout>

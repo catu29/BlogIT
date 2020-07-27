@@ -24,6 +24,8 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="asset-path" content="${pageContext.request.contextPath}/Resources/">
+        
         <title>
             ${title}
         </title>
@@ -38,17 +40,18 @@
         <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/Resources/vendors/fontawesome-free/css/all.min.css"/>
         <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/Resources/vendors/fullscreen-loader/css/jquery.loadingModal.min.css"/>
         <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/Resources/vendors/lobibox/css/lobibox.min.css"/>
-
+        <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/Resources/vendors/select2/select2.min.css"/>
+        <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/Resources/vendors/select2/select2-bootstrap.min.css"/>
+        
         <!-- Custom stlylesheet -->
         <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/Resources/Root/style.css" />
-
         <!-- custom css -->
         <jsp:invoke fragment="css"></jsp:invoke>
-        </head>
-        <body>
-            <div class="navbar sticky-top" style=" border-bottom: 1px solid #e8eaed">
-                <a class="navbar-brand mx-auto" href="">
-                    <img src="${pageContext.request.contextPath}/Resources/img/logo.png" alt="">
+    </head>
+    <body>
+        <div class="navbar sticky-top" style=" border-bottom: 1px solid #e8eaed">
+            <a class="navbar-brand mx-auto" href="">
+                <img src="${pageContext.request.contextPath}/Resources/img/logo.png" alt="">
             </a>
         </div>
         <nav class="navbar navbar-expand-lg sticky-top shadow-sm" style="background: #fff;">
@@ -109,6 +112,7 @@
                 </div>
             </div>
         </nav>
+
         <div id="nav-search">
             <form>
                 <input class="input" name="search" placeholder="Enter your search...">
@@ -117,6 +121,7 @@
                 <span></span>
             </button>
         </div>
+
         <!-- HEADER -->
         <header id="header">
             <jsp:invoke fragment="postHeader"></jsp:invoke>
@@ -209,6 +214,7 @@
     <!-- custom js -->
     <script src="${pageContext.request.contextPath}/Resources/vendors/fullscreen-loader/js/jquery.loadingModal.min.js"></script>
     <script src="${pageContext.request.contextPath}/Resources/vendors/lobibox/js/lobibox.min.js"></script>
+    <script src="${pageContext.request.contextPath}/Resources/vendors/select2/select2.full.min.js"></script>
     
     <script src="${pageContext.request.contextPath}/Resources/Root/main.js"></script>
     <script src="${pageContext.request.contextPath}/Resources/Root/helper.js"></script>
