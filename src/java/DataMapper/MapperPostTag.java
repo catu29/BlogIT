@@ -78,6 +78,19 @@ public class MapperPostTag extends MapperBase {
         }
     }
     
+    public boolean deleteTagForPost(int postId) {
+        try {
+            String query = "Delete From PostTag Where postId = " + postId;
+            PreparedStatement stmt = connection.prepareStatement(query);
+            
+            return stmt.executeUpdate(query) > 0;
+        } catch (Exception e) {
+            System.out.println("Delete all tag for post error: " + e.getMessage());
+            
+            return false;
+        }
+    }
+    
     public ArrayList<DTOTagList> getAllTagsForPost(int postId) {
         try {
             ArrayList<DTOTagList> result = new ArrayList();

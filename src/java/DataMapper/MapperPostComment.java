@@ -126,4 +126,18 @@ public class MapperPostComment extends MapperBase {
             return false;
         }
     }
+    
+    public boolean deleteAllCommentsOfPost(int postId) {
+        try {            
+            String query = "Delete From PostComment Where postId = " + postId;
+            
+            PreparedStatement stmt = connection.prepareStatement(query);
+            
+            return stmt.executeUpdate(query) > 0;
+        } catch (Exception e) {
+            System.out.println("Delete all comments of post error: " + e.getMessage());
+            
+            return false;
+        }
+    }
 }

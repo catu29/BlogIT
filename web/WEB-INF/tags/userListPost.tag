@@ -14,6 +14,8 @@
 <c:set var="listPosts" value="${requestScope.listPosts}" />
 <c:set var="countLike" value="${requestScope.countLike}" />
 <c:set var="countComment" value="${requestScope.countComment}" />
+<c:set var="seriesList" value="${requestScope.seriesList}" />
+<c:set var="authorList" value="${requestScope.authorList}" />
 
 <%-- any content can be specified here e.g.: --%>
 <div class="col-md-8">
@@ -38,6 +40,20 @@
                                     <c:out value="${post.postTitle}"/>
                                 </a>
                             </h3>
+                            <c:if test="${userBean != null && userBean.role == 0}">
+                                <ul clase="post-umeta">
+                                    <c:url var="authorURL" value="${pageContext.request.contextPath}/user/profile">
+                                        <c:param name="id" value="${post.userId}"/>
+                                    </c:url>
+                                    <li><a href="${authorURL}">${authorList[post.postId].fullname}</a></li>
+                                    <c:if test="${seriesList != null && not empty seriesList}">
+                                        <c:url var="seriesURL" value="${contextPath}/series">
+                                            <c:param name="id" value="${post.seriesId}"/>
+                                        </c:url>
+                                    <li><a href="${seriesURL}">${seriesList[post.postId].seriesName}</a></li>
+                                    </c:if>
+                                </ul>
+                            </c:if>
                             <ul class="post-umeta">
                                 <li>
                                     <fmt:formatDate var="postTime" value="${post.postTime}" type="date" dateStyle="short" pattern="dd/MM/yyyy"/>
