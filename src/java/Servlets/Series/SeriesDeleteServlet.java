@@ -5,28 +5,20 @@
  */
 package Servlets.Series;
 
-import BO.BOPost;
-import BO.BOUser;
 import BO.BOUserSeriesList;
-import Beans.SessionBeanUserSeriesList;
-import DTO.DTOPost;
-import DTO.DTOUser;
-import DTO.DTOUserSeriesList;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import javax.servlet.RequestDispatcher;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author TranCamTu
  */
-public class SeriesListPostServlet extends HttpServlet {
+public class SeriesDeleteServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -56,45 +48,18 @@ public class SeriesListPostServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-                    
-        if (request.getParameter("id") != null) {
-            String seriesId = request.getParameter("id");
-            BOUserSeriesList seriesBO = new BOUserSeriesList();
-            DTOUserSeriesList seriesDTO = seriesBO.getSeriesInformation(Integer.parseInt(seriesId));
-            
-            if (seriesDTO != null) {
-                SessionBeanUserSeriesList seriesBean = new SessionBeanUserSeriesList();
-                seriesBean.initFromDTO(seriesDTO);
-                
-                request.setAttribute("mainBean", seriesBean);
-            } else {
-                request.setAttribute("mainBean", null);
+        
+        HttpSession session = request.getSession(true);
+        
+        if (session.getAttribute("userBean") != null) {
+            if (request.getParameter("id") != null && !request.getParameter("id").trim().isEmpty()) {
+                BOUserSeriesList seriesBO = new BOUserSeriesList();
+                seriesBO.deleteUserSeriesList(Integer.parseInt(request.getParameter("id")));
             }
             
-            BOPost postBO = new BOPost();
-            ArrayList<DTOPost> postList = postBO.getAllPostsOfSeries(Integer.parseInt(seriesId));
-            
-            if (postList != null && !postList.isEmpty()) {
-                Map<Integer, DTOUser> authorOfPost = new HashMap();
-                Map<Integer, DTOUserSeriesList> seriesOfPost = new HashMap();
-                BOUser userBO = new BOUser();
-                
-                for (DTOPost post : postList) {
-                    DTOUser authorDTO = userBO.getUserInformation(post.getUserId());
-                    DTOUserSeriesList series = seriesBO.getSeriesInformation(post.getSeriesId());
-                    
-                    authorOfPost.put(post.getPostId(), authorDTO);
-                    seriesOfPost.put(post.getPostId(), series);
-                }
-
-                request.setAttribute("authorOfPost", authorOfPost);
-                request.setAttribute("seriesOfPost", seriesOfPost);
-            }
-            
-            request.setAttribute("listPosts", postList);
-            
-            RequestDispatcher rd = request.getRequestDispatcher("/Views/Series/seriesListPost.jsp");
-            rd.forward(request, response);
+            response.sendRedirect(getServletContext().getContextPath() + "/user/manage-series");
+        } else {
+            response.sendRedirect(getServletContext().getContextPath() + "/user/login");
         }
     }
 
@@ -119,7 +84,7 @@ public class SeriesListPostServlet extends HttpServlet {
      */
     @Override
     public String getServletInfo() {
-        return "Posts of series servlet";
+        return "Short description";
     }// </editor-fold>
 
 }
