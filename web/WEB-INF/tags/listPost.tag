@@ -14,6 +14,7 @@
 <c:set var="mainName" value="${requestScope.mainName}" />
 <c:set var="listPosts" value="${requestScope.listPosts}" />
 <c:set var="authorOfPost" value="${requestScope.authorOfPost}" />
+<c:set var="seriesOfPost" value="${requestScope.seriesOfPost}" />
 
 <%-- The list of normal or fragment attributes can be specified here: --%>
 <%@attribute name="anotherInfo" fragment="true"%>
@@ -31,21 +32,17 @@
             </c:when>
             <c:otherwise>
                 <c:forEach var="post" items="${listPosts}">
+                    <c:url var="postURL" value="${contextPath}/post/detail">
+                        <c:param name="name" value="${post.postTitleUnsigned}"/>
+                        <c:param name="%" value="${post.postId}"/>
+                    </c:url>
                     <!-- Post Image -->
-                    <div>
-                        <c:url var="postURL" value="${contextPath}/post/detail">
-                            <c:param name="name" value="${post.postTitleUnsigned}"/>
-                            <c:param name="%" value="${post.postId}"/>
-                        </c:url>
+                    <div>                        
                         <a href="${postURL}"><img src="${pageContext.request.contextPath}/Resources/img/${post.userId}/${post.image}" alt=""></a>
                     </div>
                     <!-- /Post Image -->
                     <!-- Post Title -->
-                    <div>
-                        <c:url var="postURL" value="${contextPath}/post/detail">
-                            <c:param name="name" value="${post.postTitleUnsigned}"/>
-                            <c:param name="%" value="${post.postId}"/>
-                        </c:url>
+                    <div>                       
                         <a href="${postURL}">${post.postTitle}</a>
                     </div>
                     <!-- /Post Title -->
@@ -55,9 +52,18 @@
                         <c:url var="authorURL" value="${contextPath}/user/profile">
                             <c:param name="id" value="${authorId}"/>
                         </c:url>
-                        <a href="${authorURL}">${author[authorId].fullname}</a>
+                        <a href="${authorURL}">${authorOfPost[authorId].fullname}</a>
                     </div>
                     <!-- /Post Author -->
+                    <!-- Post Series -->
+                    <div>
+                        <c:set var="seriesId" value="${post.seriesId}"/>
+                        <c:url var="seriesURL" value="${contextPath}/series">
+                            <c:param name="id" value="${seriesId}"/>
+                        </c:url>
+                        <a href="${seriesURL}">${seriesOfPost[seriesId].seriesName}</a>
+                    </div>
+                    <!-- /Post Series -->
                     <!-- Post Time -->
                     <div>
                         <fmt:formatDate var="postTime" value="${post.postTime}" type="date" dateStyle="short" pattern="HH:mm:ss dd/MM/yyyy"/>
