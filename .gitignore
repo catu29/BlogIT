@@ -13,3 +13,4 @@ nbproject/project.properties
 nbproject/project.xml
 nbproject/build-impl.xml
 nbproject/ant-deploy.xml
+web/META-INF/context.xml
