@@ -96,12 +96,12 @@ public class PostCommentServlet extends HttpServlet {
             commentDTO.setParentId(parentId);
             
             BOPostComment commentBO = new BOPostComment();
-            
-            if (commentBO.insertCommentForPost(commentDTO)) {
-                result = "succeeded";
-            } else {
-                result = "failed";
-            }
+            result = "succeeded";
+//            if (commentBO.insertCommentForPost(commentDTO)) {
+//                result = "succeeded";
+//            } else {
+//                result = "failed";
+//            }
         } else {
             if (userBean == null) {
                 System.out.println("User bean null");
@@ -114,7 +114,7 @@ public class PostCommentServlet extends HttpServlet {
             result = "failed";
         }
         
-        response.setContentType("application/json");
+        response.setContentType("text/plain");
         response.setCharacterEncoding("UTF-8");
         response.getWriter().write(result);
     }

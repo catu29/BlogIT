@@ -57,7 +57,7 @@ public class PostLikeServlet extends HttpServlet {
         HttpSession session = request.getSession(true);
         SessionBeanUser userBean = (SessionBeanUser) session.getAttribute("userBean");
         
-        String result;
+        String result = "failed";
         
         if (userBean != null & request.getParameter("postId") != null) {
             String postId = request.getParameter("postId");                         
@@ -85,7 +85,7 @@ public class PostLikeServlet extends HttpServlet {
             result = "failed";
         }
         
-        response.setContentType("application/json");
+        response.setContentType("text/plain");
         response.setCharacterEncoding("UTF-8");
         response.getWriter().write(result);
     }

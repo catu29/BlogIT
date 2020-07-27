@@ -3,15 +3,15 @@ let helper = {
     showProgress: function () {
         $('body').loadingModal({
             position: 'auto',
-            text: 'loading ...',
+            text: 'loading',
             color: '#fff',
-            opacity: '0.7',
+            opacity: '0.5',
             backgroundColor: 'rgb(0,0,0)',
             animation: 'circle'
         });
     },
     hideProgress: function () {
-        $('body').loadingModal('hide');
+        $('body').loadingModal('destroy');
     },
     showPopupNotify: function (type, msg) {
         Lobibox.notify(type, {
