@@ -26,7 +26,8 @@
                 <form id="loginForm" action="" method="POST">                    
                     <div class="form-group">
                         <label for="email">Email:</label>
-                        <input type="email" class="form-control" id="email" name="email" value="${userDTO.email}">
+                        <input type="email" class="form-control" id="email" name="email" value="${userDTO.email}" required
+                               oninvalid="this.setCustomValidity('Trường không được để trống.')">
                         <p style="color: red;">
                             <c:if test="${isInvalid && empty userDTO.email}" >
                                 <c:out value="Trường không được để trống" />
@@ -35,7 +36,7 @@
                     </div>                    
                     <div class="form-group">
                         <label for="password">Mật khẩu:</label>
-                        <input type="password" class="form-control" id="password" name="password" value="${userDTO.password}">
+                        <input type="password" class="form-control" id="password" name="password" value="${userDTO.password}" required>
                         <p style="color: red;">
                             <c:if test="${isInvalid && empty userDTO.password}" >
                                 <c:out value="Trường không được để trống" />

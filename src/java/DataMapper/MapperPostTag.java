@@ -31,6 +31,26 @@ public class MapperPostTag extends MapperBase {
         }
     }
     
+    public boolean addTagForPost(int postId, String[] tags) {
+        try {
+            //String query = "Insert Into PostTag Values";
+            StringBuffer query = new StringBuffer("Insert Into PostTag Values");
+            for (String tag: tags) {
+                query.append("(").append(postId).append(", '").append(tag).append("'),");
+            }
+            
+            query.substring(query.lastIndexOf(","));
+            query.append(";");
+            PreparedStatement stmt = connection.prepareStatement(query.toString());
+            
+            return stmt.executeUpdate(query.toString()) > 0;
+        } catch (Exception e) {
+            System.out.println("Add tag for post error: " + e.getMessage());
+            
+            return false;
+        }
+    }
+    
     public boolean updateTagForPost(int postId, String oldTagId, String newTagId) {
         try {
             String query = "Update PostTag Set tagId = '" + newTagId 

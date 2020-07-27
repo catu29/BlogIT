@@ -15,11 +15,13 @@ import DTO.DTOPostComment;
 import DTO.DTOPostLike;
 import DTO.DTOUser;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -27,9 +29,10 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author TranCamTu
+ * @author Tin Bui
  */
-public class UserProfileServlet extends HttpServlet {
+
+public class UserManagePostServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,7 +45,7 @@ public class UserProfileServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -60,18 +63,14 @@ public class UserProfileServlet extends HttpServlet {
         processRequest(request, response);
         HttpSession session = request.getSession(true);
         
-        if (request.getParameter("id") != null) {
-            String userId = request.getParameter("id"); // userId
+        if (session.getAttribute("userBean") != null) {
+            SessionBeanUser userBean = (SessionBeanUser) session.getAttribute("userBean");
               
-            BOUser userBO = new BOUser();
-            DTOUser userDTO = userBO.getUserInformation(Integer.parseInt(userId));
-            request.setAttribute("userProfile", userDTO);
-
             BOPost boPost = new BOPost();
             BOPostLike likeBO = new BOPostLike();
             BOPostComment commentBO = new BOPostComment();
             
-            ArrayList<DTOPost> listPosts = boPost.getAllPostsOfUser(Integer.parseInt(userId));
+            ArrayList<DTOPost> listPosts = boPost.getAllPostsOfUser(userBean.getUserId());
             
             if (listPosts != null && !listPosts.isEmpty()) {
                 Map<Integer, Integer> countLike = new HashMap<>();
@@ -91,7 +90,7 @@ public class UserProfileServlet extends HttpServlet {
             
             request.setAttribute("listPosts", listPosts);
             
-            RequestDispatcher rd = request.getRequestDispatcher("/Views/User/userProfile.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("/Views/User/userManagePosts.jsp");
             rd.forward(request, response);
         }
     }
@@ -117,7 +116,7 @@ public class UserProfileServlet extends HttpServlet {
      */
     @Override
     public String getServletInfo() {
-        return "Profile Servlet";
+        return "User Manage posts servlet";
     }// </editor-fold>
 
 }

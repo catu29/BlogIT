@@ -15,7 +15,6 @@
 <c:set var="seriesBean" value="${requestScope.seriesBean}" />
 <c:set var="authorBean" value="${requestScope.authorBean}" />
 <c:set var="postsOfSeries" value="${requestScope.postsOfSeries}" />
-<c:set var="postsOfUser" value="${requestScope.postsOfUser}" />
 <c:set var="likesOfPost" value="${requestScope.likesOfPost}" />
 <c:set var="isLiked" value="${requestScope.isLiked}" />
 <c:set var="likedUsers" value="${requestScope.likedUsers}" />
@@ -32,7 +31,13 @@
     <jsp:attribute name="postHeader">
         <!-- PAGE HEADER -->
         <div id="post-header" class="page-header">
-            <div class="page-header-bg" style="background-image: url('${pageContext.request.contextPath}/Resources/img/${postBean.image}');" data-stellar-background-ratio="0.5"></div>
+            <div class="page-header-bg" 
+                 style="background-image: url('${pageContext.request.contextPath}/Resources/img/${postBean.userId}/${postBean.image}');
+                        background-repeat: no-repeat;
+                        width: 100%;
+                        height: 100%;" 
+                 data-stellar-background-ratio="0.5">
+            </div>
             <div class="container">
                 <div class="row">
                     <div class="col-md-10">
@@ -96,7 +101,7 @@
                                         <c:param name="id" value="${authorBean.userId}"/>
                                     </c:url>
                                     <a href="${profileURL}">
-                                        <img class="author-img media-object" src="${pageContext.request.contextPath}/Resources/img/${authorBean.avatar}" alt="">
+                                        <img class="author-img media-object" src="${pageContext.request.contextPath}/Resources/img/${authorBean.userId}/${authorBean.avatar}" alt="">
                                     </a>
                                 </div>
                                 <div class="media-body">
@@ -120,7 +125,7 @@
                                         <c:if test="${comment.parentId == 0}">
                                             <div class="media">
                                                 <div class="media-left">
-                                                    <a href="${profileURL}"><img class="media-object" src="${pageContext.request.contextPath}/Resources/img/${commentedUsers[userId].avatar}" alt=""></a>
+                                                    <a href="${profileURL}"><img class="media-object" src="${pageContext.request.contextPath}/Resources/img/${commentedUsers[userId].userId}/${commentedUsers[userId].avatar}" alt=""></a>
                                                 </div>
                                                 <div class="media-body">
                                                     <div class="comment">
@@ -150,7 +155,7 @@
                                                             <c:if test="${childComment.parentId == comment.commentId}">
                                                                 <div class="media media-author">
                                                                     <div class="media-left">
-                                                                        <a href="${childPofileURL}"><img class="media-object" src="${pageContext.request.contextPath}/Resources/img/${commentedUsers[childUserId].avatar}" alt=""></a>
+                                                                        <a href="${childPofileURL}"><img class="media-object" src="${pageContext.request.contextPath}/Resources/img/${commentedUsers[childUserId].userId}/${commentedUsers[childUserId].avatar}" alt=""></a>
                                                                     </div>
                                                                     <div class="media-body">
                                                                         <div class="comment">
@@ -193,6 +198,7 @@
                                                             </div>
                                                         </form>
                                                     </div>
+                                                    <!-- /comment -->
                                                 </div>
                                             </div>
                                         </c:if>
@@ -273,7 +279,7 @@
                                             <c:param name="%" value="${post.postId}"/>
                                         </c:url>
                                         <a class="post-img" href="${postURL}">
-                                            <img src="${pageContext.request.contextPath}/Resources/img/header-1.jpg" alt="${postURL}">
+                                            <img src="${pageContext.request.contextPath}/Resources/img/${post.userId}/${post.image}" alt="${postURL}">
                                         </a>
                                         <div class="post-body">
                                             <h4 class="post-title">
@@ -306,7 +312,7 @@
                                         <c:param name="%" value="${post.postId}"/>
                                     </c:url>
                                     <a class="post-img" href="${postURL}">
-                                        <img src="${pageContext.request.contextPath}/Resources/img/header-1.jpg" alt="${postURL}">
+                                        <img src="${pageContext.request.contextPath}/Resources/img/${post.userId}/${post.image}" alt="${postURL}">
                                     </a>
                                     <div class="post-body">
                                         <h4 class="post-title">

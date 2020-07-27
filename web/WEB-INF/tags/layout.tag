@@ -50,7 +50,7 @@
     </head>
     <body>
         <div class="navbar sticky-top" style=" border-bottom: 1px solid #e8eaed">
-            <a class="navbar-brand mx-auto" href="">
+            <a class="navbar-brand mx-auto" href="${pageContext.request.contextPath}">
                 <img src="${pageContext.request.contextPath}/Resources/img/logo.png" alt="">
             </a>
         </div>
@@ -62,13 +62,10 @@
                 <div class="collapse navbar-collapse" id="navbarText">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item active">
-                            <a class="nav-link" href="#">Trang chủ <span class="sr-only">(current)</span></a>
+                            <a class="nav-link" href="${pageContext.request.contextPath}">Trang chủ <span class="sr-only">(current)</span></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Features</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Pricing</a>
+                            <a class="nav-link" href="${pageContext.request.contextPath}/post/create">Tạo bài viết</a>
                         </li>
                     </ul>
                     <form class="form-inline mr-auto" id="searchForm">
@@ -86,7 +83,7 @@
                                     <button class="dropdown-toggle btn btn-nav-user" type="button" id="userdropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                         <c:choose>
                                             <c:when test="${userBean.avatar != 'null' && not empty userBean.avatar}">
-                                                <img src="${pageContext.request.contextPath}/Resources/img/${userBean.avatar}" alt="">
+                                                <img src="${pageContext.request.contextPath}/Resources/img/${userBean.userId}/${userBean.avatar}" alt="">
                                             </c:when>
                                             <c:otherwise>
                                                 <img src="${pageContext.request.contextPath}/Resources/img/default-user.png" alt="">
@@ -97,7 +94,7 @@
                                     </button>
                                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userdropdown">
                                         <a class="dropdown-item" href="${pageContext.request.contextPath}/user/profile?id=${userBean.userId}">Thông tin cá nhân</a>
-                                        <a class="dropdown-item" href="#">Tạo bài viết</a>
+                                        <a class="dropdown-item" href="${pageContext.request.contextPath}/post/create">Tạo bài viết</a>
                                         <a class="dropdown-item" href="${pageContext.request.contextPath}/user/logout">Đăng xuất</a>
                                     </div>
                                 </div>

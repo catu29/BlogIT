@@ -111,7 +111,7 @@ public class PostLikeServlet extends HttpServlet {
      */
     @Override
     public String getServletInfo() {
-        return "Short description";
+        return "Post like servlet";
     }// </editor-fold>
 
 }

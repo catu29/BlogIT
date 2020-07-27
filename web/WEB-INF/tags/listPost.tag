@@ -31,6 +31,15 @@
             </c:when>
             <c:otherwise>
                 <c:forEach var="post" items="${listPosts}">
+                    <!-- Post Image -->
+                    <div>
+                        <c:url var="postURL" value="${contextPath}/post/detail">
+                            <c:param name="name" value="${post.postTitleUnsigned}"/>
+                            <c:param name="%" value="${post.postId}"/>
+                        </c:url>
+                        <a href="${postURL}"><img src="${pageContext.request.contextPath}/Resources/img/${post.userId}/${post.image}" alt=""></a>
+                    </div>
+                    <!-- /Post Image -->
                     <!-- Post Title -->
                     <div>
                         <c:url var="postURL" value="${contextPath}/post/detail">
@@ -57,9 +66,8 @@
                     <!-- /Post Time -->
                     <!-- Post SubTitle -->
                     <div>
-                        Lorem ipsum bla bla bla
+                        <c:out value="${post.postSubTitle}"/>
                     </div>
-                    <!-- TODO: Add post sub title in db and class -->
                     <!-- /Post SubTitle -->
                 </c:forEach>
             </c:otherwise>

@@ -28,6 +28,10 @@ public class BOUserSeriesList {
         return mapper.getUserLists(userId);
     }
     
+    public DTOUserSeriesList getLatestUserSeries(int userId) {
+        return mapper.getLatestUserSeries(userId);
+    }
+    
     public boolean insertNewUserSeriesList(DTOUserSeriesList list) {
         return mapper.insertNewUserSeriesList(list);
     }

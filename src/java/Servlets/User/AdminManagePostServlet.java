@@ -5,21 +5,32 @@
  */
 package Servlets.User;
 
+import BO.BOPost;
+import BO.BOPostComment;
+import BO.BOPostLike;
+import Beans.SessionBeanUser;
+import DTO.DTOPost;
+import DTO.DTOPostComment;
+import DTO.DTOPostLike;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author Tin Bui
+ * @author TranCamTu
  */
-@WebServlet(name = "MangePosts", urlPatterns = {"/user/posts"})
-public class MangePosts extends HttpServlet {
+
+public class AdminManagePostServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,6 +43,7 @@ public class MangePosts extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
         
     }
 
@@ -48,8 +60,38 @@ public class MangePosts extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-        RequestDispatcher rd = request.getRequestDispatcher("/Views/User/managePosts.jsp");
-        rd.forward(request, response);
+        HttpSession session = request.getSession(true);
+        
+        if (session.getAttribute("userBean") != null) {
+            SessionBeanUser userBean = (SessionBeanUser) session.getAttribute("userBean");
+              
+            BOPost boPost = new BOPost();
+            BOPostLike likeBO = new BOPostLike();
+            BOPostComment commentBO = new BOPostComment();
+            
+            ArrayList<DTOPost> listPosts = boPost.getAllPostsOfUser(userBean.getUserId());
+            
+            if (listPosts != null && !listPosts.isEmpty()) {
+                Map<Integer, Integer> countLike = new HashMap<>();
+                Map<Integer, Integer> countComment = new HashMap<>();
+                
+                for (DTOPost post : listPosts) {
+                    ArrayList<DTOPostLike> likesOfPost = likeBO.getAllLikesOfPost(post.getPostId());
+                    ArrayList<DTOPostComment> commentsOfPost = commentBO.getAllCommentsForPost(post.getPostId());
+                    
+                    countLike.put(post.getPostId(), likesOfPost.size());
+                    countComment.put(post.getPostId(), commentsOfPost.size());
+                }
+                
+                request.setAttribute("countLike", countLike);
+                request.setAttribute("countComment", countComment);
+            }                        
+            
+            request.setAttribute("listPosts", listPosts);
+            
+            RequestDispatcher rd = request.getRequestDispatcher("/Views/User/userManagePosts.jsp");
+            rd.forward(request, response);
+        }
     }
 
     /**

@@ -20,6 +20,10 @@ public class BOPost {
         return mapper.getPostInformation(postId);
     }
     
+    public DTOPost getLatestUserPostInformation(int userId) {
+        return mapper.getLatestUserPostInformation(userId);
+    }
+    
     public DTOPost getPostInformation(int postId, String titleUnsigned) {
         return mapper.getPostInformation(postId, titleUnsigned);
     }

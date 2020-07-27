@@ -21,6 +21,10 @@ public class BOPostTag {
         return mapper.addTagForPost(postId, tagId);
     }
     
+    public boolean addTagForPost(int postId, String[] tags) {        
+        return mapper.addTagForPost(postId, tags);
+    }
+    
     public boolean updateTagForPost(int postId, String oldTagId, String newTagId) {
         return mapper.updateTagForPost(postId, oldTagId, newTagId);
     }
