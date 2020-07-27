@@ -215,14 +215,16 @@ public class MapperUser extends MapperBase {
     public boolean updateUserInfo(DTOUser user) {
         try {
             String query = "Update User Set "
-                    + "fullname = N'" + user.getFullname() + "', "
+                    + "fullName = N'" + user.getFullname() + "', "
                     + "avatar = '" + user.getAvatar() + "', "
                     + "bio = N'" + user.getBio() + "', "
                     + "password = '" + user.getPassword() + "' "
                     + "where userId = " + user.getUserId();
             PreparedStatement stmt = connection.prepareStatement(query);
-        
-            return stmt.executeUpdate(query) > 0;
+        System.out.println("query string " + query);
+        boolean result = stmt.executeUpdate(query) > 0;
+        System.out.println("result " + result);
+            return result;
         } catch (Exception e) {
             System.out.println("Update user infor error: " + e.getMessage());
             return false;

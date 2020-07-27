@@ -36,8 +36,12 @@ public class BOUserSeriesList {
         return mapper.insertNewUserSeriesList(list);
     }
     
-    public boolean deleteUserSeriesList(DTOUserSeriesList list) {
-        return mapper.deleteUserSeriesList(list);
+    public boolean deleteUserSeriesList(int seriesId) {
+        return mapper.deleteUserSeriesList(seriesId);
+    }
+    
+    public boolean updateUserSeriesListName(DTOUserSeriesList list) {
+        return mapper.updateUserSeriesListName(list);
     }
     
     public boolean updateUserSeriesByCondition(DTOUserSeriesList list, String column, String condition) {
