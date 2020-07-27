@@ -20,6 +20,7 @@
 <c:set var="message" value="${requestScope.message}" />
 <c:set var="postDTO" value="${requestScope.postDTO}" />
 <c:set var="isInvalid" value="${requestScope.isInvalid}" />
+<c:set var="userBean" value="${sessionScope.userBean}" />
 
 <t:layout>
     <jsp:attribute name="js">
@@ -40,6 +41,7 @@
             <div class="col-md-9">
                 <div class="row">
                     <form class="col-md-12" method="POST" action="${pageContext.request.contextPath}/post/create" enctype="multipart/form-data">
+                        <input name="userId" value="${userBean.userId}" type="hidden"> 
                         <div class="form-group">
                             <label for="title">Tiêu đề</label>
                             <input name="title" type="text" class="form-control" id="title" required value="${postBean.title}"
@@ -50,54 +52,40 @@
                         </div>
                         <div class="form-group">
                             <label for="tags">Tags</label>
-                            <select name="tags" class="form-control" id="tags" required>
+                            <select name="tags" class="form-control select2-multi" id="tags" required multiple="true">
                                 <c:forEach var="tag" items="${listTags}">
                                     <option value="${tag.tagId}">${tag.tagName}</option>
                                 </c:forEach>
                             </select>
-                            <!-- TODO: Insert JS code to choose multiple option here -->
-                            <!-- TODO: If list 'currentTagsOfPost' has values, show them here -->
                         </div>
                         <div class="form-group">
-                            <c:choose>
-                                <c:when test="${fn:length(userSeriesList) == 0 || userSeriesList == null || empty userSeriesList}">
-                                    <label for="newSeries">Series</label>
-                                    <input name="newSeries" type="text" class="form-control" id="newSeries">
-                                </c:when>
-                                <c:otherwise>
-                                    <div>
-                                        <label for="seriesType">Chọn Series</label>
-                                        <input name="seriesType" type="radio" class="form-control" id="newSeries" value="newSeries" checked> Tạo series mới </input>
-                                        <input name="seriesType" type="radio" class="form-control" id="existingSeries" value="existingSeries"> Chọn series đã có </input>
-                                    </div>
-                                    <!-- TODO: Style for radio button -->
-                                    
-                                    <!-- TODO: Insert JS code to choose radio button here -->
-                                    <div>
-                                        <label for="series">Series</label>
-                                        <select name="series" class="form-control" id="seriesDropdown">
-                                            <c:forEach var="series" items="${userSeriesList}">
-                                                <option value="${series.seriesId}">${series.seriesName}</option>
-                                            </c:forEach>
-                                        </select>
-                                    </div>
-                                    <!-- TODO: If varible 'seriesBean' has value, show it here -->
-                                    
-                                    <div>
-                                        <label for="seriesOrder">Thứ tự bài viết trong series</label>
-                                        <input name="seriesOrder" type="number" class="form-control" id="seriesOrder" min="1" value="1"
-                                               oninvalid="this.setCustomValidity('Vui lòng nhập vào số nguyên dương.')">
-                                    </div>
-                                    <!-- NOTE: If choose radio existingSeries, this field is required -->
-                                    <!-- TODO: If variable 'postBean.seriesOrder' has value, show it at 'value' field here -->
-                                </c:otherwise>
-                            </c:choose>
+                            <label for="series">
+                                <span>Series</span>&nbsp;
+                                <button id="addNewSeriesBtn" class="btn btn-sm btn-secondary" title="Thêm mới series" type="button" data-toggle="modal" data-target="#addNewSeriesModal">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </label>
+                            <select name="series" class="form-control select2" id="seriesDropdown">
+                                <option value="">Select an option...</option>
+                                <c:forEach var="series" items="${userSeriesList}">
+                                    <option value="${series.seriesId}">${series.seriesName}</option>
+                                </c:forEach>
+                            </select>
                         </div>
+                        <div class="form-group">
+                            <label for="seriesOrder">Thứ tự bài viết trong series</label>
+                            <input name="seriesOrder" type="number" class="form-control" id="seriesOrder" min="1" value="1"
+                                   oninvalid="this.setCustomValidity('Vui lòng nhập vào số nguyên dương.')">
+                        </div>
+                        <!-- NOTE: If choose radio existingSeries, this field is required -->
+                        <!-- TODO: If variable 'postBean.seriesOrder' has value, show it at 'value' field here -->
                         <div class="form-group">
                             <label for="image">Ảnh bài viết</label>
-                            <input name="image" type="file" id="image" accept="image/png, image/jpeg, image/jpg" required>                            
-                            <!-- TODO: Style for this field -->
-                            <!-- TODO: If variable 'postBean.image' has value, show it at imported file here -->
+                            <div class="custom-file">
+                                <input name="image" class="custom-file-input" type="file" id="image" accept="image/png, image/jpeg, image/jpg" required>
+                                <label class="custom-file-label" for="image">File sẽ được thay thế</label>
+                            </div
+                            <br>
                         </div>
                         <div class="form-group">
                             <label for="description">Mô tả</label>
