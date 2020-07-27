@@ -85,98 +85,85 @@ public class UserEditProfileServlet extends HttpServlet {
 
         if (userBean != null) {
             String fullname;
-            String password;
-            String confirmPassword;
             String avatar;
             String bio;
-           
-            int count = 0;
-                        
-            if (request.getParameter("fullname") != null && !request.getParameter("fullname").isEmpty()) {
+            
+            if (request.getParameter("fullname") != null && !request.getParameter("fullname").isEmpty() && !request.getParameter("fullname").trim().isEmpty()) {
                 fullname = request.getParameter("fullname");
             } else {
                 fullname = userBean.getFullname();
             }
 
-            if (request.getParameter("bio") != null && !request.getParameter("bio").isEmpty()) {
+            if (request.getParameter("bio") != null && !request.getParameter("bio").isEmpty() && !request.getParameter("bio").trim().isEmpty()) {
                 bio = request.getParameter("bio");
             } else {
                 bio = userBean.getBio();
             }
-
-            if (request.getParameter("password") != null && !request.getParameter("password").isEmpty()) {
-                password = request.getParameter("password");
-            } else {
-                password = userBean.getPassword();
-            }
             
-            if (request.getParameter("confirmPassword") != null && !request.getParameter("confirmPassword").isEmpty()) {
-                confirmPassword = request.getParameter("confirmPassword");
-            } else {
-                confirmPassword = "";
-                count++;
-            }
-
-            DTOUser userDTO = new DTOUser();
-
-            userDTO.setFullname(fullname);
-            userDTO.setPassword(password);
-            userDTO.setRole(1);
-            userDTO.setBio(bio);
-            userDTO.setUserId(userBean.getUserId());
-
             Part filePart = request.getPart("avatar");
 
             if (filePart != null) {
                 avatar = filePart.getSubmittedFileName();
                 
-                String uploadPath = getServletContext().getRealPath("/Resources/img") + File.separator + String.valueOf(userBean.getUserId());
-                File fileDir = new File(uploadPath);
-                System.out.println("upload path " + uploadPath);
-                System.out.println("file dir " + fileDir.getAbsolutePath());
-                if (!fileDir.exists()) {
-                    System.out.println("fileDir not exists");
-                    if (fileDir.mkdirs()) {
-                        System.out.println("Make director success: " + fileDir.getAbsolutePath());
-                    } else {
-                        System.out.println("Make director fail");
+                if (!avatar.trim().isEmpty()) {
+                    String realPath = getServletContext().getRealPath("");
+                
+                    // buildLocation use for displaying immediately when changes had occured, this value is temporary and will change at next build-time
+                    String buildLocation = realPath + getServletContext().getInitParameter("upload.location") + String.valueOf(userBean.getUserId()) + File.separator;
+                    File buildFileDir = new File(buildLocation);
+
+                    if (!buildFileDir.exists()) {
+                        if (buildFileDir.mkdirs()) {
+                            System.out.println("Make director on build success: " + buildFileDir.getAbsolutePath());
+                        } else {
+                            System.out.println("Make director on build fail");
+                        }
                     }
+
+                    String savePath = realPath.replace("\\build\\web\\", "\\web");
+
+                    // saveLocation use for save permanently data in application context
+                    String saveLocation = savePath + getServletContext().getInitParameter("upload.location") + String.valueOf(userBean.getUserId()) + File.separatorChar;
+                    File saveFileDir = new File(saveLocation);
+
+                    if (!saveFileDir.exists()) {
+                        if (saveFileDir.mkdirs()) {
+                            System.out.println("Make wep application director success: " + saveFileDir.getAbsolutePath());
+                        } else {
+                            System.out.println("Make wep application director fail");
+                        }
+                    }
+
+                    InputStream fileContent = filePart.getInputStream();
+                    Files.copy(fileContent, Paths.get(buildFileDir + File.separator + avatar), StandardCopyOption.REPLACE_EXISTING);
+                    Files.copy(fileContent, Paths.get(saveFileDir + File.separator + avatar), StandardCopyOption.REPLACE_EXISTING);
                 } else {
-                    System.out.println("fileDir exists");
+                    avatar = userBean.getAvatar();
                 }
-
-                InputStream fileContent = filePart.getInputStream();
-                Files.copy(fileContent, Paths.get(fileDir + File.separator + avatar), StandardCopyOption.REPLACE_EXISTING);
-
             } else {
                 avatar = userBean.getAvatar();
-            }            
+            }
             
+            DTOUser userDTO = new DTOUser();
+
+            userDTO.setFullname(fullname);
+            userDTO.setBio(bio);
             userDTO.setAvatar(avatar);
+            userDTO.setUserId(userBean.getUserId());
 
-            if (count == 0) {
-                BOUser userBO = new BOUser();
+            BOUser userBO = new BOUser();
+            System.out.println(userBean.getUserId());
+            if (userBO.updateUserInfo(userDTO)) {
+                request.setAttribute("isInvalid", false);
+                
+                userDTO = userBO.getUserInformation(userBean.getUserId());
+                userBean.initFromDTO(userDTO);
 
-                if (userBO.updateUserInfo(userDTO)) {
-                    userDTO = userBO.getUserInformation(userBean.getUserId());
-                    userBean.initFromDTO(userDTO);
+                session.setAttribute("userBean", userBean);
 
-                    session.setAttribute("userBean", userBean);
-
-                    response.sendRedirect(getServletContext().getContextPath() + "/user/profile?id=" + userBean.getUserId());
-                } else {
-                    request.setAttribute("message", "Đã có lỗi xảy ra.");
-                    request.setAttribute("userDTO", userDTO);
-                    request.setAttribute("confirmPassword", confirmPassword);
-                    request.setAttribute("isInvalid", true);
-
-                    RequestDispatcher rd = request.getRequestDispatcher("/Views/User/userEditProfile.jsp");
-                    rd.forward(request, response);
-                }
+                response.sendRedirect(getServletContext().getContextPath() + "/user/profile?id=" + userBean.getUserId());
             } else {
-                request.setAttribute("isExisting", false);
-                request.setAttribute("userDTO", userDTO);
-                request.setAttribute("confirmPassword", confirmPassword);
+                request.setAttribute("message", "Đã có lỗi xảy ra.");
                 request.setAttribute("isInvalid", true);
 
                 RequestDispatcher rd = request.getRequestDispatcher("/Views/User/userEditProfile.jsp");
