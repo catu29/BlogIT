@@ -192,10 +192,23 @@
         <servlet-name>SeriesCreateServlet</servlet-name>
         <url-pattern>/series/create</url-pattern>
     </servlet-mapping>
+    
     <servlet-mapping>
         <servlet-name>UserEditProfileServlet</servlet-name>
         <url-pattern>/user/edit-profile</url-pattern>
     </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>CKFinder</servlet-name>
+        <servlet-class>com.cksource.ckfinder.servlet.CKFinderServlet</servlet-class>
+        <multipart-config>
+            <location>/tmp</location>
+            <max-file-size>5242880</max-file-size><!--5MB-->
+            <max-request-size>20971520</max-request-size><!--20MB-->
+            <file-size-threshold>0</file-size-threshold>
+        </multipart-config>
+    </servlet>
+    
     <session-config>
         <session-timeout>
             60
