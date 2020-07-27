@@ -3,17 +3,25 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Servlets.Post;
+package Servlets.User;
 
+import BO.BOPost;
+import BO.BOPostComment;
 import BO.BOPostLike;
+import BO.BOUser;
 import Beans.SessionBeanUser;
+import DTO.DTOPost;
+import DTO.DTOPostComment;
 import DTO.DTOPostLike;
+import DTO.DTOUser;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,9 +29,10 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author TranCamTu
+ * @author Tin Bui
  */
-public class PostLikeServlet extends HttpServlet {
+
+public class UserManagePostServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,7 +45,7 @@ public class PostLikeServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -51,43 +60,39 @@ public class PostLikeServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-                
         processRequest(request, response);
-        
         HttpSession session = request.getSession(true);
-        SessionBeanUser userBean = (SessionBeanUser) session.getAttribute("userBean");
         
-        String result;
-        
-        if (userBean != null & request.getParameter("postId") != null) {
-            String postId = request.getParameter("postId");                         
-            Date date = new Date();
-            
-            DTOPostLike likeDTO = new DTOPostLike(Integer.parseInt(postId), userBean.getUserId(), date);
+        if (session.getAttribute("userBean") != null) {
+            SessionBeanUser userBean = (SessionBeanUser) session.getAttribute("userBean");
+              
+            BOPost boPost = new BOPost();
             BOPostLike likeBO = new BOPostLike();
+            BOPostComment commentBO = new BOPostComment();
             
-            boolean isLiked = likeBO.isLiked(Integer.parseInt(postId), userBean.getUserId());            
-
-            if ((!isLiked && likeBO.insertNewLike(likeDTO)) || (isLiked && likeBO.deleteLike(Integer.parseInt(postId), userBean.getUserId()))) {
-                result = "succeeded";                
-            } else {
-                result = "failed";
-            }
-        } else {
-            if (userBean == null) {
-                System.out.println("User bean null");
-            }
+            ArrayList<DTOPost> listPosts = boPost.getAllPostsOfUser(userBean.getUserId());
             
-            if (request.getParameter("postId") == null) {
-                System.out.println("Post id null");
-            }
-                        
-            result = "failed";
+            if (listPosts != null && !listPosts.isEmpty()) {
+                Map<Integer, Integer> countLike = new HashMap<>();
+                Map<Integer, Integer> countComment = new HashMap<>();
+                
+                for (DTOPost post : listPosts) {
+                    ArrayList<DTOPostLike> likesOfPost = likeBO.getAllLikesOfPost(post.getPostId());
+                    ArrayList<DTOPostComment> commentsOfPost = commentBO.getAllCommentsForPost(post.getPostId());
+                    
+                    countLike.put(post.getPostId(), likesOfPost.size());
+                    countComment.put(post.getPostId(), commentsOfPost.size());
+                }
+                
+                request.setAttribute("countLike", countLike);
+                request.setAttribute("countComment", countComment);
+            }                        
+            
+            request.setAttribute("listPosts", listPosts);
+            
+            RequestDispatcher rd = request.getRequestDispatcher("/Views/User/userManagePosts.jsp");
+            rd.forward(request, response);
         }
-        
-        response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
-        response.getWriter().write(result);
     }
 
     /**
@@ -111,7 +116,7 @@ public class PostLikeServlet extends HttpServlet {
      */
     @Override
     public String getServletInfo() {
-        return "Post like servlet";
+        return "User Manage posts servlet";
     }// </editor-fold>
 
 }

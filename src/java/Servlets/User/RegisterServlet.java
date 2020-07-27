@@ -8,6 +8,7 @@ package Servlets.User;
 import BO.BOUser;
 import Beans.SessionBeanUser;
 import DTO.DTOUser;
+import java.io.File;
 import java.io.IOException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -107,7 +108,7 @@ public class RegisterServlet extends HttpServlet {
         userDTO.setEmail(email);
         userDTO.setFullname(fullname);
         userDTO.setPassword(password);
-        userDTO.setRole(0);
+        userDTO.setRole(1);
             
         if (count == 0) {            
             BOUser userBO = new BOUser();
@@ -121,7 +122,7 @@ public class RegisterServlet extends HttpServlet {
                 RequestDispatcher rd = request.getRequestDispatcher("/Views/User/register.jsp");
                 rd.forward(request, response);
             } else {
-                request.setAttribute("isExisting", false);                
+                request.setAttribute("isExisting", false);
                 
                 if (userBO.insertNewUser(userDTO)) {
                     SessionBeanUser userBean = new SessionBeanUser();
@@ -129,6 +130,13 @@ public class RegisterServlet extends HttpServlet {
                     userBean.initFromDTO(userDTO);
                     
                     session.setAttribute("userBean", userBean);
+                    
+                    File file = new File(getServletContext().getRealPath("/Resources/img") + File.separator + String.valueOf(userBean.getUserId()));
+                    if (file.mkdirs()) {
+                        System.out.println(file.getAbsolutePath() + " success");
+                    } else {
+                        System.out.println(file.getAbsolutePath() + " fail");
+                    }
                     
                     response.sendRedirect(getServletContext().getContextPath() + "/user/profile?id=" + userBean.getUserId());
                 } else {

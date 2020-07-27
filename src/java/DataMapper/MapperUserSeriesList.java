@@ -36,7 +36,7 @@ public class MapperUserSeriesList extends MapperBase {
             return null;
         }
     }
-    
+            
     /***
      * Get all series lists of all users
      * @return - ArrayList of UserSeriesList if have data.
@@ -96,6 +96,24 @@ public class MapperUserSeriesList extends MapperBase {
         }
     }
     
+    public DTOUserSeriesList getLatestUserSeries(int userId) {
+        try {
+            String query = "Select * from UserSeriesList Where userId = " + userId + " Order by seriesId DESC Limit 1";
+            PreparedStatement stmt = connection.prepareStatement(query);
+            
+            ResultSet rs = stmt.executeQuery(query);
+            
+            rs.next();
+                
+            DTOUserSeriesList seriesDTO = new DTOUserSeriesList(rs.getInt("seriesId"), rs.getInt("userId"), rs.getString("seriesName"), rs.getString("seriesNameUnsigned"));
+
+            return seriesDTO;
+        } catch (Exception e) {
+            System.out.println("Get series list information error: " + e.getMessage());
+            return null;
+        }
+    }
+    
     /***
      * Create new series list of a particular user and insert it into db
      * @param list - DTOUserSeriesList, list data which wanted to be inserted
@@ -104,10 +122,12 @@ public class MapperUserSeriesList extends MapperBase {
      */
     public boolean insertNewUserSeriesList(DTOUserSeriesList list) {
         try {
+            String seriesNameUnsigned = convertToUnsigned(list.getSeriesNameUnsigned().trim());
+            
             String query = "Insert Into UserSeriesList(userId, seriesName, seriesNameUnsigned) values ('"
                     + list.getUserId() + "', N'"
-                    + list.getSeriesName() + "', '"
-                    + list.getSeriesNameUnsigned() + "';";
+                    + list.getSeriesName().trim() + "', '"
+                    + seriesNameUnsigned + "';";
             
             PreparedStatement stmt = connection.prepareStatement(query);
             

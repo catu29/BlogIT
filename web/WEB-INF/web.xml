@@ -63,6 +63,19 @@
     <servlet>
         <servlet-name>PostCreateServlet</servlet-name>
         <servlet-class>Servlets.Post.PostCreateServlet</servlet-class>
+        <multipart-config/>
+    </servlet>
+    <servlet>
+        <servlet-name>TestServlet</servlet-name>
+        <servlet-class>Test.TestServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UserManagePostServlet</servlet-name>
+        <servlet-class>Servlets.User.UserManagePostServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AdminManagePostServlet</servlet-name>
+        <servlet-class>Servlets.User.AdminManagePostServlet</servlet-class>
     </servlet>
     
     <servlet-mapping>
@@ -117,6 +130,19 @@
         <servlet-name>PostCreateServlet</servlet-name>
         <url-pattern>/post/create</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UserManagePostServlet</servlet-name>
+        <url-pattern>/user/manage-post</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdminManagePostServlet</servlet-name>
+        <url-pattern>/admin/manage-post</url-pattern>
+    </servlet-mapping>
+    
+    <servlet-mapping>
+        <servlet-name>TestServlet</servlet-name>
+        <url-pattern>/TestServlet</url-pattern>
+    </servlet-mapping>    
     
     <session-config>
         <session-timeout>

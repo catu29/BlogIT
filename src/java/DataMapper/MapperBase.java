@@ -8,6 +8,8 @@ package DataMapper;
 import DataAccess.MySqlConnection;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.text.Normalizer;
+import java.util.ArrayList;
 
 /**
  *
@@ -32,5 +34,23 @@ public class MapperBase {
         if (!connection.isClosed()) {
             connection.close();
         }
+    }
+    
+    protected String convertToUnsigned(String src) {        
+        String dest = Normalizer.normalize(src, Normalizer.Form.NFD);
+        dest = dest.replaceAll("[^\\p{ASCII}]", "").toLowerCase();
+        
+        String splits[] = dest.split(" ");
+        ArrayList<String> result = new ArrayList();
+        
+        for(int i = 0; i < splits.length; i++) {
+            splits[i].trim();
+            
+            if (!splits[i].isEmpty()) {
+                result.add(splits[i]);
+            }
+        }
+        
+        return String.join("-", result);
     }
 }

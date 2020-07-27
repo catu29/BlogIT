@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import DataAccess.MySqlConnection;
 import DataMapper.MapperUser;
+import java.io.File;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -59,11 +60,7 @@ public class TestServlet extends HttpServlet{
         BOPostReport reportBO = new BOPostReport();
         ArrayList<DTOPostReport> reportList = reportBO.getAllPostReport();
         
-        if (reportList == null) {
-            System.out.println("Report list null");
-        } else {
-            System.out.println("Report list size: " + reportList.size());
-        }
+        System.out.println(getServletContext().getRealPath("/Resources/img") + File.separator);
     }
 
     /**

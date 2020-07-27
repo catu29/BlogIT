@@ -26,7 +26,8 @@
                 <form id="registerForm" action="" method="POST">                    
                     <div class="form-group">
                         <label for="email">Email:</label>
-                        <input type="email" class="form-control" id="email" name="email" value="${userDTO.email}">
+                        <input type="email" class="form-control" id="email" name="email" value="${userDTO.email}" required
+                               oninvalid="this.setCustomValidity('Trường không được để trống.')">
                         <p style="color: red;">
                             <c:choose>
                                 <c:when test="${isExisting == true}">
@@ -40,7 +41,7 @@
                     </div>
                     <div class="form-group">
                         <label for="fullname">Họ và tên:</label>
-                        <input type="text" class="form-control" id="fullname" name="fullname" value="${userDTO.fullname}">
+                        <input type="text" class="form-control" id="fullname" name="fullname" value="${userDTO.fullname}" required>
                         <p style="color: red;">    
                             <c:if test="${empty userDTO.fullname && isInvalid}">
                                 <c:out value="Trường không được để trống"/>
@@ -49,7 +50,7 @@
                     </div>
                     <div class="form-group">
                         <label for="password">Mật khẩu:</label>
-                        <input type="password" class="form-control" id="password" name="password" value="${userDTO.password}">
+                        <input type="password" class="form-control" id="password" name="password" value="${userDTO.password}" required>
                         <p style="color: red;">
                             <c:if test="${empty userDTO.password && isInvalid}">
                                 <c:out value="Trường không được để trống"/>
@@ -58,7 +59,7 @@
                     </div>
                     <div class="form-group">
                         <label for="confirmPassword">Nhập lại mật khẩu:</label>
-                        <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" value="${confirmPassword}">
+                        <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" value="${confirmPassword}" required>
                         <p style="color: red;">
                             <c:choose>
                                 <c:when test="${empty confirmPassword && isInvalid}">

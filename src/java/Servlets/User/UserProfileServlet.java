@@ -90,7 +90,6 @@ public class UserProfileServlet extends HttpServlet {
             }                        
             
             request.setAttribute("listPosts", listPosts);
-            request.setAttribute("userId", userId);
             
             RequestDispatcher rd = request.getRequestDispatcher("/Views/User/userProfile.jsp");
             rd.forward(request, response);
