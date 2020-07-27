@@ -71,10 +71,10 @@ public class PostCommentServlet extends HttpServlet {
         HttpSession session = request.getSession(true);
         SessionBeanUser userBean = (SessionBeanUser) session.getAttribute("userBean");
         
-        String result;
+        int commentResultId = -1;
         
         if (request.getParameter("message") == null|| request.getParameter("message").trim().isEmpty()){
-            result = "failed";
+            commentResultId = -1;
         } 
         else if (userBean != null && request.getParameter("postId") != null) {
             String postId = request.getParameter("postId");
@@ -96,12 +96,13 @@ public class PostCommentServlet extends HttpServlet {
             commentDTO.setParentId(parentId);
             
             BOPostComment commentBO = new BOPostComment();
-            result = "succeeded";
-//            if (commentBO.insertCommentForPost(commentDTO)) {
-//                result = "succeeded";
-//            } else {
-//                result = "failed";
-//            }
+            
+            if (commentBO.insertCommentForPost(commentDTO)) {
+                DTOPostComment comment = commentBO.getLatestCommentForPost(Integer.parseInt(postId));
+                commentResultId = comment.getCommentId();
+            } else {
+                commentResultId = -1;
+            }
         } else {
             if (userBean == null) {
                 System.out.println("User bean null");
@@ -111,12 +112,12 @@ public class PostCommentServlet extends HttpServlet {
                 System.out.println("Post id null");
             }
                         
-            result = "failed";
+            commentResultId = -1;
         }
         
         response.setContentType("text/plain");
         response.setCharacterEncoding("UTF-8");
-        response.getWriter().write(result);
+        response.getWriter().write(commentResultId);
     }
 
     /**

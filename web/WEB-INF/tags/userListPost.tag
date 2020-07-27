@@ -38,7 +38,7 @@
                                     <c:out value="${post.postTitle}"/>
                                 </a>
                             </h3>
-                            <ul class="post-meta">
+                            <ul class="post-umeta">
                                 <li>
                                     <fmt:formatDate var="postTime" value="${post.postTime}" type="date" dateStyle="short" pattern="dd/MM/yyyy"/>
                                     <c:out value="${postTime}" />

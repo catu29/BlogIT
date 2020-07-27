@@ -109,7 +109,7 @@ public class MapperUserSeriesList extends MapperBase {
 
             return seriesDTO;
         } catch (Exception e) {
-            System.out.println("Get series list information error: " + e.getMessage());
+            System.out.println("Get latest series list information error: " + e.getMessage());
             return null;
         }
     }

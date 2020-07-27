@@ -20,6 +20,10 @@ public class BOPostComment {
         return mapper.getAllCommentsForPost(postId);
     }
     
+    public DTOPostComment getLatestCommentForPost(int postId) {
+        return mapper.getLatestCommentForPost(postId);
+    }
+    
     public boolean insertCommentForPost(DTOPostComment comment) {
         return mapper.insertCommentForPost(comment);
     }
