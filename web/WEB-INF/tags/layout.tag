@@ -42,6 +42,7 @@
         <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/Resources/vendors/lobibox/css/lobibox.min.css"/>
         <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/Resources/vendors/select2/select2.min.css"/>
         <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/Resources/vendors/select2/select2-bootstrap.min.css"/>
+        <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/Resources/vendors/file-upload-with-preview/file-upload-with-preview.min.css"/>
         
         <!-- Custom stlylesheet -->
         <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/Resources/Root/style.css" />
@@ -213,6 +214,7 @@
     <script src="${pageContext.request.contextPath}/Resources/vendors/fullscreen-loader/js/jquery.loadingModal.min.js"></script>
     <script src="${pageContext.request.contextPath}/Resources/vendors/lobibox/js/lobibox.min.js"></script>
     <script src="${pageContext.request.contextPath}/Resources/vendors/select2/select2.full.min.js"></script>
+    <script src="${pageContext.request.contextPath}/Resources/vendors/file-upload-with-preview/file-upload-with-preview.min.js"></script>
     
     <script src="${pageContext.request.contextPath}/Resources/Root/main.js"></script>
     <script src="${pageContext.request.contextPath}/Resources/Root/helper.js"></script>
