@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Servlets.Post;
+package Servlets.Home;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Tin Bui
  */
-public class PostServlet extends HttpServlet {
+public class HomeServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -47,8 +47,7 @@ public class PostServlet extends HttpServlet {
             throws ServletException, IOException {
         processRequest(request, response);
         
-        RequestDispatcher rd = request.getRequestDispatcher("Views/Post/post.jsp");
-        rd.forward(request, response);
+        response.sendRedirect(getServletContext().getContextPath());
     }
 
     /**
@@ -72,7 +71,7 @@ public class PostServlet extends HttpServlet {
      */
     @Override
     public String getServletInfo() {
-        return "Post Servlet";
+        return "Homepage Servlet";
     }// </editor-fold>
 
 }
