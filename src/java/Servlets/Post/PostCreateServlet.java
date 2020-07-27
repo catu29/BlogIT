@@ -9,7 +9,6 @@ import BO.BOPost;
 import BO.BOPostTag;
 import BO.BOTagList;
 import BO.BOUserSeriesList;
-import Beans.SessionBeanPost;
 import Beans.SessionBeanUser;
 import DTO.DTOPost;
 import DTO.DTOPostTag;
@@ -111,7 +110,6 @@ public class PostCreateServlet extends HttpServlet {
             String tags[];
             String series;
             String seriesOrder;
-            String newSeries;
             String image;
             String description;
             String content;
@@ -157,7 +155,7 @@ public class PostCreateServlet extends HttpServlet {
             postDTO.setPostTime(createTime);
             
             if (request.getParameter("series") != null && !request.getParameter("series").isEmpty()) {
-                series = request.getParameter("series");                
+                series = request.getParameter("series");
                 postDTO.setSeriesId(Integer.parseInt(series));
             } else {
                 series = "";
@@ -171,13 +169,7 @@ public class PostCreateServlet extends HttpServlet {
                 seriesOrder = "";
                 postDTO.setSeriesOrder(0);
             }
-            
-            if (request.getParameter("newSeries") != null && !request.getParameter("newSeries").isEmpty()) {
-                newSeries = request.getParameter("newSeries");
-            } else {
-                newSeries = "";
-            }
-                        
+                                    
             Part filePart = request.getPart("image");
             if (filePart != null) {                
                 image = filePart.getSubmittedFileName();
@@ -195,16 +187,6 @@ public class PostCreateServlet extends HttpServlet {
                 BOPost postBO = new BOPost();
                 BOPostTag postTagBO = new BOPostTag();
                 BOUserSeriesList seriesBO = new BOUserSeriesList();
-                
-                if (series.equals("") && !newSeries.equals("")) {
-                    seriesDTO.setSeriesName(newSeries);
-                    seriesDTO.setUserId(userBean.getUserId());
-                    
-                    if (seriesBO.insertNewUserSeriesList(seriesDTO)) {
-                        DTOUserSeriesList newSeriesInfo = seriesBO.getLatestUserSeries(userBean.getUserId());
-                        postDTO.setSeriesId(newSeriesInfo.getSeriesId());
-                    }
-                }
                                 
                 String uploadPath = getServletContext().getRealPath("/Resources/img") + File.separator + String.valueOf(userBean.getUserId());
                 File fileDir = new File(uploadPath);

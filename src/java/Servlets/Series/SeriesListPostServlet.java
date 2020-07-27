@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Servlets.Post;
+package Servlets.Series;
 
 import BO.BOPost;
 import BO.BOUser;
@@ -26,7 +26,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author TranCamTu
  */
-public class PostsOfSeriesServlet extends HttpServlet {
+public class SeriesListPostServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>

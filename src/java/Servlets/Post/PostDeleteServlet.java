@@ -3,24 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Servlets.User;
+package Servlets.Post;
 
 import BO.BOPost;
 import BO.BOPostComment;
 import BO.BOPostLike;
-import BO.BOUser;
-import BO.BOUserSeriesList;
+import BO.BOPostReport;
+import BO.BOPostTag;
 import Beans.SessionBeanUser;
-import DTO.DTOPost;
-import DTO.DTOPostComment;
-import DTO.DTOUser;
-import DTO.DTOPostLike;
-import DTO.DTOUserSeriesList;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import javax.servlet.RequestDispatcher;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -31,8 +23,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author TranCamTu
  */
-
-public class AdminManagePostServlet extends HttpServlet {
+public class PostDeleteServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -62,47 +53,38 @@ public class AdminManagePostServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+        
         HttpSession session = request.getSession(true);
         
-        if (session.getAttribute("userBean") != null) {
+        if (session.getAttribute("userBean") != null && request.getParameter("postId") != null && !request.getParameter("postId").isEmpty()) {
             SessionBeanUser userBean = (SessionBeanUser) session.getAttribute("userBean");
-              
-            BOPost boPost = new BOPost();
+            int postId = Integer.parseInt(request.getParameter("postId"));
+            
+            BOPost postBO = new BOPost();
+            BOPostTag tagBO = new BOPostTag();
             BOPostLike likeBO = new BOPostLike();
             BOPostComment commentBO = new BOPostComment();
-            BOUserSeriesList seriesBO = new BOUserSeriesList();
-            BOUser userBO = new BOUser();
+            BOPostReport reportBO = new BOPostReport();
             
-            ArrayList<DTOPost> listPosts = boPost.getAllPostsOfUser(userBean.getUserId());
-            
-            if (listPosts != null && !listPosts.isEmpty()) {
-                Map<Integer, Integer> countLike = new HashMap();
-                Map<Integer, Integer> countComment = new HashMap();
-                Map<Integer, DTOUserSeriesList> seriesList = new HashMap();
-                Map<Integer, DTOUser> authorList = new HashMap();
+            if (postBO.deletePost(postId)) {
+                System.out.println("Delete post " + postId + " succeed");
                 
-                for (DTOPost post : listPosts) {
-                    ArrayList<DTOPostLike> likesOfPost = likeBO.getAllLikesOfPost(post.getPostId());
-                    ArrayList<DTOPostComment> commentsOfPost = commentBO.getAllCommentsForPost(post.getPostId());
-                    DTOUserSeriesList seriesDTO = seriesBO.getSeriesInformation(post.getSeriesId());
-                    DTOUser userDTO = userBO.getUserInformation(post.getUserId());
-                    
-                    countLike.put(post.getPostId(), likesOfPost.size());
-                    countComment.put(post.getPostId(), commentsOfPost.size());
-                    seriesList.put(post.getPostId(), seriesDTO);
-                    authorList.put(post.getPostId(), userDTO);
+                if (tagBO.deleteTagForPost(postId)) {
+                    System.out.println("Delete tag for post " + postId + " succeed");
                 }
                 
-                request.setAttribute("countLike", countLike);
-                request.setAttribute("countComment", countComment);
-                request.setAttribute("seriesList", seriesList);
-                request.setAttribute("authorList", authorList);
-            }                        
-            
-            request.setAttribute("listPosts", listPosts);
-            
-            RequestDispatcher rd = request.getRequestDispatcher("/Views/User/userManagePosts.jsp");
-            rd.forward(request, response);
+                if (likeBO.deleteLike(postId, userBean.getUserId())) {
+                    System.out.println("Delete like for post " + postId + " succeed");
+                }
+                
+                if (commentBO.deleteAllCommentsOfPost(postId)) {
+                    System.out.println("Delete all comments for post " + postId + " succeed");
+                }
+                
+                // TODO: delete all reports of post
+            } else {
+                System.out.println("Delete post " + postId + " fail");
+            }
         }
     }
 
@@ -118,6 +100,7 @@ public class AdminManagePostServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+        
     }
 
     /**

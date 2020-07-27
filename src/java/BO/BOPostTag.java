@@ -33,6 +33,10 @@ public class BOPostTag {
         return mapper.deleteTagForPost(postId, tagId);
     }
     
+    public boolean deleteTagForPost(int postId) {
+        return mapper.deleteTagForPost(postId);
+    }
+    
     public ArrayList<DTOTagList> getAllTagsForPost(int postId) {
         return mapper.getAllTagsForPost(postId);
     }

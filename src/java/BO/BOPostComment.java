@@ -35,4 +35,8 @@ public class BOPostComment {
     public boolean deleteCommentForPost(int commentId) {
         return mapper.deleteCommentForPost(commentId);
     }
+    
+    public boolean deleteAllCommentsOfPost(int postId) {
+        return mapper.deleteAllCommentsOfPost(postId);
+    }
 }
