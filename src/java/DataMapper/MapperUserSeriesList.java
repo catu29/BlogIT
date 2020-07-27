@@ -122,12 +122,12 @@ public class MapperUserSeriesList extends MapperBase {
      */
     public boolean insertNewUserSeriesList(DTOUserSeriesList list) {
         try {
-            String seriesNameUnsigned = convertToUnsigned(list.getSeriesNameUnsigned().trim());
+            String seriesNameUnsigned = convertToUnsigned(list.getSeriesName().trim());
             
-            String query = "Insert Into UserSeriesList(userId, seriesName, seriesNameUnsigned) values ('"
-                    + list.getUserId() + "', N'"
+            String query = "Insert Into UserSeriesList(userId, seriesName, seriesNameUnsigned) values ("
+                    + list.getUserId() + ", N'"
                     + list.getSeriesName().trim() + "', '"
-                    + seriesNameUnsigned + "';";
+                    + seriesNameUnsigned + "');";
             
             PreparedStatement stmt = connection.prepareStatement(query);
             

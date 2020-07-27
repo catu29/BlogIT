@@ -33,9 +33,9 @@
         <div id="post-header" class="page-header">
             <div class="page-header-bg" 
                  style="background-image: url('${pageContext.request.contextPath}/Resources/img/${postBean.userId}/${postBean.image}');
-                        background-repeat: no-repeat;
-                        width: 100%;
-                        height: 100%;" 
+                 background-repeat: no-repeat;
+                 width: 100%;
+                 height: 100%;" 
                  data-stellar-background-ratio="0.5">
             </div>
             <div class="container">
@@ -144,7 +144,7 @@
                                                         <a data-toggle="collapse" href="#formReplyTo_${comment.commentId}" role="button" aria-expanded="false" aria-controls="formReplyTo_${comment.commentId}">Trả lời</a>
 
                                                     </div>
-
+                                                    <br>
                                                     <div id="comments_of_${comment.commentId}">
                                                         <!-- comment -->
                                                         <c:forEach var="childComment" items="${commentsOfPost}">
