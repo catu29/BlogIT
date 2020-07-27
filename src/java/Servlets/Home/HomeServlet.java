@@ -5,8 +5,22 @@
  */
 package Servlets.Home;
 
+import BO.BOPost;
+import BO.BOPostComment;
+import BO.BOPostLike;
+import BO.BOTagList;
+import BO.BOUser;
+import BO.BOUserSeriesList;
+import DTO.DTOPost;
+import DTO.DTOTagList;
+import DTO.DTOUser;
+import DTO.DTOUserSeriesList;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -47,7 +61,50 @@ public class HomeServlet extends HttpServlet {
             throws ServletException, IOException {
         processRequest(request, response);
         
-        response.sendRedirect(getServletContext().getContextPath());
+        BOTagList tagBO = new BOTagList();
+        BOPost postBO = new BOPost();
+        BOUser userBO = new BOUser();
+        BOPostLike likeBO = new BOPostLike();
+        BOPostComment commentBO = new BOPostComment();
+        BOUserSeriesList seriesBO = new BOUserSeriesList();
+        
+        ArrayList<DTOTagList> top10Tags = tagBO.getTopNumberOfTags(10);
+        ArrayList<DTOPost> top3LikePosts = postBO.getTopLikePosts(3);
+        ArrayList<DTOPost> top4NewPosts = postBO.getTopNewPosts(4);
+        ArrayList<DTOUserSeriesList> top6RandomSeriesList = seriesBO.getTopRandomList(6);
+                
+        Map<Integer, ArrayList<DTOPost>> top3PostsOfRandomSeries = new HashMap();
+        
+        for (DTOUserSeriesList series : top6RandomSeriesList) {
+            ArrayList<DTOPost> top3Posts = postBO.getTopPostsOfSeries(series.getSeriesId(), 3);
+            top3PostsOfRandomSeries.put(series.getSeriesId(), top3Posts);
+        }
+        
+        ArrayList<DTOPost> allPosts = postBO.getAllPosts();
+        Map<Integer, DTOUser> authorOfPost = new HashMap();
+        Map<Integer, Integer> countLikeOfPost = new HashMap();
+        Map<Integer, Integer> countCommentOfPost = new HashMap();
+        
+        for (DTOPost post : allPosts) {
+            DTOUser author = userBO.getUserInformation(post.getUserId());
+            int postId = post.getPostId();
+            
+            authorOfPost.put(postId, author);
+            countLikeOfPost.put(postId, likeBO.getAllLikesOfPost(postId).size());
+            countCommentOfPost.put(postId, commentBO.getAllCommentsForPost(postId).size());
+        }
+        
+        request.setAttribute("top10Tags", top10Tags);
+        request.setAttribute("top3LikePosts", top3LikePosts);
+        request.setAttribute("top4NewPosts", top4NewPosts);
+        request.setAttribute("top6RandomSeriesList", top6RandomSeriesList);
+        request.setAttribute("top3PostsOfRandomSeries", top3PostsOfRandomSeries);
+        request.setAttribute("authorOfPost", authorOfPost);
+        request.setAttribute("countLikeOfPost", countLikeOfPost);
+        request.setAttribute("countCommentOfPost", countCommentOfPost);
+        
+        RequestDispatcher rd = request.getRequestDispatcher("/Views/Shared/home.jsp");
+        rd.forward(request, response);
     }
 
     /**

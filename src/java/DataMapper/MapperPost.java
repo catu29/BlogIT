@@ -240,6 +240,113 @@ public class MapperPost extends MapperBase {
         }
     }
     
+    public ArrayList<DTOPost> getTopPostsOfSeries(int seriesId, int number) {
+        try {
+            ArrayList<DTOPost> result = new ArrayList();
+            
+            String query = "Select * from Post where seriesId = " + seriesId + " order by seriesOrder asc limit " + number;
+            PreparedStatement stmt = connection.prepareStatement(query);
+            
+            ResultSet rs = stmt.executeQuery(query);
+            
+            while (rs.next()) {
+                DTOPost post = new DTOPost();
+                                
+                post.setPostId(rs.getInt("postId"));
+                post.setPostTitle(rs.getString("postTitle"));
+                post.setPostTitleUnsigned(rs.getString("postTitleUnsigned"));
+                post.setPostSubTitle(rs.getString("postSubTitle"));
+                post.setPostTime(rs.getDate("postTime"));
+                post.setUserId(rs.getInt("userId"));
+                post.setSeriesId(rs.getInt("seriesId"));
+                post.setSeriesOrder(rs.getInt("seriesOrder"));
+                post.setImage(rs.getString("image"));
+                post.setPostContent(rs.getString("postContent"));
+                
+                result.add(post);
+            }
+            
+            return result;
+        } catch (Exception e) {
+            System.out.println("Get all posts of series error: " + e.getMessage());
+            
+            return null;
+        }
+    }
+    
+    public ArrayList<DTOPost> getTopLikePosts(int number) {
+        try {
+            ArrayList<DTOPost> result = new ArrayList();
+            
+            String query = "select post.postId, postTitle, postTitleUnsigned, " +
+                            "postSubTitle, postTime, post.userId, seriesId, " +
+                            "seriesOrder, image, postContent, count(postLike.userId) as countLike " +
+                            "from post inner join postlike on post.postId = postLike.postId " +
+                            "group by post.postId " +
+                            "order by countLike desc " +
+                            "limit " + number;
+            PreparedStatement stmt = connection.prepareStatement(query);
+            
+            ResultSet rs = stmt.executeQuery(query);
+            
+            while(rs.next()) {
+                DTOPost post = new DTOPost();
+                
+                post.setPostId(rs.getInt("postId"));
+                post.setPostTitle(rs.getString("postTitle"));
+                post.setPostTitleUnsigned(rs.getString("postTitleUnsigned"));
+                post.setPostSubTitle(rs.getString("postSubTitle"));
+                post.setPostTime(rs.getDate("postTime"));
+                post.setUserId(rs.getInt("userId"));
+                post.setSeriesId(rs.getInt("seriesId"));
+                post.setSeriesOrder(rs.getInt("seriesOrder"));
+                post.setImage(rs.getString("image"));
+                post.setPostContent(rs.getString("postContent"));
+                
+                result.add(post);
+            }
+            
+            return result;
+        } catch (Exception e) {
+            System.out.println("Get top like posts error: " + e.getMessage());
+            return null;
+        }
+    }
+    
+    public ArrayList<DTOPost> getTopNewPosts(int number) {
+        try {
+            ArrayList<DTOPost> result = new ArrayList();
+            
+            String query = "Select * from Post order by postTime desc limit " + number;
+            PreparedStatement stmt = connection.prepareStatement(query);
+            
+            ResultSet rs = stmt.executeQuery(query);
+            
+            while (rs.next()) {
+                DTOPost post = new DTOPost();
+                
+                post.setPostId(rs.getInt("postId"));
+                post.setPostTitle(rs.getString("postTitle"));
+                post.setPostTitleUnsigned(rs.getString("postTitleUnsigned"));
+                post.setPostSubTitle(rs.getString("postSubTitle"));
+                post.setPostTime(rs.getDate("postTime"));
+                post.setUserId(rs.getInt("userId"));
+                post.setSeriesId(rs.getInt("seriesId"));
+                post.setSeriesOrder(rs.getInt("seriesOrder"));
+                post.setImage(rs.getString("image"));
+                post.setPostContent(rs.getString("postContent"));
+                
+                result.add(post);
+            }
+            
+            return result;
+        } catch (Exception e) {
+            System.out.println("Get all posts error: " + e.getMessage());
+            
+            return null;
+        }
+    }
+    
     public boolean insertNewPost(DTOPost post) {
         try {
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");

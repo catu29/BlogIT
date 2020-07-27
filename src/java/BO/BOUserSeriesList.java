@@ -32,6 +32,10 @@ public class BOUserSeriesList {
         return mapper.getLatestUserSeries(userId);
     }
     
+    public ArrayList<DTOUserSeriesList> getTopRandomList(int number) {
+        return mapper.getTopRandomList(number);
+    }
+    
     public boolean insertNewUserSeriesList(DTOUserSeriesList list) {
         return mapper.insertNewUserSeriesList(list);
     }
