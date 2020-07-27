@@ -110,7 +110,7 @@
                         <div class="form-group">
                             <label for="content">Nội dung bài viết</label>
                             <textarea name="content" type="text" class="form-control" id="content" required></textarea>
-                            <c:if test="${isInvalid && (postDTO.postContent == null|| empty postDTO.postContent)}">
+                            <c:if test="${isInvalid && (postDTO.postContent == null || empty postDTO.postContent)}">
                                 <p style="color: red;">Trường không được để trống.</p>
                             </c:if>
                             <!-- TODO: If variable 'postBean.postContent' has value, show it here -->

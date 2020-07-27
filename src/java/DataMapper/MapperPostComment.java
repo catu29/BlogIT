@@ -52,6 +52,30 @@ public class MapperPostComment extends MapperBase {
         }
     }
     
+    public DTOPostComment getLatestCommentForPost(int postId) {
+        try {
+            String query = "Select * from PostComment where postId = " + postId + " Order by commentId DESC limit 1";
+            PreparedStatement stmt = connection.prepareStatement(query);
+            
+            ResultSet rs = stmt.executeQuery(query);
+            rs.next();
+            
+            DTOPostComment comment = new DTOPostComment();
+            
+            comment.setCommentId(rs.getInt("commentId"));
+            comment.setCommentTime(rs.getDate("commentTime"));
+            comment.setContent(rs.getString("content"));
+            comment.setParentId(rs.getInt("parentId"));
+            comment.setPostId(rs.getInt("postId"));
+            comment.setUserId(rs.getInt("userId"));
+            
+            return comment;
+        } catch (Exception e) {
+            System.out.println("Get latest comment for post error: " + e.getMessage());
+            return null;
+        }
+    }
+    
     public boolean insertCommentForPost(DTOPostComment comment) {
         try {
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss"); 

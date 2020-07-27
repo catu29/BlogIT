@@ -71,7 +71,7 @@ public class MapperPost extends MapperBase {
             
             return post;
         } catch (Exception e) {
-            System.out.println("Get post information by id error: " + e.getMessage());
+            System.out.println("Get latest post information by user id error: " + e.getMessage());
             return null;
         }
     }
