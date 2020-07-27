@@ -21,7 +21,7 @@
             <div class="mb-4">
                 <c:choose>
                     <c:when test="${userBean.avatar != 'null' && userBean.avatar != null && not empty userBean.avatar}">
-                        <img class="user-avt" src="${pageContext.request.contextPath}/Resources/img/${userBean.userId}/${userBean.avatar}" alt="">
+                        <img class="user-avt" src="${pageContext.request.contextPath}/Resources/img/${userBean.userId}/${userBean.avatar}" alt="avt">
                     </c:when>
                     <c:otherwise>
                         <img class="user-avt" src="${pageContext.request.contextPath}/Resources/img/default-user.png" alt="">
@@ -41,28 +41,25 @@
             </c:choose>
             </p>
             <div class="mb-4">
-                <c:if test="${userBean != null && userBean.userId == userProfile.userId}">
-                    <c:choose>
-                        <c:when test="${userBean.role == 0}">
-                            <p><a href="${pageContext.request.contextPath}/admin/manage-user">Quản lý người dùng</a></p>
-                            <p><a href="${pageContext.request.contextPath}/admin/manage-post">Quản lý bài viết</a></p>
-                            <p><a href="${pageContext.request.contextPath}/admin/manage-series">Quản lý series</a></p>
-                            <p><a href="${pageContext.request.contextPath}/admin/manage-tag">Quản lý tag</a></p>
-                            <p><a href="${pageContext.request.contextPath}/admin/manage-comment">Quản lý bình luận</a></p>
-                            <p><a href="${pageContext.request.contextPath}/admin/manage-like">Quản lý lượt like</a></p>
-                            <p><a href="${pageContext.request.contextPath}/admin/manage-report">Quản lý báo cáo</a></p>
-                        </c:when>
-                        <c:when test="${userBean.role != 0}">
-                            <p><a href="${pageContext.request.contextPath}/user/edit-profile">Thay đổi thông tin cá nhân</a></p>
-                            <p><a href="${pageContext.request.contextPath}/user/manage-post">Các bài viết của tôi</a></p>
-                            <p><a href="${pageContext.request.contextPath}/user/manage-series">Các series của tôi</a></p>
-                        </c:when>
-                    </c:choose>                        
+                <c:if test="${userBean != null && (userBean.userId == userProfile.userId || userProfile == null)}">                    
+                    <p><a href="${pageContext.request.contextPath}/user/edit-profile">Thay đổi thông tin cá nhân</a></p>
+                    <p><a href="${pageContext.request.contextPath}/user/manage-post">Các bài viết của tôi</a></p>
+                    <p><a href="${pageContext.request.contextPath}/user/manage-series">Các series của tôi</a></p>
+                    <hr>
+                    <c:if test="${userBean.role == 0}">
+                        <p><a href="${pageContext.request.contextPath}/admin/manage-user">Quản lý người dùng</a></p>
+                        <p><a href="${pageContext.request.contextPath}/admin/manage-post">Quản lý bài viết</a></p>
+                        <p><a href="${pageContext.request.contextPath}/admin/manage-series">Quản lý series</a></p>
+                        <p><a href="${pageContext.request.contextPath}/admin/manage-tag">Quản lý tag</a></p>
+                        <p><a href="${pageContext.request.contextPath}/admin/manage-comment">Quản lý bình luận</a></p>
+                        <p><a href="${pageContext.request.contextPath}/admin/manage-like">Quản lý lượt like</a></p>
+<!--                        <p><a href="${pageContext.request.contextPath}/admin/manage-report">Quản lý báo cáo</a></p>-->
+                    </c:if>                  
                 </c:if>
             </div>
         </c:when>
         <c:when test="${userBean.userId != userProfile.userId || (userBean == null && userProfile != null)}">
-            <div class="mb-4">
+            <div class="mb-4">                
                 <c:choose>
                     <c:when test="${userProfile.avatar != 'null' && userProfile.avatar != null && not empty userProfile.avatar}">
                         <img class="user-avt" src="${pageContext.request.contextPath}/Resources/img/${userProfile.userId}/${userProfile.avatar}" alt="">

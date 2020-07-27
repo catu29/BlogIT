@@ -83,7 +83,7 @@
                                 <div class="dropdown">
                                     <button class="dropdown-toggle btn btn-nav-user" type="button" id="userdropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                         <c:choose>
-                                            <c:when test="${userBean.avatar != 'null' && not empty userBean.avatar}">
+                                            <c:when test="${userBean.avatar != 'null' && userBean.avatar != null && not empty userBean.avatar}">
                                                 <img src="${pageContext.request.contextPath}/Resources/img/${userBean.userId}/${userBean.avatar}" alt="">
                                             </c:when>
                                             <c:otherwise>
