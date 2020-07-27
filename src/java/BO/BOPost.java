@@ -44,6 +44,18 @@ public class BOPost {
         return mapper.getAllPostsOfSeries(seriesId);
     }
     
+    public ArrayList<DTOPost> getTopPostsOfSeries(int seriesId, int number) {
+        return mapper.getTopPostsOfSeries(seriesId, number);
+    }
+    
+    public ArrayList<DTOPost> getTopLikePosts(int number) {
+        return mapper.getTopLikePosts(number);
+    }
+    
+    public ArrayList<DTOPost> getTopNewPosts(int number) {
+        return mapper.getTopNewPosts(number);
+    }
+    
     public boolean insertNewPost(DTOPost post) {
         return mapper.insertNewPost(post);
     }

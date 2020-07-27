@@ -33,6 +33,10 @@ public class BOTagList {
         return mapper.getAllTags();
     }
     
+    public ArrayList<DTOTagList> getTopNumberOfTags(int number) {
+        return mapper.getTopNumberOfTags(number);
+    }
+    
     public DTOTagList searchTagById(String id) {
         return mapper.searchTagById(id);
     }

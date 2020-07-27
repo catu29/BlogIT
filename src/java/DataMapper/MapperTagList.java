@@ -76,6 +76,28 @@ public class MapperTagList extends MapperBase {
         }
     }
     
+    public ArrayList<DTOTagList> getTopNumberOfTags(int number) {
+        try {
+            ArrayList<DTOTagList> result = new ArrayList();
+            
+            String query = "Select * From TagList limit " + number;
+            PreparedStatement stmt = connection.prepareStatement(query);
+            
+            ResultSet rs = stmt.executeQuery(query);
+            
+            while(rs.next()) {
+                DTOTagList tag = new DTOTagList(rs.getString("tagId"), rs.getString("tagName"));
+                result.add(tag);
+            }
+            
+            return result;
+        } catch (Exception e) {
+            System.out.println("Get all tags error: " + e.getMessage());
+            
+            return null;
+        }
+    }
+    
     public DTOTagList searchTagById(String id) {
         try {
             String query = "Select * From TagList Where tagId = '" + id + "';";

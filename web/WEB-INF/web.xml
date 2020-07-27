@@ -102,6 +102,10 @@
         <servlet-name>SeriesDeleteServlet</servlet-name>
         <servlet-class>Servlets.Series.SeriesDeleteServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>PostServlet</servlet-name>
+        <servlet-class>Servlets.Post.PostServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PostCommentServlet</servlet-name>
         <url-pattern>/post/detail/comment</url-pattern>
@@ -148,8 +152,8 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>HomeServlet</servlet-name>
-        <url-pattern>/post</url-pattern>
-        <url-pattern>/post/</url-pattern>
+        <url-pattern>/home</url-pattern>
+        <url-pattern>/home/</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>PostCreateServlet</servlet-name>
@@ -175,27 +179,27 @@
         <servlet-name>SeriesCreateServlet</servlet-name>
         <url-pattern>/series/create</url-pattern>
     </servlet-mapping>
-    
     <servlet-mapping>
         <servlet-name>UserEditProfileServlet</servlet-name>
         <url-pattern>/user/edit-profile</url-pattern>
     </servlet-mapping>
-
     <servlet-mapping>
         <servlet-name>UserManageSeriesServlet</servlet-name>
         <url-pattern>/user/manage-series</url-pattern>
     </servlet-mapping>
-
     <servlet-mapping>
         <servlet-name>SeriesUpdateServlet</servlet-name>
         <url-pattern>/series/update</url-pattern>
     </servlet-mapping>
-
     <servlet-mapping>
         <servlet-name>SeriesDeleteServlet</servlet-name>
         <url-pattern>/series/delete</url-pattern>
     </servlet-mapping>
-
+    <servlet-mapping>
+        <servlet-name>PostServlet</servlet-name>
+        <url-pattern>/post</url-pattern>
+        <url-pattern>/post/</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             60

@@ -114,6 +114,28 @@ public class MapperUserSeriesList extends MapperBase {
         }
     }
     
+    public ArrayList<DTOUserSeriesList> getTopRandomList(int number) {
+        try {
+            ArrayList<DTOUserSeriesList> result = new ArrayList();
+            String query = "Select * from UserSeriesList inner join " +
+                           "(Select seriesId from UserSeriesList order by rand() limit " + number + ") as subList " +
+                           "on UserSeriesList.seriesId = subList.seriesId";
+            PreparedStatement stmt = connection.prepareStatement(query);
+            
+            ResultSet rs = stmt.executeQuery(query);
+            
+            while(rs.next()) {
+                DTOUserSeriesList list = new DTOUserSeriesList(rs.getInt("seriesId"), rs.getInt("userId"), rs.getString("seriesName"), rs.getString("seriesNameUnsigned"));
+                result.add(list);
+            }
+            
+            return result;
+        } catch (Exception e) {
+            System.out.println("Get top random series list error: " + e.getMessage());
+            return null;
+        }
+    }
+    
     /***
      * Create new series list of a particular user and insert it into db
      * @param list - DTOUserSeriesList, list data which wanted to be inserted
