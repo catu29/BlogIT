@@ -20,57 +20,60 @@
 
 <%-- any content can be specified here e.g.: --%>
 <div>
-<c:choose>
-    <c:when test="${listPosts == null || empty listPosts}">
-        Không có bài viết nào
-    </c:when>
-    <c:otherwise>
-        <c:forEach var="post" items="${listPosts}">
-            <c:url var="postURL" value="${contextPath}/post/detail">
-                <c:param name="name" value="${post.postTitleUnsigned}"/>
-                <c:param name="%" value="${post.postId}"/>
-            </c:url>
-            <!-- Post Image -->
-            <div>                        
-                <a href="${postURL}"><img src="${pageContext.request.contextPath}/Resources/img/${post.userId}/${post.image}" alt=""></a>
+    <c:choose>
+        <c:when test="${listPosts == null || empty listPosts}">
+            Không có bài viết nào
+        </c:when>
+        <c:otherwise>
+            <c:forEach var="post" items="${listPosts}">
+                <!-- SECTION -->
+                <div class="section">
+                    <!-- container -->
+                    <div class="container">
+                        <!-- row -->
+                        <div class="row">
+                            <div class="col-md-8">
+                                <!-- post -->
+                                <c:url var="postURL" value="${contextPath}/post/detail">
+                                    <c:param name="name" value="${post.postTitleUnsigned}"/>
+                                    <c:param name="%" value="${post.postId}"/>
+                                </c:url>
+                                <div class="post post-row">
+                                    <a class="post-img" href="${postURL}"><img src="${pageContext.request.contextPath}/Resources/img/${post.userId}/${post.image}" alt=""></a>
+                                    <div class="post-body">
+                                        <div class="post-category">
+                                            <c:set var="seriesId" value="${post.seriesId}"/>
+                                            <c:url var="seriesURL" value="${contextPath}/series">
+                                                <c:param name="id" value="${seriesId}"/>
+                                            </c:url>
+                                            <a href="${seriesURL}">${seriesOfPost[seriesId].seriesName}</a>
+                                        </div>
+                                        <h3 class="post-title"><a href="${postURL}">${post.postTitle}</a></h3>
+                                            <c:set var="authorId" value="${post.userId}"/>
+                                            <c:url var="authorURL" value="${contextPath}/user/profile">
+                                                <c:param name="id" value="${authorId}"/>
+                                            </c:url>
+                                            <fmt:formatDate var="postTime" value="${post.postTime}" type="date" dateStyle="short" pattern="dd/MM/yyyy"/>
+                                        <ul class="post-meta">
+                                            <li><a href="${authorURL}">${authorOfPost[authorId].fullname}</a></li>
+                                            <li>${postTime}</li>
+                                        </ul>
+                                        <p>${post.postSubTitle}</p>
+                                    </div>
+                                </div>
+                                <!-- /post -->
+                            </div>
+                        </div>
+                        <!-- /row -->
+                    </div>
+                    <!-- /container -->
+                </div>
+                <!-- /SECTION -->
+            </c:forEach>
+            <div class="section-row loadmore text-center">
+                <a href="javascript:void" class="primary-button">Xem thêm</a>
             </div>
-            <!-- /Post Image -->
-            <!-- Post Title -->
-            <div>                       
-                <a href="${postURL}">${post.postTitle}</a>
-            </div>
-            <!-- /Post Title -->
-            <!-- Post Author -->
-            <div>
-                <c:set var="authorId" value="${post.userId}"/>
-                <c:url var="authorURL" value="${contextPath}/user/profile">
-                    <c:param name="id" value="${authorId}"/>
-                </c:url>
-                <a href="${authorURL}">${authorOfPost[authorId].fullname}</a>
-            </div>
-            <!-- /Post Author -->
-            <!-- Post Series -->
-            <div>
-                <c:set var="seriesId" value="${post.seriesId}"/>
-                <c:url var="seriesURL" value="${contextPath}/series">
-                    <c:param name="id" value="${seriesId}"/>
-                </c:url>
-                <a href="${seriesURL}">${seriesOfPost[seriesId].seriesName}</a>
-            </div>
-            <!-- /Post Series -->
-            <!-- Post Time -->
-            <div>
-                <fmt:formatDate var="postTime" value="${post.postTime}" type="date" dateStyle="short" pattern="HH:mm:ss dd/MM/yyyy"/>
-                <c:out value="${postTime}" />
-            </div>
-            <!-- /Post Time -->
-            <!-- Post SubTitle -->
-            <div>
-                <c:out value="${post.postSubTitle}"/>
-            </div>
-            <!-- /Post SubTitle -->
-        </c:forEach>
-    </c:otherwise>
-</c:choose>
+        </c:otherwise>
+    </c:choose>
 </div>
 <jsp:invoke fragment="anotherInfo"></jsp:invoke>

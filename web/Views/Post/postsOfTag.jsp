@@ -13,13 +13,13 @@
     <jsp:attribute name="title">Tag ${tagBean.tagName}</jsp:attribute>
     <jsp:body>
         <c:choose>
-            <c:when test="${tagBean == null}">
-                Tag không tồn tại
+            <c:when test="${tagBean == null || empty tagBean}">
+                <!--Tag không tồn tại-->
             </c:when>
             <c:otherwise>
                 <h1>Các bài viết thuộc tag ${tagBean.tagName}</h1>
                 <t:listPost>
-                    <jsp:attribute name="anotherInfo">Another info process here</jsp:attribute>
+                    <jsp:attribute name="anotherInfo"></jsp:attribute>
                 </t:listPost>
             </c:otherwise>
         </c:choose>        
