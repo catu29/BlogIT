@@ -45,7 +45,16 @@ $(document).ready(function () {
             }
         });
     });
-
+    
+    
+    var imgUrl = $('#image').data('imgurl');
+    if(imgUrl != '') {
+        var userId = $('#image').data('userid');
+        imgUrl = contextPath + 'img/' + userId + '/' + imgUrl;
+    }
+    else {
+        imgUrl = contextPath + 'placeholder-image.png';
+    }
     var upload = new FileUploadWithPreview('myUniqueUploadId', {
         showDeleteButtonOnImages: true,
         text: {
@@ -53,7 +62,7 @@ $(document).ready(function () {
             browse: 'Browse',
         },
         images: {
-            baseImage: contextPath + 'placeholder-image.png',
+            baseImage: imgUrl,
         },
     })
 });

@@ -80,6 +80,7 @@ public class PostUpdateServlet extends HttpServlet {
                 
                 DTOUserSeriesList currentSeriesDTO = seriesBO.getSeriesInformation(currentPostDTO.getSeriesId());
                 ArrayList<DTOTagList> currentTagsOfPost = tagBO.getAllTagsForPost(currentPostDTO.getPostId());
+                ArrayList<Integer> currentTagIdsOfPost = tagBO.getAllTagIdsForPost(currentPostDTO.getPostId());
                                                                 
                 SessionBeanUserSeriesList seriesBean = new SessionBeanUserSeriesList();
                 postBean = new SessionBeanPost();
@@ -94,6 +95,7 @@ public class PostUpdateServlet extends HttpServlet {
 
                 request.setAttribute("seriesBean", seriesBean);
                 request.setAttribute("currentTagsOfPost", currentTagsOfPost);
+                request.setAttribute("currentTagIdsOfPost", currentTagIdsOfPost);
             }
             
             HttpSession session = request.getSession(true);

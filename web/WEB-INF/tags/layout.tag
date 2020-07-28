@@ -101,9 +101,9 @@
                                 </div>
                             </c:when>
                             <c:otherwise>
-                                <button class="btn primary-button" type="button" data-toggle="modal" data-target="#authenticationModal">
+                                <a class="btn primary-button" href="${pageContext.request.contextPath}/user/login">
                                     Đăng nhập
-                                </button>
+                                </a>
                             </c:otherwise>
                         </c:choose>
                     </form>
@@ -125,7 +125,7 @@
             <jsp:invoke fragment="postHeader"></jsp:invoke>
             </header>
             <!-- /HEADER -->
-            <div class="section">
+            <div class="section" style="min-height: 80vh;">
                 <div class="container">
                 <jsp:doBody/>
             </div>
@@ -150,7 +150,6 @@
     </footer>
     <!-- /FOOTER -->
 
-    <jsp:include page="../../Views/Shared/authenticationModal.jsp" />
     <jsp:include page="../../Views/Shared/addNewSeriesModal.jsp" />
 
     <!-- libraries-->
