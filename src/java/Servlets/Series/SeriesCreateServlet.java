@@ -37,7 +37,7 @@ public class SeriesCreateServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -69,29 +69,29 @@ public class SeriesCreateServlet extends HttpServlet {
         processRequest(request, response);
         HttpSession session = request.getSession(true);
         ArrayList<DTOUserSeriesList> seriesList = new ArrayList();
-        
+
         if (request.getParameter("seriesName") != null && !request.getParameter("seriesName").isEmpty()) {
             if (session.getAttribute("userBean") == null) {
                 request.setAttribute("message", "Vui lòng đăng nhập để thực hiện tác vụ này.");
             } else {
                 SessionBeanUser userBean = (SessionBeanUser) session.getAttribute("userBean");
                 String seriesName = request.getParameter("seriesName");
-                
+
                 DTOUserSeriesList seriesDTO = new DTOUserSeriesList();
                 seriesDTO.setSeriesName(seriesName);
                 seriesDTO.setUserId(userBean.getUserId());
-                
-                BOUserSeriesList seriesBO = new BOUserSeriesList();
 
-                if (seriesBO.insertNewUserSeriesList(seriesDTO)) {
-                    seriesList = seriesBO.getUserLists(userBean.getUserId());
-                }
+                BOUserSeriesList seriesBO = new BOUserSeriesList();
+//                if (seriesBO.insertNewUserSeriesList(seriesDTO)) {
+//                    seriesList = seriesBO.getUserLists(userBean.getUserId());
+//                }
+                seriesList = seriesBO.getUserLists(userBean.getUserId());
             }
         }
         
         Gson gson = new Gson();
         String json = gson.toJson(seriesList);
-        
+
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         response.getWriter().write(json);

@@ -23,11 +23,7 @@
                     <div class="form-group">
                         <label for="seriesName">Tên Series</label>
                         <input type="text" class="input" id="seriesName" name="seriesName" required="true" oninvalid="this.setCustomValidity('Trường không được để trống.')">
-                    </div>
-                    <div class="form-group">
-                        <input type="hidden" id="curURL" value="${currentURL}">
-                        <input type="hidden" id="curQueryString" value="${currentQueryString}">
-                    </div>
+                    </div>  
                     <button type="submit" class="primary-button btn-block">Lưu</button>
                 </form>
             </div>

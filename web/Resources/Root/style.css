@@ -1360,8 +1360,7 @@ textarea.input {
 
 #footer {
     margin-top: 40px;
-    padding-top: 80px;
-    padding-bottom: 40px;
+    padding: 20px;
     background-color: #1b1c1e;
 }
 

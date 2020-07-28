@@ -23,13 +23,13 @@ let helper = {
             msg: msg,
             img: null,
             closable: true,
-            delay: 0,
-            delayIndicator: false,
+            delay: 5000,
+            delayIndicator: true,
             closeOnClick: true,
             width: 400,
             sound: true,
             position: "top right",
-            soundPath: SITEURL + 'vendor/lobibox/sounds/',
+            soundPath: SITEURL + 'vendors/lobibox/sounds/',
             iconSource: 'fontAwesome',
         });
     }

@@ -6,7 +6,7 @@ $(document).ready(function () {
         $('form.post-reply').find('textarea[name="message"]').html(usernameHtml);
     });
 
-    $('form.post-reply').submit(function (e) {
+    $(document).on('submit', 'form.post-reply', function (e) {
         e.preventDefault();
 
         var today = new Date($.now());
@@ -22,6 +22,9 @@ $(document).ready(function () {
         var userFullName = form.data('userfullname');
         var userAvtUrl = form.data('useravturl');
         var postId = $(this).find('[name="postId"]').val();
+        var msg = $(this).find('[name="message"]').val();
+
+        console.log(form);
 
 
         helper.showProgress();
@@ -35,20 +38,24 @@ $(document).ready(function () {
                 helper.hideProgress();
 
                 $('body').loadingModal('hide');
-                $(form)[0].reset();
-                if (data == 'succeeded') {
+
+                if (data != '-1') {
+                    var returnCmtId = data;
+                    var replyToId = parentId;
                     var formStr = '';
+
                     if (parentId == 0) {
-                        var returnCmtId = '';
-                        formStr = '<div class="collapse" id="formReplyTo_"' + returnCmtId + '><form class="post-reply" action="' + url + '" method="POST" data-parentid="' + returnCmtId + '" data-userurl="' + userUrl + '" data-userfullname="' + userFullName + '" data-useravturl="' + userAvtUrl + '"><div class="row"><div class="col-md-12"><input name="postId" value="' + postId + '" type="hidden"><input name="parentId" value="'+returnCmtId+'" type="hidden"><div class="form-group"><textarea class="input" name="message" placeholder="Nhập bình luận" required="true"></textarea></div></div><div class="col-md-12"><button class="primary-button">Gửi</button></div></div></form></div>';
+                        formStr = '<div class="collapse" id="formReplyTo_' + returnCmtId + '"><form class="post-reply" action="' + url + '" method="POST" data-parentid="' + returnCmtId + '" data-userurl="' + userUrl + '" data-userfullname="' + userFullName + '" data-useravturl="' + userAvtUrl + '"><div class="row"><div class="col-md-12"><input name="postId" value="' + postId + '" type="hidden"><input name="parentId" value="' + returnCmtId + '" type="hidden"><div class="form-group"><textarea class="input" name="message" placeholder="Nhập bình luận" required="true"></textarea></div></div><div class="col-md-12"><button class="primary-button">Gửi</button></div></div></form></div>';
+                        replyToId = returnCmtId;
                     }
 
-                    var commentStr = '<div class="media media-author"><div class="media-left"><a href="' + userUrl + '"><img class="media-object" src="' + userAvtUrl + '" alt=""></a></div><div class="media-body"><div class="comment"><div class="media-heading"><h4><a href="' + userUrl + '" class="username" data-username="' + userFullName + '">' + userFullName + '</a></h4><span class="time">' + dateTime + '</span></div><p>' + $(this).find('[name="message"]').val() + '</p><a data-toggle="collapse" href="#formReplyTo_' + returnCmtId + '" role="button" aria-expanded="false" aria-controls="formReplyTo_' + returnCmtId + '">Trả lời</a></div>' + formStr + '</div></div>';
+                    var commentStr = '<div class="media"><div class="media-left"><a href="' + userUrl + '"><img class="media-object" src="' + userAvtUrl + '" alt=""></a></div><div class="media-body"><div class="comment"><div class="media-heading"><h4><a href="' + userUrl + '" class="username" data-username="' + userFullName + '">' + userFullName + '</a></h4><span class="time">' + dateTime + '</span></div><p>' + msg + '</p><a data-toggle="collapse" href="#formReplyTo_' + replyToId + '" role="button" aria-expanded="false" aria-controls="formReplyTo_' + replyToId + '">Trả lời</a></div><br><div id="comments_of_' + replyToId + '"></div>' + formStr + '</div></div>';
 
                     $(commentStr).append(formStr);
                     $('#comments_of_' + parentId).append(commentStr);
 
 
+                    $(form)[0].reset();
                 }
             },
             error: function (error) {
@@ -68,7 +75,6 @@ $(document).ready(function () {
             success: function (data) {
 
                 if (isLiked) {
-                    console.log(isLiked);
                     $('#likePostBtn').find('i').removeClass('fas').addClass('far');
                     $('#likePostBtn').data('isliked', false);
                 } else {

@@ -1,12 +1,16 @@
 
 $(document).ready(function () {
-    CKEDITOR.replace('content');
+    var contextPath = $('meta[name="asset-path"]').attr('content');
 
-    $('#addNewSeriesModal').find(form).submit(function (e) {
+    var contentCKEditor = CKEDITOR.replace('content');
+
+
+    $('#addNewSeriesModal').find('form').submit(function (e) {
         e.preventDefault();
 
         var url = $(this).attr('action');
         var params = $(this).serialize();
+        helper.showProgress();
 
         $.ajax({
             type: "POST",
@@ -14,10 +18,30 @@ $(document).ready(function () {
             data: params,
             success: function (data)
             {
-                alert(data); // show response from the php script.
+                helper.hideProgress();
+                $('#addNewSeriesModal').modal('hide');
+                $('#addNewSeriesModal').find('form').find('[name="seriesName"]').val('');
+                
+                if (data) {
+                    helper.showPopupNotify('success', 'Thêm series thành công');
+                    
+                    $('[name="series"]').empty();
+                    var newOption = new Option('Select an option...', '', false, false);
+                    $('[name="series"]').append(newOption).trigger('change');
+                    
+                    data.forEach(function (series) {
+                        newOption = new Option(series.seriesName, series.seriesId, false, false);
+                        $('[name="series"]').append(newOption).trigger('change');
+                    });
+                }
+                else {
+                    helper.showPopupNotify('error', 'Đã có lỗi xảy ra vui lòng thử lại sau');
+                }
             },
             error: function (error) {
-                console.log(error);
+                helper.hideProgress();
+                $('#addNewSeriesModal').find('form').find('[name="seriesName"]').val('');
+                $('#addNewSeriesModal').modal('hide');
             }
         });
     });
@@ -25,16 +49,11 @@ $(document).ready(function () {
     var upload = new FileUploadWithPreview('myUniqueUploadId', {
         showDeleteButtonOnImages: true,
         text: {
-            chooseFile: 'Custom Placeholder Copy',
-            browse: 'Custom Button Copy',
-            selectedCount: 'Custom Files Selected Copy',
+            chooseFile: 'Choose file ...',
+            browse: 'Browse',
         },
         images: {
-            baseImage: importedBaseImage,
+            baseImage: contextPath + 'placeholder-image.png',
         },
-        presetFiles: [
-            '../public/logo-promosis.png',
-            'https://images.unsplash.com/photo-1557090495-fc9312e77b28?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=668&q=80',
-        ],
     })
 });

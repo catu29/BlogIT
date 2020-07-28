@@ -58,14 +58,14 @@
     transition: all 0.2s ease;
     margin-top: 20px;
     margin-bottom: 40px;
-    height: 250px;
+    height: 360px;
     width: 100%;
     border-radius: 4px;
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
     background-color: #fff;
-    overflow: scroll; }
+     }
   .custom-file-container__image-multi-preview {
     position: relative;
     box-sizing: border-box;

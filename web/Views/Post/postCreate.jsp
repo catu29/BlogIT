@@ -80,22 +80,14 @@
                         <!-- NOTE: If choose radio existingSeries, this field is required -->
                         <!-- TODO: If variable 'postBean.seriesOrder' has value, show it at 'value' field here -->
                         <div class="custom-file-container" data-upload-id="myUniqueUploadId">
-                            <label>Upload File <a href="javascript:void(0)" class="custom-file-container__image-clear" title="Clear Image">&times;</a></label>
+                            <label for="image">Ảnh bài viết <a href="javascript:void(0)" class="custom-file-container__image-clear" title="Clear Image">&times;</a></label>
 
                             <label class="custom-file-container__custom-file" >
-                                <input type="file" class="custom-file-container__custom-file__custom-file-input" accept="*" multiple aria-label="Choose File">
+                                <input id="image" name="image" type="file" class="custom-file-container__custom-file__custom-file-input" accept="image/png, image/jpeg, image/jpg" aria-label="Choose File" required>
                                 <input type="hidden" name="MAX_FILE_SIZE" value="10485760" />
                                 <span class="custom-file-container__custom-file__custom-file-control"></span>
                             </label>
                             <div class="custom-file-container__image-preview"></div>
-                        </div>
-                        <div class="form-group">
-                            <label for="image">Ảnh bài viết</label>
-                            <div class="custom-file">
-                                <input name="image" class="custom-file-input" type="file" id="image" accept="image/png, image/jpeg, image/jpg" required>
-                                <label class="custom-file-label" for="image">File sẽ được thay thế</label>
-                            </div
-                            <br>
                         </div>
                         <div class="form-group">
                             <label for="description">Mô tả</label>

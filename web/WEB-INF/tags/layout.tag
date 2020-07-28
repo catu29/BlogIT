@@ -25,7 +25,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="asset-path" content="${pageContext.request.contextPath}/Resources/">
-        
+
         <title>
             ${title}
         </title>
@@ -43,15 +43,15 @@
         <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/Resources/vendors/select2/select2.min.css"/>
         <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/Resources/vendors/select2/select2-bootstrap.min.css"/>
         <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/Resources/vendors/file-upload-with-preview/file-upload-with-preview.min.css"/>
-        
+
         <!-- Custom stlylesheet -->
         <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/Resources/Root/style.css" />
         <!-- custom css -->
         <jsp:invoke fragment="css"></jsp:invoke>
-    </head>
-    <body>
-        <div class="navbar sticky-top" style=" border-bottom: 1px solid #e8eaed">
-            <a class="navbar-brand mx-auto" href="${pageContext.request.contextPath}">
+        </head>
+        <body>
+            <div class="navbar sticky-top" style=" border-bottom: 1px solid #e8eaed">
+                <a class="navbar-brand mx-auto" href="${pageContext.request.contextPath}">
                 <img src="${pageContext.request.contextPath}/Resources/img/logo.png" alt="">
             </a>
         </div>
@@ -138,61 +138,11 @@
         <div class="container">
             <!-- row -->
             <div class="row">
-                <div class="col-md-3">
-                    <div class="footer-widget">
-                        <div class="footer-logo">
-                            <a href="index.html" class="logo"><img src="${pageContext.request.contextPath}/Resources/img/logo-alt.png" alt=""></a>
-                        </div>
-                        <p>Nec feugiat nisl pretium fusce id velit ut tortor pretium. Nisl purus in mollis nunc sed. Nunc non blandit massa enim nec.</p>
-
-                    </div>
+                <div class="col-md-4"></div>
+                <div class="col-md-4">
+                    <img src="${pageContext.request.contextPath}/Resources/img/logo-alt.png"
                 </div>
-                <div class="col-md-3">
-                    <div class="footer-widget">
-                        <h3 class="footer-title">Categories</h3>
-                        <div class="category-widget">
-                            <ul>
-                                <li><a href="#">Lifestyle <span>451</span></a></li>
-                                <li><a href="#">Fashion <span>230</span></a></li>
-                                <li><a href="#">Technology <span>40</span></a></li>
-                                <li><a href="#">Travel <span>38</span></a></li>
-                                <li><a href="#">Health <span>24</span></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="footer-widget">
-                        <h3 class="footer-title">Tags</h3>
-                        <div class="tags-widget">
-                            <ul>
-                                <li><a href="#">Social</a></li>
-                                <li><a href="#">Lifestyle</a></li>
-                                <li><a href="#">Blog</a></li>
-                                <li><a href="#">Travel</a></li>
-                                <li><a href="#">Technology</a></li>
-                                <li><a href="#">Fashion</a></li>
-                                <li><a href="#">Life</a></li>
-                                <li><a href="#">News</a></li>
-                                <li><a href="#">Magazine</a></li>
-                                <li><a href="#">Food</a></li>
-                                <li><a href="#">Health</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="footer-widget">
-                        <h3 class="footer-title">Newsletter</h3>
-                        <div class="newsletter-widget">
-                            <form>
-                                <p>Nec feugiat nisl pretium fusce id velit ut tortor pretium.</p>
-                                <input class="input" name="newsletter" placeholder="Enter Your Email">
-                                <button class="primary-button">Subscribe</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
+                <div class="col-md-4"></div>
             </div>
             <!-- /row -->
         </div>
@@ -215,7 +165,7 @@
     <script src="${pageContext.request.contextPath}/Resources/vendors/lobibox/js/lobibox.min.js"></script>
     <script src="${pageContext.request.contextPath}/Resources/vendors/select2/select2.full.min.js"></script>
     <script src="${pageContext.request.contextPath}/Resources/vendors/file-upload-with-preview/file-upload-with-preview.min.js"></script>
-    
+
     <script src="${pageContext.request.contextPath}/Resources/Root/main.js"></script>
     <script src="${pageContext.request.contextPath}/Resources/Root/helper.js"></script>
     <jsp:invoke fragment="js"></jsp:invoke>

@@ -52,7 +52,7 @@ public class PostCommentServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-               
+
     }
 
     /**
@@ -67,57 +67,57 @@ public class PostCommentServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-        
+
         HttpSession session = request.getSession(true);
         SessionBeanUser userBean = (SessionBeanUser) session.getAttribute("userBean");
-        
+
         int commentResultId = -1;
-        
-        if (request.getParameter("message") == null|| request.getParameter("message").trim().isEmpty()){
+
+        if (request.getParameter("message") == null || request.getParameter("message").trim().isEmpty()) {
             commentResultId = -1;
-        } 
-        else if (userBean != null && request.getParameter("postId") != null) {
+        } else if (userBean != null && request.getParameter("postId") != null) {
             String postId = request.getParameter("postId");
             String message = request.getParameter("message");
             Date date = new Date();
             int parentId;
-            
+
             if (request.getParameter("parentId") == null) {
                 parentId = 0;
             } else {
                 parentId = Integer.parseInt(request.getParameter("parentId"));
             }
-            
+
             DTOPostComment commentDTO = new DTOPostComment();
             commentDTO.setPostId(Integer.parseInt(postId));
             commentDTO.setUserId(userBean.getUserId());
             commentDTO.setContent(message);
             commentDTO.setCommentTime(date);
             commentDTO.setParentId(parentId);
-            
+
             BOPostComment commentBO = new BOPostComment();
-            
+
             if (commentBO.insertCommentForPost(commentDTO)) {
                 DTOPostComment comment = commentBO.getLatestCommentForPost(Integer.parseInt(postId));
                 commentResultId = comment.getCommentId();
             } else {
                 commentResultId = -1;
             }
+            commentResultId = 5;
         } else {
             if (userBean == null) {
                 System.out.println("User bean null");
             }
-            
+
             if (request.getParameter("postId") == null) {
                 System.out.println("Post id null");
             }
-                        
+
             commentResultId = -1;
         }
-        
+
         response.setContentType("text/plain");
         response.setCharacterEncoding("UTF-8");
-        response.getWriter().write(commentResultId);
+        response.getWriter().write(Integer.toString(commentResultId));
     }
 
     /**
