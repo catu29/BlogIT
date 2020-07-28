@@ -83,7 +83,7 @@
                             <label for="image">Ảnh bài viết <a href="javascript:void(0)" class="custom-file-container__image-clear" title="Clear Image">&times;</a></label>
 
                             <label class="custom-file-container__custom-file" >
-                                <input id="image" name="image" type="file" class="custom-file-container__custom-file__custom-file-input" accept="image/png, image/jpeg, image/jpg" aria-label="Choose File" required>
+                                <input id="image" name="image" type="file" class="custom-file-container__custom-file__custom-file-input" accept="*" aria-label="Choose File" required>
                                 <input type="hidden" name="MAX_FILE_SIZE" value="10485760" />
                                 <span class="custom-file-container__custom-file__custom-file-control"></span>
                             </label>

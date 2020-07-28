@@ -127,7 +127,7 @@ public class PostCreateServlet extends HttpServlet {
             
             if (request.getParameterValues("tags") != null && request.getParameterValues("tags").length != 0) {
                 tags = request.getParameterValues("tags");  
-                System.out.println("tag " + tags[0]);
+                System.out.println("tag " + tags.length);
             } else {
                 tags = null;
                 count++;
@@ -231,8 +231,9 @@ public class PostCreateServlet extends HttpServlet {
                 postDTO.setImage(image);
                 
                 if (postBO.insertNewPost(postDTO)) {
-                    if (tags != null) {
+                    if (tags != null && tags.length != 0) {
                         DTOPost post = postBO.getLatestUserPostInformation(userBean.getUserId());
+                        System.out.println(String.valueOf(userBean.getUserId()));
                         postTagBO.addTagForPost(post.getPostId(), tags);
                     }
                 }

@@ -73,7 +73,7 @@
                         <div class="input-group">
                             <input class="form-control" name="search">
                             <div class="input-group-append">
-                                <button type="button" class="btn btn-secondary"><i class="fa fa-search"></i></button>
+                                <button type="submit" class="btn btn-secondary"><i class="fa fa-search"></i></button>
                             </div>
                         </div>
                     </form>

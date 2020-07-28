@@ -126,6 +126,10 @@
         <servlet-name>SearchServlet</servlet-name>
         <servlet-class>Servlets.Home.SearchServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>UserListServlet</servlet-name>
+        <servlet-class>Servlets.User.UserListServlet</servlet-class>
+    </servlet>
     <!--Servlet-mapping-->
     <servlet-mapping>
         <servlet-name>PostCommentServlet</servlet-name>
@@ -224,6 +228,10 @@
     <servlet-mapping>
         <servlet-name>SearchServlet</servlet-name>
         <url-pattern>/search</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UserListServlet</servlet-name>
+        <url-pattern>/admin/manage-user</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
