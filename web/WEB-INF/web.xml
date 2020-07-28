@@ -7,6 +7,13 @@
         <res-type>javax.sql.DataSource</res-type>
         <res-auth>Container</res-auth>
     </resource-ref>
+    <!--jsp config-->
+    <jsp-config>
+        <jsp-property-group>
+            <url-pattern>*.jsp</url-pattern>
+            <page-encoding>UTF-8</page-encoding>
+        </jsp-property-group>
+    </jsp-config>
     <!--Welcome file list-->
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
@@ -16,6 +23,11 @@
         <param-name>upload.location</param-name>
         <param-value>\Resources\img\</param-value>
     </context-param>
+    <context-param>
+        <param-name>PARAMETER_ENCODING</param-name>
+        <param-value>UTF-8</param-value>
+    </context-param>
+    <!--Servlets-->
     <servlet>
         <servlet-name>PostCommentServlet</servlet-name>
         <servlet-class>Servlets.Post.PostCommentServlet</servlet-class>
@@ -79,7 +91,7 @@
     </servlet>
     <servlet>
         <servlet-name>AdminManagePostServlet</servlet-name>
-        <servlet-class>Servlets.User.AdminManagePostServlet</servlet-class>
+        <servlet-class>Servlet.Admin.AdminManagePostServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>PostDeleteServlet</servlet-name>
@@ -114,6 +126,7 @@
         <servlet-name>SearchServlet</servlet-name>
         <servlet-class>Servlets.Home.SearchServlet</servlet-class>
     </servlet>
+    <!--Servlet-mapping-->
     <servlet-mapping>
         <servlet-name>PostCommentServlet</servlet-name>
         <url-pattern>/post/detail/comment</url-pattern>

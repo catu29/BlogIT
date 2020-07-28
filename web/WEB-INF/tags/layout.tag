@@ -22,7 +22,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="asset-path" content="${pageContext.request.contextPath}/Resources/">
 
@@ -112,12 +112,12 @@
         </nav>
 
         <div id="nav-search">
-            <form>
+            <form action="${pageContext.request.contextPath}/search" method="POST">
                 <input class="input" name="search" placeholder="Enter your search...">
-            </form>
-            <button class="nav-close search-close">
-                <span></span>
-            </button>
+                <button type="submit" class="nav-close search-close">
+                    <span></span>
+                </button>
+            </form> 
         </div>
 
         <!-- HEADER -->

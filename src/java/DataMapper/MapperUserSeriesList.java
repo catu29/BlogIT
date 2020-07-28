@@ -22,10 +22,11 @@ public class MapperUserSeriesList extends MapperBase {
     public DTOUserSeriesList getSeriesInformation(int seriesId) {
         try {
             String query = "Select * from UserSeriesList where seriesId = " + seriesId;
+            System.out.println(query);
             PreparedStatement stmt = connection.prepareStatement(query);
             
             ResultSet rs = stmt.executeQuery(query);
-            
+                        
             rs.next();
                 
             DTOUserSeriesList seriesDTO = new DTOUserSeriesList(rs.getInt("seriesId"), rs.getInt("userId"), rs.getString("seriesName"), rs.getString("seriesNameUnsigned"));

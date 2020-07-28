@@ -40,7 +40,7 @@ public class SearchServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
+        request.setCharacterEncoding(getServletContext().getInitParameter("PARAMETER_ENCODING"));
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -55,8 +55,7 @@ public class SearchServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
-        
+        processRequest(request, response);        
         
     }
 
@@ -75,7 +74,7 @@ public class SearchServlet extends HttpServlet {
         
         if (request.getParameter("search") != null && !request.getParameter("search").trim().isEmpty()) {
             String condition = request.getParameter("search");
-            
+            System.out.println(condition);
             BOPost postBO = new BOPost();
             ArrayList<DTOPost> listPosts = postBO.search(condition);
             
