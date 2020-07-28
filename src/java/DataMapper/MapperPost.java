@@ -406,4 +406,39 @@ public class MapperPost extends MapperBase {
             return false;
         }
     }
+    
+    public ArrayList<DTOPost> search(String condition) {
+        try {
+            ArrayList<DTOPost> result = new ArrayList();
+            String query = "Select * from Post where "
+                         + "postTitle like '%" + condition + "%' or "
+                         + "postSubTitle like '%" + condition + "%' or "
+                         + "postContent like '%" + condition + "%'";
+            PreparedStatement stmt = connection.prepareStatement(query);
+            
+            ResultSet rs = stmt.executeQuery(query);
+            
+            while(rs.next()) {
+                DTOPost post = new DTOPost();
+            
+                post.setPostId(rs.getInt("postId"));
+                post.setPostTitle(rs.getString("postTitle"));
+                post.setPostTitleUnsigned(rs.getString("postTitleUnsigned"));
+                post.setPostSubTitle(rs.getString("postSubTitle"));
+                post.setPostTime(rs.getDate("postTime"));
+                post.setUserId(rs.getInt("userId"));
+                post.setSeriesId(rs.getInt("seriesId"));
+                post.setSeriesOrder(rs.getInt("seriesOrder"));
+                post.setImage(rs.getString("image"));
+                post.setPostContent(rs.getString("postContent"));
+                
+                result.add(post);
+            }
+            
+            return result;
+        } catch (Exception e) {
+            System.out.println("Search error: " + e.getMessage());
+            return null;
+        }
+    }
 }
