@@ -12,6 +12,6 @@
         <title>Trang chủ</title>
     </head>
     <body>
-        <% response.sendRedirect(getServletContext().getContextPath() + "/home");%>
+        <% response.sendRedirect(getServletContext().getContextPath() + "/home"); %>
     </body>
 </html>

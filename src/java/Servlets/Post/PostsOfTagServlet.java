@@ -72,7 +72,6 @@ public class PostsOfTagServlet extends HttpServlet {
 
             if (listDTO != null) {
                 tagBean.initFromDTO(listDTO);
-                request.setAttribute("mainName", tagBean.getTagName());
             } else {
                 tagBean = null;
             }
@@ -95,7 +94,7 @@ public class PostsOfTagServlet extends HttpServlet {
                 request.setAttribute("seriesOfPost", seriesOfPost);
             }
 
-            request.setAttribute("mainBean", tagBean);
+            request.setAttribute("tagBean", tagBean);
             request.setAttribute("listPosts", postsOfTag);
 
             RequestDispatcher rd = request.getRequestDispatcher("/Views/Post/postsOfTag.jsp");

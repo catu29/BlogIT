@@ -69,7 +69,7 @@
                             <a class="nav-link" href="${pageContext.request.contextPath}/post/create">Tạo bài viết</a>
                         </li>
                     </ul>
-                    <form class="form-inline mr-auto" id="searchForm">
+                    <form class="form-inline mr-auto" id="searchForm" action="${pageContext.request.contextPath}/search" method="POST">
                         <div class="input-group">
                             <input class="form-control" name="search">
                             <div class="input-group-append">

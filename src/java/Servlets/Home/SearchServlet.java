@@ -3,16 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Servlets.Series;
+package Servlets.Home;
 
 import BO.BOPost;
 import BO.BOUser;
 import BO.BOUserSeriesList;
-import Beans.SessionBeanUserSeriesList;
 import DTO.DTOPost;
 import DTO.DTOUser;
 import DTO.DTOUserSeriesList;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -26,7 +26,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author TranCamTu
  */
-public class SeriesListPostServlet extends HttpServlet {
+public class SearchServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -56,46 +56,8 @@ public class SeriesListPostServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-                    
-        if (request.getParameter("id") != null) {
-            String seriesId = request.getParameter("id");
-            BOUserSeriesList seriesBO = new BOUserSeriesList();
-            DTOUserSeriesList seriesDTO = seriesBO.getSeriesInformation(Integer.parseInt(seriesId));
-            
-            if (seriesDTO != null) {
-                SessionBeanUserSeriesList seriesBean = new SessionBeanUserSeriesList();
-                seriesBean.initFromDTO(seriesDTO);
-                
-                request.setAttribute("seriesBean", seriesBean);
-            } else {
-                request.setAttribute("seriesBean", null);
-            }
-            
-            BOPost postBO = new BOPost();
-            ArrayList<DTOPost> postList = postBO.getAllPostsOfSeries(Integer.parseInt(seriesId));
-            
-            if (postList != null && !postList.isEmpty()) {
-                Map<Integer, DTOUser> authorOfPost = new HashMap();
-                Map<Integer, DTOUserSeriesList> seriesOfPost = new HashMap();
-                BOUser userBO = new BOUser();
-                
-                for (DTOPost post : postList) {
-                    DTOUser authorDTO = userBO.getUserInformation(post.getUserId());
-                    DTOUserSeriesList series = seriesBO.getSeriesInformation(post.getSeriesId());
-                    
-                    authorOfPost.put(post.getPostId(), authorDTO);
-                    seriesOfPost.put(post.getPostId(), series);
-                }
-
-                request.setAttribute("authorOfPost", authorOfPost);
-                request.setAttribute("seriesOfPost", seriesOfPost);
-            }
-            
-            request.setAttribute("listPosts", postList);
-            
-            RequestDispatcher rd = request.getRequestDispatcher("/Views/Series/seriesListPost.jsp");
-            rd.forward(request, response);
-        }
+        
+        
     }
 
     /**
@@ -109,7 +71,38 @@ public class SeriesListPostServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        processRequest(request, response);       
+        
+        if (request.getParameter("search") != null && !request.getParameter("search").trim().isEmpty()) {
+            String condition = request.getParameter("search");
+            
+            BOPost postBO = new BOPost();
+            ArrayList<DTOPost> listPosts = postBO.search(condition);
+            
+            if (listPosts != null && !listPosts.isEmpty()) {
+                Map<Integer, DTOUser> authorOfPost = new HashMap();
+                Map<Integer, DTOUserSeriesList> seriesOfPost = new HashMap();
+                
+                BOUser userBO = new BOUser();
+                BOUserSeriesList seriesBO = new BOUserSeriesList();
+                
+                for (DTOPost post : listPosts) {
+                    DTOUser user = userBO.getUserInformation(post.getUserId());
+                    DTOUserSeriesList series = seriesBO.getSeriesInformation(post.getSeriesId());
+                    
+                    authorOfPost.put(post.getPostId(), user);
+                    seriesOfPost.put(post.getPostId(), series);
+                }
+                
+                request.setAttribute("authorOfPost", authorOfPost);
+                request.setAttribute("seriesOfPost", seriesOfPost);
+            }
+            
+            request.setAttribute("listPosts", listPosts);
+            
+            RequestDispatcher rd = request.getRequestDispatcher("/Views/Shared/searchResult.jsp");
+            rd.forward(request, response);
+        }
     }
 
     /**
@@ -119,7 +112,7 @@ public class SeriesListPostServlet extends HttpServlet {
      */
     @Override
     public String getServletInfo() {
-        return "Posts of series servlet";
+        return "Search servlet";
     }// </editor-fold>
 
 }

@@ -67,4 +67,8 @@ public class BOPost {
     public boolean deletePost(int postId) {
         return mapper.deletePost(postId);
     }
+    
+    public ArrayList<DTOPost> search(String condition) {
+        return mapper.search(condition);
+    }
 }
