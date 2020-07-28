@@ -146,7 +146,7 @@ public class MapperUserSeriesList extends MapperBase {
         
         try {
             String seriesNameUnsigned = convertToUnsigned(list.getSeriesName().trim());
-            System.out.println(seriesNameUnsigned);
+            
             String query = "Insert Into UserSeriesList(userId, seriesName, seriesNameUnsigned) values ("
                     + list.getUserId() + ", N'"
                     + list.getSeriesName().trim() + "', '"
