@@ -214,8 +214,13 @@
                                 <div class="tags-widget">
                                     <ul>
                                         <c:forEach var="tag" items="${top10Tags}">
-                                            <li><a href="">${tag.tagName} ${tag.tagId}</a></li>
-                                            </c:forEach>
+                                            <c:url var="tagURL" value="${contextPath}/tag">
+                                                <c:param name="id" value="${tag.tagId}"/>
+                                            </c:url>
+                                            <li>
+                                                <a href="${tagURL}">${tag.tagName} ${tag.tagId}</a>
+                                            </li>
+                                        </c:forEach>
                                     </ul>
                                 </div>
                             </div>
