@@ -55,11 +55,17 @@
                             </c:if>
                         </div>
                         <div class="form-group">
-                            <label for="tags">${currentTagsOfPost.size()}</label>
+                            <label for="tags">Tags</label>
                             <select name="tags" class="form-control select2-multi" id="tags" required multiple="true">
                                 <c:forEach var="tag" items="${listTags}">
+                                    <c:set var="isContain" value="${false}"></c:set>
+                                    <c:forEach var="postTag" items="${currentTagsOfPost}">
+                                        <c:if test="${postTag.tagId == tag.tagId}">
+                                            <c:set var="isContain" value="${true}"></c:set>
+                                        </c:if>
+                                    </c:forEach>
                                     <c:choose>
-                                        <c:when test="{fn:contains(currentTagIdsOfPost, tag.tagId)}">
+                                        <c:when test="${isContain == true}">
                                             <option value="${tag.tagId}" selected>${tag.tagName}</option>
                                         </c:when>
                                         <c:otherwise>

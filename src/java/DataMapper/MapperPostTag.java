@@ -115,29 +115,6 @@ public class MapperPostTag extends MapperBase {
         }
     }
     
-    public ArrayList<Integer> getAllTagIdsForPost(int postId) {
-        try {
-            ArrayList<Integer> result = new ArrayList();
-            
-            String query = "select TagList.tagId from "
-                    + "TagList inner join PostTag On TagList.tagId = PostTag.tagId "
-                    + "Where PostTag.postId = " + postId + ";";
-            PreparedStatement stmt = connection.prepareStatement(query);
-            
-            ResultSet rs = stmt.executeQuery(query);
-            
-            while (rs.next()) {
-                result.add(rs.getInt("tagId"));
-            }
-            
-            return result;
-        } catch (Exception e) {
-            System.out.println("Get all tags for post error: " + e.getMessage());
-            
-            return null;
-        }
-    }
-    
     public ArrayList<DTOPost> getAllPostsForTag(String tagId) {
         try {
             ArrayList<DTOPost> result = new ArrayList();

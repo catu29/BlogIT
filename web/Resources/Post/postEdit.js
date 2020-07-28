@@ -7,11 +7,11 @@ $(document).ready(function () {
 
     $('#addNewSeriesModal').find('form').submit(function (e) {
         e.preventDefault();
-
+        
         var url = $(this).attr('action');
         var params = $(this).serialize();
         helper.showProgress();
-
+        alert(url);
         $.ajax({
             type: "POST",
             url: url,
@@ -24,7 +24,7 @@ $(document).ready(function () {
                 
                 if (data) {
                     helper.showPopupNotify('success', 'Thêm series thành công');
-                    
+                    console.log(data);
                     $('[name="series"]').empty();
                     var newOption = new Option('Select an option...', '', false, false);
                     $('[name="series"]').append(newOption).trigger('change');

@@ -44,8 +44,4 @@ public class BOPostTag {
     public ArrayList<DTOPost> getAllPostsForTag(String tagId) {
         return mapper.getAllPostsForTag(tagId);
     }
-    
-    public ArrayList<Integer> getAllTagIdsForPost(int postId) {
-        return mapper.getAllTagIdsForPost(postId);
-    }
 }

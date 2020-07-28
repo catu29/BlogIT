@@ -82,9 +82,9 @@ public class SeriesCreateServlet extends HttpServlet {
                 seriesDTO.setUserId(userBean.getUserId());
 
                 BOUserSeriesList seriesBO = new BOUserSeriesList();
-//                if (seriesBO.insertNewUserSeriesList(seriesDTO)) {
-//                    seriesList = seriesBO.getUserLists(userBean.getUserId());
-//                }
+                if (seriesBO.insertNewUserSeriesList(seriesDTO)) {
+                    seriesList = seriesBO.getUserLists(userBean.getUserId());
+                }
                 seriesList = seriesBO.getUserLists(userBean.getUserId());
             }
         }

@@ -65,28 +65,32 @@ public class PostUpdateServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-        
+
         if (request.getParameter("postId") != null) {
             String postId = request.getParameter("postId");
-            
+
             SessionBeanPost postBean = new SessionBeanPost();
             BOPost postBO = new BOPost();
 
             DTOPost currentPostDTO = postBO.getPostInformation(Integer.parseInt(postId));
-        
+
             if (currentPostDTO != null) {
                 BOUserSeriesList seriesBO = new BOUserSeriesList();
                 BOPostTag tagBO = new BOPostTag();
-                
+
                 DTOUserSeriesList currentSeriesDTO = seriesBO.getSeriesInformation(currentPostDTO.getSeriesId());
                 ArrayList<DTOTagList> currentTagsOfPost = tagBO.getAllTagsForPost(currentPostDTO.getPostId());
-                ArrayList<Integer> currentTagIdsOfPost = tagBO.getAllTagIdsForPost(currentPostDTO.getPostId());
-                                                                
+                ArrayList<String> currentTagIdsOfPost = new ArrayList<String>();
+                
+                for(DTOTagList tag :  currentTagsOfPost) {
+                    currentTagIdsOfPost.add(tag.getTagId());
+                }
+                
                 SessionBeanUserSeriesList seriesBean = new SessionBeanUserSeriesList();
                 postBean = new SessionBeanPost();
-                
+
                 postBean.initFromDTO(currentPostDTO);
-                
+
                 if (currentSeriesDTO != null) {
                     seriesBean.initFromDTO(currentSeriesDTO);
                 } else {
@@ -97,9 +101,9 @@ public class PostUpdateServlet extends HttpServlet {
                 request.setAttribute("currentTagsOfPost", currentTagsOfPost);
                 request.setAttribute("currentTagIdsOfPost", currentTagIdsOfPost);
             }
-            
+
             HttpSession session = request.getSession(true);
-        
+
             if (session.getAttribute("userBean") == null) {
                 request.setAttribute("message", "Vui lòng đăng nhập");
             } else {
@@ -115,9 +119,9 @@ public class PostUpdateServlet extends HttpServlet {
                 request.setAttribute("listTags", listTags);
                 request.setAttribute("listPosts", listPosts);
             }
-                    
+
             request.setAttribute("postBean", postBean);
-        
+
             RequestDispatcher rd = request.getRequestDispatcher("/Views/Post/postEdit.jsp");
             rd.forward(request, response);
         }
@@ -135,12 +139,12 @@ public class PostUpdateServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-        
+
         HttpSession session = request.getSession(true);
-        
+
         if (session.getAttribute("userBean") != null) {
             SessionBeanUser userBean = (SessionBeanUser) session.getAttribute("userBean");
-            
+
             String title;
             String tags[];
             String series;
@@ -149,55 +153,55 @@ public class PostUpdateServlet extends HttpServlet {
             String image;
             String description;
             String content;
-            
+
             int count = 0;
-                                              
+
             if (request.getParameter("title") != null && !request.getParameter("title").isEmpty()) {
                 title = request.getParameter("title");
             } else {
                 title = "";
                 count++;
             }
-            
+
             if (request.getParameterValues("tags") != null && request.getParameterValues("tags").length != 0) {
-                tags = request.getParameterValues("tags");  
+                tags = request.getParameterValues("tags");
             } else {
                 tags = null;
                 count++;
-            }   
-            
+            }
+
             if (request.getParameter("description") != null && !request.getParameter("description").isEmpty()) {
                 description = request.getParameter("description");
             } else {
                 description = "";
                 count++;
             }
-            
+
             if (request.getParameter("content") != null && !request.getParameter("content").isEmpty()) {
                 content = request.getParameter("content");
             } else {
                 content = "";
                 count++;
             }
-            
+
             DTOPost postDTO = new DTOPost();
-            
+
             Date createTime = new Date();
-            
+
             postDTO.setPostTitle(title);
             postDTO.setUserId(userBean.getUserId());
             postDTO.setPostSubTitle(description);
             postDTO.setPostContent(content);
             postDTO.setPostTime(createTime);
-            
+
             if (request.getParameter("series") != null && !request.getParameter("series").isEmpty()) {
-                series = request.getParameter("series");                
+                series = request.getParameter("series");
                 postDTO.setSeriesId(Integer.parseInt(series));
             } else {
                 series = "";
                 postDTO.setSeriesId(0);
             }
-            
+
             if (request.getParameter("seriesOrder") != null && !request.getParameter("seriesOrder").isEmpty()) {
                 seriesOrder = request.getParameter("seriesOrder");
                 postDTO.setSeriesOrder(Integer.parseInt(seriesOrder));
@@ -205,44 +209,44 @@ public class PostUpdateServlet extends HttpServlet {
                 seriesOrder = "";
                 postDTO.setSeriesOrder(0);
             }
-            
+
             if (request.getParameter("newSeries") != null && !request.getParameter("newSeries").isEmpty()) {
                 newSeries = request.getParameter("newSeries");
             } else {
                 newSeries = "";
             }
-                        
+
             Part filePart = request.getPart("image");
-            if (filePart != null) {                
+            if (filePart != null) {
                 image = filePart.getSubmittedFileName();
             } else {
                 image = "";
                 count++;
             }
-            
+
             if (count == 0) {
                 request.setAttribute("isInvalide", false);
-                
+
                 DTOUserSeriesList seriesDTO = new DTOUserSeriesList();
                 ArrayList<DTOPostTag> postTagDTO = new ArrayList();
-                
+
                 BOPost postBO = new BOPost();
                 BOPostTag postTagBO = new BOPostTag();
                 BOUserSeriesList seriesBO = new BOUserSeriesList();
-                
+
                 if (series.equals("") && !newSeries.equals("")) {
                     seriesDTO.setSeriesName(newSeries);
                     seriesDTO.setUserId(userBean.getUserId());
-                    
+
                     if (seriesBO.insertNewUserSeriesList(seriesDTO)) {
                         DTOUserSeriesList newSeriesInfo = seriesBO.getLatestUserSeries(userBean.getUserId());
                         postDTO.setSeriesId(newSeriesInfo.getSeriesId());
                     }
                 }
-                                
+
                 String uploadPath = getServletContext().getRealPath("/Resources/img") + File.separator + String.valueOf(userBean.getUserId());
                 File fileDir = new File(uploadPath);
-                
+
                 if (!fileDir.exists()) {
                     if (fileDir.mkdirs()) {
                         System.out.println("Make director success: " + fileDir.getAbsolutePath());
@@ -250,30 +254,30 @@ public class PostUpdateServlet extends HttpServlet {
                         System.out.println("Make director fail");
                     }
                 }
-                
+
                 InputStream fileContent = filePart.getInputStream();
                 Files.copy(fileContent, Paths.get(fileDir + File.separator + image), StandardCopyOption.REPLACE_EXISTING);
-                
+
                 postDTO.setImage(image);
-                
+
                 if (postBO.insertNewPost(postDTO)) {
                     if (tags != null) {
                         DTOPost post = postBO.getLatestUserPostInformation(userBean.getUserId());
                         postTagBO.addTagForPost(post.getPostId(), tags);
                     }
                 }
-                
+
                 response.sendRedirect(getServletContext().getContextPath() + "/user/manage-post");
             } else {
                 request.setAttribute("postDTO", postDTO);
                 request.setAttribute("isInvalide", true);
-                
+
                 RequestDispatcher rd = request.getRequestDispatcher("/Views/Post/postEdit.jsp");
                 rd.forward(request, response);
             }
         } else {
             session.setAttribute("message", "Vui lòng đăng nhập");
-            
+
             RequestDispatcher rd = request.getRequestDispatcher("/Views/Post/postEdit.jsp");
             rd.forward(request, response);
         }
